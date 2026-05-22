@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+  const [touchMarks, setTouchMarks] = useState([]);
+  const lastTouchAt = useRef(0);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -18,9 +21,10 @@ export default function CustomCursor() {
   const outlineY = useSpring(cursorY, springConfigOutline);
 
   useEffect(() => {
-    // Only enable on non-touch devices
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch) return;
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    setIsTouch(coarsePointer);
+
+    if (coarsePointer) return;
 
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
@@ -57,51 +61,131 @@ export default function CustomCursor() {
     };
   }, [cursorX, cursorY, isVisible]);
 
-  // Hide on screens smaller than 1024px completely
-  if (!isVisible || typeof window === 'undefined') return null;
+  useEffect(() => {
+    if (!isTouch) return;
+
+    const addTouchMark = (touch, type = 'tap') => {
+      const id = `${Date.now()}-${touch.clientX}-${touch.clientY}`;
+      setTouchMarks((marks) => [
+        ...marks.slice(-5),
+        {
+          id,
+          type,
+          x: touch.clientX,
+          y: touch.clientY
+        }
+      ]);
+
+      window.setTimeout(() => {
+        setTouchMarks((marks) => marks.filter((mark) => mark.id !== id));
+      }, 760);
+    };
+
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      addTouchMark(touch, 'tap');
+    };
+
+    const handleTouchMove = (e) => {
+      const now = Date.now();
+      if (now - lastTouchAt.current < 90) return;
+      lastTouchAt.current = now;
+
+      const touch = e.touches[0];
+      if (!touch) return;
+      addTouchMark(touch, 'trail');
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [isTouch]);
+
+  const showDesktopCursor = isVisible && !isTouch;
 
   return (
-    <div className="hidden lg:block">
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-gold-soft pointer-events-none z-[9999]"
-        animate={{ rotate: isHovering ? 45 : 0, scale: isHovering ? 1.4 : 1 }}
-        transition={{ duration: 0.22 }}
-        style={{
-          x: dotX,
-          y: dotY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-11 h-11 pointer-events-none z-[9998]"
-        animate={{
-          scale: isHovering ? 1.45 : 1,
-          rotate: isHovering ? 45 : 0
-        }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          x: outlineX,
-          y: outlineY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      >
-        <span className="absolute inset-0 border border-gold/70" />
-        <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gold/35" />
-        <span className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gold/35" />
-      </motion.div>
-      <motion.div
-        className="fixed top-0 left-0 h-px w-12 origin-left bg-gold/50 pointer-events-none z-[9997]"
-        animate={{ opacity: isHovering ? 0.8 : 0.35, scaleX: isHovering ? 1.45 : 1 }}
-        transition={{ duration: 0.24 }}
-        style={{
-          x: outlineX,
-          y: outlineY,
-          translateY: '-50%',
-          rotate: -18
-        }}
-      />
-    </div>
+    <>
+      {showDesktopCursor && (
+        <div className="hidden lg:block">
+          <motion.div
+            className="fixed top-0 left-0 w-1.5 h-1.5 bg-gold-soft pointer-events-none z-[9999]"
+            animate={{ rotate: isHovering ? 45 : 0, scale: isHovering ? 1.4 : 1 }}
+            transition={{ duration: 0.22 }}
+            style={{
+              x: dotX,
+              y: dotY,
+              translateX: '-50%',
+              translateY: '-50%',
+            }}
+          />
+          <motion.div
+            className="fixed top-0 left-0 w-11 h-11 pointer-events-none z-[9998]"
+            animate={{
+              scale: isHovering ? 1.45 : 1,
+              rotate: isHovering ? 45 : 0
+            }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              x: outlineX,
+              y: outlineY,
+              translateX: '-50%',
+              translateY: '-50%',
+            }}
+          >
+            <span className="absolute inset-0 border border-gold/70" />
+            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gold/35" />
+            <span className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gold/35" />
+          </motion.div>
+          <motion.div
+            className="fixed top-0 left-0 h-px w-12 origin-left bg-gold/50 pointer-events-none z-[9997]"
+            animate={{ opacity: isHovering ? 0.8 : 0.35, scaleX: isHovering ? 1.45 : 1 }}
+            transition={{ duration: 0.24 }}
+            style={{
+              x: outlineX,
+              y: outlineY,
+              translateY: '-50%',
+              rotate: -18
+            }}
+          />
+        </div>
+      )}
+
+      <div className="fixed inset-0 z-[9996] pointer-events-none lg:hidden">
+        <AnimatePresence>
+          {touchMarks.map((mark) => (
+            <motion.span
+              key={mark.id}
+              className="absolute left-0 top-0 h-14 w-14 rounded-full border border-gold/65"
+              initial={{
+                x: mark.x,
+                y: mark.y,
+                opacity: 0.9,
+                scale: mark.type === 'tap' ? 0.35 : 0.18,
+                rotate: -24
+              }}
+              animate={{
+                opacity: 0,
+                scale: mark.type === 'tap' ? 1.5 : 0.95,
+                rotate: 18
+              }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                translateX: '-50%',
+                translateY: '-50%',
+                boxShadow: '0 0 28px rgba(176, 184, 192, 0.22)'
+              }}
+            >
+              <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 bg-gold-soft" />
+            </motion.span>
+          ))}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
