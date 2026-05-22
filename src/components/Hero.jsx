@@ -74,11 +74,11 @@ export default function Hero({ isLoaded }) {
             animate={{ boxShadow: ['0 0 0 0 rgba(176,184,192,0.62)', '0 0 0 12px rgba(176,184,192,0)', '0 0 0 0 rgba(176,184,192,0)'] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
           />
-          Launching Soon 
+          Website in development
         </motion.div>
 
         <h1 className="font-serif text-[clamp(2.8rem,6vw,5.2rem)] font-light leading-[1.02] tracking-[-0.025em] mb-7">
-          {isLoaded && <RevealText delay={0.6}>Building tomorrow's *skylines.*</RevealText>}
+          {isLoaded && <RevealText delay={0.6}>Hilltop Developments is *coming online.*</RevealText>}
         </h1>
 
         <motion.p 
@@ -87,7 +87,7 @@ export default function Hero({ isLoaded }) {
           animate={isLoaded ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 18, filter: 'blur(10px)' }}
           transition={{ duration: 0.85, delay: 1.05 }}
         >
-          Hilltop Developments crafts premium real estate experiences across Nigeria — thoughtfully designed properties for those who recognise enduring value. Our full digital portfolio launches soon; our team is available now for private consultations and investor briefings.
+          This is the official online presence for Hilltop Developments while the full website is being prepared. For now, use this page to confirm the brand and contact the team directly.
         </motion.p>
 
         <div className="flex flex-wrap gap-4">
@@ -97,7 +97,7 @@ export default function Hero({ isLoaded }) {
             transition={{ duration: 0.6, delay: 1.25 }}
           >
             <MagneticButton variant="primary" href="#consult">
-              Schedule a Consultation <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              Contact the Team <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </MagneticButton>
           </motion.div>
           
@@ -107,7 +107,7 @@ export default function Hero({ isLoaded }) {
             transition={{ duration: 0.6, delay: 1.35 }}
           >
             <MagneticButton variant="ghost" href="#consult">
-              Request Brochure
+              Get Launch Updates
             </MagneticButton>
           </motion.div>
         </div>

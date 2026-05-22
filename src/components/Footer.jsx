@@ -32,13 +32,13 @@ export default function Footer() {
           </div>
         </ScrollReveal>
 
-        {/* Connect */}
         <ScrollReveal delay={0.3}>
-          <h5 className="text-[0.75rem] tracking-[0.15em] uppercase text-gold font-medium mb-5">Connect</h5>
-          <div className="flex flex-col gap-2">
+          <h5 className="text-[0.75rem] tracking-[0.15em] uppercase text-gold font-medium mb-5">WhatsApp</h5>
+          <div className="flex flex-col gap-3">
             <a href="https://wa.me/2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2">WhatsApp</a>
-            <a href="#" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2">LinkedIn</a>
-            <a href="#" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2">Instagram</a>
+            <p className="text-cream/60 text-[0.9rem] leading-[1.6] font-light max-w-[260px]">
+              Social channels will be added when the official handles are ready.
+            </p>
           </div>
         </ScrollReveal>
 
@@ -46,7 +46,7 @@ export default function Footer() {
 
       <div className="max-w-[1400px] mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[0.82rem] text-cream/65">
         <div>© 2026 Hilltop Developments. All rights reserved.</div>
-        <div>Site in development</div>
+        <div>Official site in development</div>
       </div>
     </footer>
   );
