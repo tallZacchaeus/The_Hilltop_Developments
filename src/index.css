@@ -13,7 +13,7 @@
     background:
       radial-gradient(circle at 18% 24%, rgba(44, 79, 124, 0.34), transparent 32%),
       radial-gradient(circle at 72% 16%, rgba(212, 183, 110, 0.16), transparent 28%),
-      radial-gradient(circle at 64% 80%, rgba(21, 42, 69, 0.8), transparent 38%);
+      radial-gradient(circle at 64% 80%, rgba(16, 32, 79, 0.8), transparent 38%);
     animation: hilltop-mesh 30s ease-in-out infinite alternate;
   }
 
