@@ -5,9 +5,9 @@ export default function Header({ isLoaded }) {
   const { scrollY } = useScroll();
   
   const py = useTransform(scrollY, [0, 40], ['1.75rem', '1rem']);
-  const bg = useTransform(scrollY, [0, 40], ['rgba(11, 31, 77, 0)', 'rgba(11, 31, 77, 0.75)']);
+  const bg = useTransform(scrollY, [0, 40], ['rgba(20, 38, 95, 0)', 'rgba(16, 32, 79, 0.78)']);
   const backdropBlur = useTransform(scrollY, [0, 40], ['blur(0px)', 'blur(12px)']);
-  const borderBottom = useTransform(scrollY, [0, 40], ['1px solid rgba(246, 242, 234, 0)', '1px solid rgba(246, 242, 234, 0.15)']);
+  const borderBottom = useTransform(scrollY, [0, 40], ['1px solid rgba(212, 183, 110, 0)', '1px solid rgba(212, 183, 110, 0.22)']);
 
   return (
     <motion.header

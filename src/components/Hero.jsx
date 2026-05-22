@@ -59,7 +59,7 @@ export default function Hero({ isLoaded }) {
   return (
     <section className="min-h-screen grid grid-cols-1 lg:grid-cols-[56%_44%] items-center px-6 lg:px-12 pt-32 pb-16 gap-12 lg:gap-16 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.06), transparent 32%), radial-gradient(circle at 84% 18%, rgba(176,184,192,0.15), transparent 34%)'
+        background: 'linear-gradient(135deg, rgba(255,253,246,0.05), transparent 32%), radial-gradient(circle at 84% 18%, rgba(212,183,110,0.18), transparent 34%)'
       }} />
 
       <div className="relative z-10 pt-10 lg:pt-0">
@@ -70,8 +70,8 @@ export default function Hero({ isLoaded }) {
           transition={{ duration: 0.8, delay: 0.45 }}
         >
           <motion.span 
-            className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_0_0_rgba(176,184,192,0.6)]"
-            animate={{ boxShadow: ['0 0 0 0 rgba(176,184,192,0.62)', '0 0 0 12px rgba(176,184,192,0)', '0 0 0 0 rgba(176,184,192,0)'] }}
+            className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_0_0_rgba(212,183,110,0.6)]"
+            animate={{ boxShadow: ['0 0 0 0 rgba(212,183,110,0.62)', '0 0 0 12px rgba(212,183,110,0)', '0 0 0 0 rgba(212,183,110,0)'] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
           />
           Website in development
@@ -166,14 +166,6 @@ export default function Hero({ isLoaded }) {
           </div>
         </motion.div>
 
-        <motion.div 
-          className="absolute -bottom-6 -left-4 lg:-bottom-8 lg:-left-8 bg-navy-deep px-5 py-4 lg:px-6 lg:py-5 border-l-2 border-gold text-[0.7rem] lg:text-[0.78rem] tracking-[0.12em] uppercase text-gold-soft z-20"
-          initial={{ x: -26, opacity: 0, filter: 'blur(8px)' }}
-          animate={isLoaded ? { x: 0, opacity: 1, filter: 'blur(0px)' } : { x: -26, opacity: 0, filter: 'blur(8px)' }}
-          transition={{ duration: 0.85, delay: 1.75, ease: [0.22, 1, 0.36, 1] }}
-        >
-          
-        </motion.div>
       </div>
     </section>
   );

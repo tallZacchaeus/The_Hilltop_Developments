@@ -178,7 +178,7 @@ export default function CustomCursor() {
               style={{
                 translateX: '-50%',
                 translateY: '-50%',
-                boxShadow: '0 0 28px rgba(176, 184, 192, 0.22)'
+                boxShadow: '0 0 28px rgba(212, 183, 110, 0.24)'
               }}
             >
               <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 bg-gold-soft" />

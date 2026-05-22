@@ -8,18 +8,18 @@ export default {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#203858',
-          deep: '#183050',
-          soft: '#586880',
+          DEFAULT: '#14265F',
+          deep: '#10204F',
+          soft: '#253D76',
         },
         cream: {
-          DEFAULT: '#FFFFFF',
-          muted: 'rgba(176, 184, 192, 0.82)',
+          DEFAULT: '#FFFDF6',
+          muted: 'rgba(255, 253, 246, 0.68)',
         },
-        paper: '#F8F8F8',
+        paper: '#FFFDF6',
         gold: {
-          DEFAULT: '#B0B8C0',
-          soft: '#F0F0F0',
+          DEFAULT: '#D4B76E',
+          soft: '#E2C985',
         }
       },
       fontFamily: {
