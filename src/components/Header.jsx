@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import logoUrl from '../../Hilltop_Developments_2-removebg-preview-cropped.png';
+import Logo from './ui/Logo';
 
 export default function Header({ isLoaded }) {
   const { scrollY } = useScroll();
@@ -23,12 +23,12 @@ export default function Header({ isLoaded }) {
       animate={isLoaded ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 1 }}
     >
-      <a href="#" className="text-cream no-underline flex items-center">
-        <img
-          src={logoUrl}
-          alt="Hilltop Developments"
-          className="h-16 w-auto md:h-20"
-        />
+      <a href="#" className="text-cream no-underline flex items-center gap-3">
+        <Logo size={34} />
+        <span className="hidden sm:flex flex-col font-display uppercase leading-none">
+          <span className="text-[0.92rem] font-semibold tracking-[0.08em]">Hilltop</span>
+          <span className="mt-1 text-[0.48rem] font-normal tracking-[0.24em]">Developments</span>
+        </span>
       </a>
       
       <nav className="flex gap-8 items-center text-[0.85rem] tracking-[0.05em] uppercase">

@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 
 export default function Marquee() {
   const items = [
-    "Hilltop Developments",
-    "Official Brand Page",
-    "Website in Progress",
-    "Direct Enquiries",
-    "Launch Updates"
+    "Building Sustainable Cities",
+    "Strategic Enterprise",
+    "Future-Ready Cities",
+    "Impactful Partnerships",
+    "Long-Term Value"
   ];
 
   // Duplicate for seamless loop

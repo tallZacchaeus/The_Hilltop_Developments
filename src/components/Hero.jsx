@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useMotionValue, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import RevealText from './ui/RevealText';
 import MagneticButton from './ui/MagneticButton';
@@ -25,6 +25,7 @@ const slides = [
 
 export default function Hero({ isLoaded }) {
   const [activeSlide, setActiveSlide] = useState(0);
+  const reduceMotion = useReducedMotion();
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
@@ -58,9 +59,7 @@ export default function Hero({ isLoaded }) {
 
   return (
     <section className="min-h-screen grid grid-cols-1 lg:grid-cols-[56%_44%] items-center px-6 lg:px-12 pt-32 pb-16 gap-12 lg:gap-16 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'linear-gradient(135deg, rgba(255,253,246,0.05), transparent 32%), radial-gradient(circle at 84% 18%, rgba(212,183,110,0.18), transparent 34%)'
-      }} />
+      <div className="hero-gradient-mesh absolute -inset-16 pointer-events-none opacity-80" />
 
       <div className="relative z-10 pt-10 lg:pt-0">
         <motion.div 
@@ -74,11 +73,11 @@ export default function Hero({ isLoaded }) {
             animate={{ boxShadow: ['0 0 0 0 rgba(212,183,110,0.62)', '0 0 0 12px rgba(212,183,110,0)', '0 0 0 0 rgba(212,183,110,0)'] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
           />
-          Website in development
+          Building Sustainable Cities · Launching Soon
         </motion.div>
 
-        <h1 className="font-serif text-[clamp(2.8rem,6vw,5.2rem)] font-light leading-[1.02] tracking-[-0.025em] mb-7">
-          {isLoaded && <RevealText delay={0.6}>Hilltop Developments is *coming online.*</RevealText>}
+        <h1 className="font-display text-[clamp(2.7rem,5.8vw,5.4rem)] font-bold leading-[1.02] mb-7">
+          {isLoaded && <RevealText delay={0.6}>Building *sustainable* cities.</RevealText>}
         </h1>
 
         <motion.p 
@@ -87,7 +86,7 @@ export default function Hero({ isLoaded }) {
           animate={isLoaded ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 18, filter: 'blur(10px)' }}
           transition={{ duration: 0.85, delay: 1.05 }}
         >
-          This is the official online presence for Hilltop Developments while the full website is being prepared. For now, use this page to confirm the brand and contact the team directly.
+          A Realty Expression of the Marvel Ideations. Hilltop Developments is shaping resilient, future-ready cities across Nigeria through innovative, adaptive, and impactful real estate. Our full digital portfolio launches soon; our team is available now for investor briefings and private consultations.
         </motion.p>
 
         <div className="flex flex-wrap gap-4">
@@ -139,13 +138,17 @@ export default function Hero({ isLoaded }) {
                 x: slideX,
                 y: slideY
               }}
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
+              animate={{ opacity: 1, scale: reduceMotion ? 1 : [1.02, 1.08] }}
               exit={{ opacity: 0, scale: 1.04 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                opacity: { duration: reduceMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] },
+                scale: { duration: reduceMotion ? 0 : 16, ease: 'linear' }
+              }}
             />
           </AnimatePresence>
 
+          <div className="absolute inset-0 bg-navy opacity-25 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/55 via-navy/10 to-transparent" />
 
           <div className="absolute left-5 right-5 bottom-5 z-20 flex items-center justify-between gap-4">

@@ -1,9 +1,10 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef } from 'react';
 
 export default function RevealText({ children, className = '', delay = 0, stagger = 0.08 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const reduceMotion = useReducedMotion();
 
   // Handle strings only for simplicity. Split by space.
   const words = typeof children === 'string' ? children.split(' ') : [];
@@ -19,12 +20,12 @@ export default function RevealText({ children, className = '', delay = 0, stagge
           <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
             <motion.span
               className={`inline-block ${isItalic ? 'italic text-gold' : ''}`}
-              initial={{ y: '100%', opacity: 0 }}
-              animate={isInView ? { y: 0, opacity: 1 } : { y: '100%', opacity: 0 }}
+              initial={reduceMotion ? false : { y: '100%', opacity: 0 }}
+              animate={reduceMotion || isInView ? { y: 0, opacity: 1 } : { y: '100%', opacity: 0 }}
               transition={{
-                duration: 0.9,
+                duration: reduceMotion ? 0 : 0.9,
                 ease: [0.22, 1, 0.36, 1],
-                delay: delay + i * stagger
+                delay: reduceMotion ? 0 : delay + i * stagger
               }}
             >
               {displayWord}

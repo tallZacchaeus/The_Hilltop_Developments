@@ -9,7 +9,7 @@ export default function Footer() {
         <ScrollReveal delay={0} className="lg:col-span-1">
           <h4 className="font-serif text-[1.4rem] font-normal mb-4">Hilltop Developments</h4>
           <p className="text-cream/65 text-[0.95rem] leading-[1.6] font-light max-w-[340px]">
-            Official holding page for Hilltop Developments while the full website is being prepared.
+            A Realty Expression of the Marvel Ideations. Building sustainable cities across Nigeria.
           </p>
         </ScrollReveal>
 
@@ -37,16 +37,20 @@ export default function Footer() {
           <div className="flex flex-col gap-3">
             <a href="https://wa.me/2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2">WhatsApp</a>
             <p className="text-cream/60 text-[0.9rem] leading-[1.6] font-light max-w-[260px]">
-              Social channels will be added when the official handles are ready.
+              For investor briefings, private consultations, and launch enquiries.
             </p>
           </div>
         </ScrollReveal>
 
       </div>
 
-      <div className="max-w-[1400px] mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[0.82rem] text-cream/65">
+      <div className="mx-auto max-w-[1400px] pt-8 text-center">
+        <div className="mb-7 font-serif text-[1.25rem] italic text-gold">Building Sustainable Cities</div>
+      </div>
+
+      <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[0.82rem] text-cream/65">
         <div>© 2026 Hilltop Developments. All rights reserved.</div>
-        <div>Official site in development</div>
+        <div>A Realty Expression of the Marvel Ideations</div>
       </div>
     </footer>
   );

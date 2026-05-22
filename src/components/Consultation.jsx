@@ -1,21 +1,23 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import RevealText from './ui/RevealText';
 import MagneticButton from './ui/MagneticButton';
 import ScrollReveal from './ui/ScrollReveal';
+import SectionWipe from './ui/SectionWipe';
 import { ArrowRight } from 'lucide-react';
 
 export default function Consultation() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });
 
-  const mailSubject = encodeURIComponent("Enquiry — Hilltop Developments");
+  const mailSubject = encodeURIComponent("Investor Inquiry — Hilltop Developments");
   const mailBody = encodeURIComponent("Hello Hilltop team,\n\nI'd like to receive updates about Hilltop Developments.\n\nName:\nPhone:\nPreferred contact method:\n\nThank you.");
   const mailtoLink = `mailto:info@hilltopdevelopments.com?subject=${mailSubject}&body=${mailBody}`;
   const whatsappLink = "https://wa.me/2349139083794?text=" + encodeURIComponent("Hello Hilltop Developments, I'd like to receive updates and confirm the right contact for enquiries.");
 
   return (
     <section id="consult" className="relative py-28 px-6 lg:px-12 bg-navy-deep overflow-hidden" ref={ref}>
+      <SectionWipe className="absolute left-0 top-0 z-20" />
       
       {/* Giant H Background */}
       <motion.div 
@@ -44,13 +46,13 @@ export default function Consultation() {
           />
         </div>
 
-        <h2 className="font-serif text-[clamp(2.2rem,4.5vw,3.6rem)] font-light leading-[1.1] tracking-[-0.02em] mb-6">
-          {isInView && <RevealText>Reach Hilltop *directly.*</RevealText>}
+        <h2 className="font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-bold leading-[1.1] mb-6">
+          {isInView && <RevealText>Partner with us as we *build what's next.*</RevealText>}
         </h2>
 
         <ScrollReveal delay={0.4}>
           <p className="text-cream/65 text-[1.1rem] leading-[1.7] font-light max-w-[600px] mx-auto mb-12">
-            The full site is not live yet. For now, send an enquiry and the team will follow up with the right information when it is ready to share.
+            Whether you're evaluating an investment opportunity or exploring a future residence, our team is available for private briefings ahead of full launch. We respond personally within one business day.
           </p>
         </ScrollReveal>
 

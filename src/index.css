@@ -8,6 +8,31 @@
   }
 }
 
+@layer utilities {
+  .hero-gradient-mesh {
+    background:
+      radial-gradient(circle at 18% 24%, rgba(44, 79, 124, 0.34), transparent 32%),
+      radial-gradient(circle at 72% 16%, rgba(212, 183, 110, 0.16), transparent 28%),
+      radial-gradient(circle at 64% 80%, rgba(21, 42, 69, 0.8), transparent 38%);
+    animation: hilltop-mesh 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes hilltop-mesh {
+    0% {
+      transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
+    }
+    100% {
+      transform: translate3d(2%, 1%, 0) rotate(10deg) scale(1.08);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-gradient-mesh {
+      animation: none;
+    }
+  }
+}
+
 @media (min-width: 1024px) {
   body {
     cursor: none;

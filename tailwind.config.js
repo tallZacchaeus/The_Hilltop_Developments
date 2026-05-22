@@ -8,9 +8,10 @@ export default {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#14265F',
-          deep: '#10204F',
-          soft: '#253D76',
+          DEFAULT: '#1E3A5F',
+          deep: '#152A45',
+          light: '#2C4F7C',
+          soft: '#2C4F7C',
         },
         cream: {
           DEFAULT: '#FFFDF6',
@@ -23,6 +24,7 @@ export default {
         }
       },
       fontFamily: {
+        display: ['Sora', 'sans-serif'],
         serif: ['Fraunces', 'serif'],
         sans: ['"Inter Tight"', 'sans-serif'],
       },
