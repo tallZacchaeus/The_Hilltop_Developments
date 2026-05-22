@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-navy text-cream font-sans antialiased overflow-x-hidden selection:bg-gold/30 selection:text-cream;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
