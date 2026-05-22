@@ -27,15 +27,15 @@ export default function Footer() {
         <ScrollReveal delay={0.2}>
           <h5 className="text-[0.75rem] tracking-[0.15em] uppercase text-gold font-medium mb-5">Contact</h5>
           <div className="flex flex-col gap-2">
-            <a href="mailto:info@hilltopdevelopments.com" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors">info@hilltopdevelopments.com</a>
-            <a href="tel:+2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors">+234 (0) 913 908 3794</a>
+            <a href="mailto:info@hilltopdevelopments.com" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm w-fit">info@hilltopdevelopments.com</a>
+            <a href="tel:+2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm w-fit">+234 (0) 913 908 3794</a>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.3}>
           <h5 className="text-[0.75rem] tracking-[0.15em] uppercase text-gold font-medium mb-5">WhatsApp</h5>
           <div className="flex flex-col gap-3">
-            <a href="https://wa.me/2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2">WhatsApp</a>
+            <a href="https://wa.me/2349139083794" className="text-cream text-[0.95rem] font-light hover:text-gold transition-colors block w-max origin-left hover:rotate-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">WhatsApp</a>
             <p className="text-cream/60 text-[0.9rem] leading-[1.6] font-light max-w-[260px]">
               For investor briefings, private consultations, and launch enquiries.
             </p>

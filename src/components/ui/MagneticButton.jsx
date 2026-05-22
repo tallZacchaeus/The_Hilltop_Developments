@@ -32,7 +32,7 @@ export default function MagneticButton({ children, variant = 'primary', href, on
     y.set(0);
   };
 
-  const baseClasses = "relative inline-flex items-center justify-center gap-2.5 px-7 py-4 text-[0.85rem] tracking-[0.08em] uppercase transition-colors duration-300 font-medium whitespace-nowrap overflow-hidden";
+  const baseClasses = "relative inline-flex items-center justify-center gap-2.5 px-7 py-4 text-[0.85rem] tracking-[0.08em] uppercase transition-colors duration-300 font-medium whitespace-nowrap overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy";
   const variants = {
     primary: "bg-gold text-navy-deep hover:bg-gold-soft",
     ghost: "bg-transparent text-cream border border-cream/15 hover:border-gold hover:text-gold"

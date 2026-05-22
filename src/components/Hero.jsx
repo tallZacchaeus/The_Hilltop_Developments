@@ -35,12 +35,12 @@ export default function Hero({ isLoaded }) {
   const slideY = useTransform(mouseY, [0, 1], [12, -12]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer = setTimeout(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
     }, 5200);
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearTimeout(timer);
+  }, [activeSlide]);
 
   const handleMouseMove = (e) => {
     // Only tilt on non-touch devices
@@ -162,7 +162,7 @@ export default function Hero({ isLoaded }) {
                   type="button"
                   aria-label={`Show ${slide.label}`}
                   onClick={() => setActiveSlide(index)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${index === activeSlide ? 'w-8 bg-gold-soft' : 'w-3 bg-gold/35 hover:bg-gold/70'}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy ${index === activeSlide ? 'w-8 bg-gold-soft' : 'w-3 bg-gold/35 hover:bg-gold/70'}`}
                 />
               ))}
             </div>

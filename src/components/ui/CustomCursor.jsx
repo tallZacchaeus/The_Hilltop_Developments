@@ -111,7 +111,7 @@ export default function CustomCursor() {
   return (
     <>
       {showDesktopCursor && (
-        <div className="hidden lg:block">
+        <div className="pointer-events-none">
           <motion.div
             className="fixed top-0 left-0 w-1.5 h-1.5 bg-gold-soft pointer-events-none z-[9999]"
             animate={{ rotate: isHovering ? 45 : 0, scale: isHovering ? 1.4 : 1 }}
