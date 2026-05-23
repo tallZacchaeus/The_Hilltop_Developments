@@ -138,11 +138,17 @@ export default function Hero({ isLoaded }) {
               loading={activeSlide === 0 ? 'eager' : 'lazy'}
               decoding="async"
               fetchPriority={activeSlide === 0 ? 'high' : 'auto'}
-              onError={() => setActiveSlide(0)}
               style={{ x: slideX, y: slideY }}
               initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
               animate={{ opacity: 1, scale: reduceMotion ? 1 : [1.02, 1.08] }}
-              exit={{ opacity: 0, scale: 1.04 }}
+              exit={{
+                opacity: 0,
+                scale: 1.04,
+                transition: {
+                  opacity: { duration: reduceMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] },
+                  scale: { duration: reduceMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }
+                }
+              }}
               transition={{
                 opacity: { duration: reduceMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] },
                 scale: { duration: reduceMotion ? 0 : 16, ease: 'linear' }
