@@ -6,19 +6,19 @@ import { ArrowRight } from 'lucide-react';
 
 const slides = [
   {
-    src: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1400&q=80',
+    src: '/carousel/urban-residences.jpg',
     label: 'Urban Residences'
   },
   {
-    src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80',
+    src: '/carousel/commercial-landmarks.jpg',
     label: 'Commercial Landmarks'
   },
   {
-    src: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80',
+    src: '/carousel/private-living.jpg',
     label: 'Private Living'
   },
   {
-    src: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80',
+    src: '/carousel/architectural-detail.jpg',
     label: 'Architectural Detail'
   }
 ];
@@ -130,14 +130,16 @@ export default function Hero({ isLoaded }) {
           style={{ rotateX, rotateY, perspective: 1000 }}
         >
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.img
               key={slides[activeSlide].src}
-              className="absolute -inset-5 bg-cover bg-center brightness-[0.78] saturate-[0.9]"
-              style={{
-                backgroundImage: `url("${slides[activeSlide].src}")`,
-                x: slideX,
-                y: slideY
-              }}
+              src={slides[activeSlide].src}
+              alt=""
+              className="absolute -inset-5 h-[calc(100%+2.5rem)] w-[calc(100%+2.5rem)] object-cover object-center brightness-[0.78] saturate-[0.9]"
+              loading={activeSlide === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={activeSlide === 0 ? 'high' : 'auto'}
+              onError={() => setActiveSlide(0)}
+              style={{ x: slideX, y: slideY }}
               initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
               animate={{ opacity: 1, scale: reduceMotion ? 1 : [1.02, 1.08] }}
               exit={{ opacity: 0, scale: 1.04 }}
