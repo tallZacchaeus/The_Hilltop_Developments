@@ -26,7 +26,7 @@ npm run dev            # http://localhost:5173
 
 | Script | Does |
 |--------|------|
-| `npm run build` | Production build to `dist/`, with every page prerendered to its own HTML file |
+| `npm run build` | Production build to `dist/`, with every page prerendered to its own HTML file and a generated `sitemap.xml` |
 | `npm run preview` | Serves `dist/` like Vercel: same security headers, clean URLs, real 404s |
 | `npm test` | Runs the Vitest suite |
 | `npm run test:coverage` | Tests + coverage (fails below the 80 % threshold) |
@@ -42,7 +42,7 @@ Most content lives in `src/data/` — no layout changes needed:
 
 Images go in `public/images/` (keep them under ~400 KB, 1600 px wide).
 
-New developments are prerendered automatically. A new top-level page needs its route in `src/App.jsx`, its path in `PAGE_ROUTES` (`site.js`) and a `usePageMeta` call, or the build stops.
+New developments are prerendered and added to `sitemap.xml` automatically. A new top-level page needs its route in `src/App.jsx`, its path in `PAGE_ROUTES` (`site.js`) and a `usePageMeta` call, or the build stops.
 
 ## Deployment
 

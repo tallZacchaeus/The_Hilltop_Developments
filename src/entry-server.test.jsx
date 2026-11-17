@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { DEVELOPMENTS } from './data/developments';
 import { NOT_FOUND_PAGE, prerenderPages } from './prerender/routes';
-import { render, renderDocument } from './entry-server';
+import { SITEMAP_FILE, buildSitemap, render, renderDocument } from './entry-server';
 
 const TEMPLATE =
   '<html><head><!--app-head:start--><title>Default</title><!--app-head:end--></head>' +
@@ -52,5 +52,12 @@ describe('renderDocument', () => {
     expect(document).toContain('<meta property="og:url" content="https://www.thehilltopdevelopments.com/services" />');
     expect(document).toContain('Expertise That Moves Developments Forward.');
     expect(document).not.toContain('<title>Default</title>');
+  });
+});
+
+describe('sitemap exports (used by scripts/prerender.js)', () => {
+  it('gives the prerender script the sitemap and the file to write it to', () => {
+    expect(SITEMAP_FILE).toBe('sitemap.xml');
+    expect(buildSitemap()).toContain('<loc>https://www.thehilltopdevelopments.com/developments/splurge</loc>');
   });
 });

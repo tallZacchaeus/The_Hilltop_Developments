@@ -1,12 +1,23 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { buildPageMeta, canonicalPath, metaTagsFor } from './pageMeta';
+import { buildPageMeta, canonicalPath, canonicalUrl, metaTagsFor } from './pageMeta';
 
 describe('canonicalPath', () => {
   it('drops trailing slashes but keeps the root', () => {
     expect(canonicalPath('/about/')).toBe('/about');
     expect(canonicalPath('/developments/splurge//')).toBe('/developments/splurge');
     expect(canonicalPath('/')).toBe('/');
+  });
+});
+
+describe('canonicalUrl', () => {
+  it('prefixes the canonical path with the production origin', () => {
+    expect(canonicalUrl('/')).toBe('https://www.thehilltopdevelopments.com/');
+    expect(canonicalUrl('/developments/splurge/')).toBe('https://www.thehilltopdevelopments.com/developments/splurge');
+  });
+
+  it('matches the URL buildPageMeta puts in the canonical link', () => {
+    expect(canonicalUrl('/about/')).toBe(buildPageMeta({}, '/about/').url);
   });
 });
 

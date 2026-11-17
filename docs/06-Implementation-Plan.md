@@ -54,7 +54,7 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 - ⬜ Review the live site on a real phone and desktop
 - ⬜ Send a real enquiry by email and by WhatsApp from a phone
 - ⬜ Hilltop approves the copy notes in [01-PRD.md](01-PRD.md) §9
-- ⬜ Confirm the email domain is Hilltop's; set up Google Search Console
+- ⬜ Confirm the email domain is Hilltop's; set up Google Search Console and submit `/sitemap.xml` (Phase 5.2)
 
 ## Phase 5.1 — Prerendered pages 🟡 (17 Nov 2026)
 
@@ -71,6 +71,18 @@ Shared links showed the homepage title for every page, and unknown URLs returned
 | Local check with `npm run preview`: status codes, per-page titles, headers on 404s, `?type=` / `?category=`, client-side navigation, no console or CSP errors | ✅ |
 | Check the Vercel preview deployment: 404 status, `/about/` redirect, link preview of a development page | ⬜ |
 
+## Phase 5.2 — Sitemap and robots.txt 🟡 (17 Nov 2026)
+
+Both URLs used to return the 404 page; Search Console needs them. Built on top of Phase 5.1 (details in [02-TRD.md](02-TRD.md) §2a).
+
+| Task | Status |
+|------|--------|
+| `sitemap.xml` generated at build time from `prerenderPages()` (`src/prerender/sitemap.js`): canonical URLs, 404 left out, XML-escaped, stable order; new developments are listed automatically | ✅ |
+| Static `public/robots.txt`: allows all crawlers, names the sitemap | ✅ |
+| Tests: sitemap rendering, page list, `canonicalUrl`, `robots.txt` contents | ✅ 157 tests (~99 % statements / ~96 % branches) |
+| Local check with `npm run preview`: `/robots.txt` 200 `text/plain`, `/sitemap.xml` 200 XML with 16 URLs, unknown paths still 404 | ✅ |
+| Merge after Phase 5.1, then check both URLs on the live site | ⬜ |
+
 ## Phase 6 — Next (planned)
 
 | Item | Notes |
@@ -81,5 +93,4 @@ Shared links showed the homepage title for every page, and unknown URLs returned
 | CMS | For Insights (news, articles, careers) |
 | Image formats | Serve AVIF/WebP variants |
 | E2E tests | Playwright smoke run against the Vercel preview |
-| Sitemap and robots.txt | Generate `sitemap.xml` from `prerenderPages()` and add `robots.txt`; both currently return the 404 page. Needed before submitting to Search Console |
 | Per-page share images | Development pages still use the site-wide `og-hilltop.jpg`; a 1200×630 image per development would make WhatsApp previews more specific |
