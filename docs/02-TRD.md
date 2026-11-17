@@ -7,7 +7,7 @@
 | Layer | Choice | Notes |
 |-------|--------|-------|
 | UI library | React 18 | Function components and hooks only |
-| Build tool | Vite 5 | `npm run dev`; `npm run build` = client build + server build of `src/entry-server.jsx` + `scripts/prerender.js` → one static HTML file per route in `dist/` |
+| Build tool | Vite 5 | `npm run dev`; `npm run build` = client build + server build of `src/entry-server.jsx` + `scripts/prerender.js` → one static HTML file per route, plus `sitemap.xml`, in `dist/` |
 | Routing | React Router 7 (`react-router-dom`, library mode) | Routes in `src/App.jsx`; every page is prerendered at build time and hydrated in the browser (§2a, [03-App-Flow.md](03-App-Flow.md)) |
 | Styling | Tailwind CSS 3 | Design tokens in `tailwind.config.js`; a few utilities in `src/index.css` |
 | Motion | Framer Motion 11 | Scroll reveals and menu transitions; all respect `prefers-reduced-motion` |
@@ -28,7 +28,8 @@
 
 Link-preview crawlers (WhatsApp, LinkedIn, Facebook, X) don't run JavaScript, so each page's title, description and Open Graph tags must be in the HTML the server sends.
 
-- **Build:** `vite build` (client) → `vite build --ssr src/entry-server.jsx --outDir dist-ssr` → `node scripts/prerender.js`. The script renders every path from `prerenderPages()` (`src/prerender/routes.js`: `PAGE_ROUTES` plus one page per entry in `DEVELOPMENTS`, then `/404` → `404.html`) and deletes `dist-ssr/`.
+- **Build:** `vite build` (client) → `vite build --ssr src/entry-server.jsx --outDir dist-ssr` → `node scripts/prerender.js`. The script renders every path from `prerenderPages()` (`src/prerender/routes.js`: `PAGE_ROUTES` plus one page per entry in `DEVELOPMENTS`, then `/404` → `404.html`), writes `dist/sitemap.xml`, and deletes `dist-ssr/`.
+- **Sitemap and robots:** `buildSitemap()` (`src/prerender/sitemap.js`) lists every path from `prerenderPages()` except `/404`, in the same order, so new pages and developments are added automatically (16 URLs today: 9 pages + 7 developments). Each `<loc>` comes from `canonicalUrl()` in `src/lib/pageMeta.js`, the same function behind every page's canonical link, so the two can't disagree. Only `/404` is left out, by path, because it is the only `noindex` page today. A new page that calls `usePageMeta({ noIndex: true })` must also be excluded in `renderSitemap`. There is no `<lastmod>`: a build date would change on every deploy, and Google ignores dates it can't trust. `public/robots.txt` is static: it allows every crawler and names `https://www.thehilltopdevelopments.com/sitemap.xml`. A test checks that line against `SITE.url`.
 - **Metadata:** pages call `usePageMeta`; during prerendering it reports to `PageMetaSinkContext`, and `src/prerender/template.js` writes escaped tags between the `<!--app-head:start-->` / `<!--app-head:end-->` markers in `index.html`. Both sides build tags from `src/lib/pageMeta.js`. The build fails if a page renders without calling `usePageMeta`.
 - **Browser:** `src/main.jsx` hydrates when `#root` already has markup (production) and renders from scratch on the dev server. `src/Root.jsx` is the wrapper both entries share.
 - **Hydration rule:** the browser's first render must match the prerendered HTML exactly. The server sees only the path, so anything that depends on the query string, the clock or browser preferences waits for `useHydrated()` (`src/hooks/useHydrated.js`), which turns `true` right after hydration. Current uses: `ContactPage` (`?type=`), `DevelopmentsPage` (`?category=`), `Reveal`, `ImageHero`. The footer year uses `suppressHydrationWarning` (baked in at build time; it updates on the next deploy). `src/hydration.test.jsx` hydrates every page and fails on any mismatch.
@@ -67,7 +68,7 @@ All site-wide values (name, URLs, contact details, navigation, footer links) liv
 |------|-------------|
 | Performance | JS ≤ 150 KB gzipped for the initial load; LCP < 2.5 s and CLS < 0.1 on mobile 4G; images lazy-loaded below the fold with explicit `width`/`height`; hero image eager with `fetchpriority="high"` |
 | Accessibility | WCAG 2.1 AA: semantic landmarks, one `h1` per page, visible focus rings, keyboard-operable menus and accordion, form errors announced, colour contrast ≥ 4.5:1 for body text, reduced-motion support |
-| SEO | Each route's `<title>`, meta description, robots, canonical, Open Graph and Twitter tags are in its prerendered HTML (link previews work without JavaScript) and kept current on navigation by `usePageMeta`; unknown URLs return HTTP 404; Organization JSON-LD in `index.html`; 1200×630 JPG social image (site-wide) |
+| SEO | Each route's `<title>`, meta description, robots, canonical, Open Graph and Twitter tags are in its prerendered HTML (link previews work without JavaScript) and kept current on navigation by `usePageMeta`; unknown URLs return HTTP 404; `/sitemap.xml` generated at build time with the canonical URL of every page except the 404, and `/robots.txt` allowing all crawlers and naming the sitemap (§2a); Organization JSON-LD in `index.html`; 1200×630 JPG social image (site-wide) |
 | Browser support | Last two versions of Chrome, Safari (incl. iOS), Firefox, Edge |
 | Responsiveness | Layouts verified at 375, 768, 1024, 1440 px; no horizontal scroll |
 | Security | No user data stored client-side; external links use `rel="noopener noreferrer"`; form input validated before building links |
