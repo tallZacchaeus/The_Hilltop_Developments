@@ -6,6 +6,15 @@ export function canonicalPath(pathname) {
 }
 
 /**
+ * The absolute production URL of a page ("/about/" → "https://…/about"). The canonical link
+ * and the sitemap both use it, so search engines see one URL per page.
+ * @param {string} pathname
+ */
+export function canonicalUrl(pathname) {
+  return `${SITE.url}${canonicalPath(pathname)}`;
+}
+
+/**
  * Resolves a page's metadata. Shared by the browser (usePageMeta) and the prerender step,
  * so the HTML that link-preview crawlers read matches what the app sets at runtime.
  * @param {{ title?: string, description?: string, noIndex?: boolean }} input
@@ -16,7 +25,7 @@ export function buildPageMeta({ title, description, noIndex = false } = {}, path
   return Object.freeze({
     title: title ? `${title} | ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`,
     description: description ?? SITE.description,
-    url: `${SITE.url}${canonicalPath(pathname)}`,
+    url: canonicalUrl(pathname),
     robots: noIndex ? 'noindex' : 'index, follow',
   });
 }

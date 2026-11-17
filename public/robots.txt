@@ -1,0 +1,5 @@
+# Every page is open to crawlers. The sitemap is generated at build time by scripts/prerender.js.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.thehilltopdevelopments.com/sitemap.xml

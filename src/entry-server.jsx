@@ -6,6 +6,7 @@ import { PageMetaSinkContext } from './hooks/usePageMeta';
 import { injectPage, renderHeadTags } from './prerender/template';
 
 export { prerenderPages } from './prerender/routes';
+export { SITEMAP_FILE, buildSitemap } from './prerender/sitemap';
 
 /**
  * Renders one route to HTML, together with the metadata its page reported through usePageMeta.

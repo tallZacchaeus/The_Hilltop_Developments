@@ -65,7 +65,7 @@ export const FOOTER_GROUPS = Object.freeze([
   },
 ]);
 
-/** Every top-level route the app defines (used by tests and the sitemap in docs). */
+/** Every top-level route the app defines (used by the prerender step, the generated sitemap and tests). */
 export const PAGE_ROUTES = Object.freeze([
   '/',
   '/about',
