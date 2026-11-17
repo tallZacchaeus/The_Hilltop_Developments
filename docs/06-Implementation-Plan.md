@@ -46,11 +46,14 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 | Production build size | ✅ JS 120 KB gzipped (budget 150 KB), CSS 6 KB |
 | Independent code review | ✅ 0 critical / 0 high. Fixed all 8 medium (malformed-hash crash + error boundary, focus-ring and text contrast, dropdown Escape, scroll lock on rotate, same-page menu taps, stale enquiry topic, focus on navigation) and 5 low (heading skip, back/forward scroll, trailing-slash canonical, CRLF mailto, new-tab cue). Left as-is: `aria-controls` pointing at the unmounted mobile menu (harmless) |
 
-## Phase 5 — Launch ⬜
+## Phase 5 — Launch 🟡
 
-- ⬜ Commit on a branch, open PR, review the Vercel preview deployment
+- ✅ Commit on a branch and open [PR #1](https://github.com/tallZacchaeus/The_Hilltop_Developments/pull/1) (17 Nov 2026)
+- ✅ Merge to `main` (`addf303`) → production deploy on Vercel, state READY (17 Nov 2026)
+- ✅ Live-site check on `www.thehilltopdevelopments.com`: all routes return the new app shell, security headers present, apex redirects to `www`, fonts load, no console or CSP errors, canonical / `og:url` set per page. Merged `main` passes all 79 tests and builds to the same bundle hashes as the reviewed branch
+- ⬜ Review the live site on a real phone and desktop
+- ⬜ Send a real enquiry by email and by WhatsApp from a phone
 - ⬜ Hilltop approves the copy notes in [01-PRD.md](01-PRD.md) §9
-- ⬜ Merge to `main` → production deploy
 - ⬜ Confirm the email domain is Hilltop's; set up Google Search Console
 
 ## Phase 6 — Next (planned)
@@ -63,3 +66,4 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 | CMS | For Insights (news, articles, careers) |
 | Image formats | Serve AVIF/WebP variants |
 | E2E tests | Playwright smoke run against the Vercel preview |
+| True 404 status | The SPA rewrite returns HTTP 200 for unknown URLs; the 404 page is `noindex`, but Search Console may report "soft 404". Prerendering known routes would allow a real 404 |
