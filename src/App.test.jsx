@@ -1,0 +1,198 @@
+import { describe, expect, it } from 'vitest';
+import { screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { DEVELOPMENTS } from './data/developments';
+import { renderRoute } from './test/renderRoute';
+
+const PAGES = [
+  ['/', 'Building Sustainable Cities for Generations'],
+  ['/about', 'Who We Are'],
+  ['/services', 'Expertise That Moves Developments Forward.'],
+  ['/developments', 'Our Real Estate Developments'],
+  ['/insights', 'Insights and Updates'],
+  ['/contact', 'Get in Touch with Hilltop'],
+  ['/own-a-piece', 'Own a Piece of the Earth.'],
+  ['/privacy-policy', 'Privacy Policy'],
+  ['/terms', 'Terms & Conditions'],
+];
+
+describe('routes', () => {
+  it.each(PAGES)('%s renders exactly one h1: "%s"', (path, heading) => {
+    renderRoute(path);
+    expect(screen.getByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+  });
+
+  it.each(DEVELOPMENTS.map((item) => [item.slug, item.name]))('/developments/%s shows %s', (slug, name) => {
+    renderRoute(`/developments/${slug}`);
+    expect(screen.getByRole('heading', { level: 1, name })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /register interest/i })).toHaveAttribute(
+      'href',
+      `/contact?type=development&development=${slug}`,
+    );
+  });
+
+  it('shows the not-found page for unknown paths and marks it noindex', () => {
+    renderRoute('/no-such-page');
+    expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
+    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+  });
+
+  it('shows the not-found page for an unknown development slug', () => {
+    renderRoute('/developments/atlantis');
+    expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
+  });
+});
+
+describe('page metadata', () => {
+  it('sets the title, canonical URL, og:url and robots for each page', () => {
+    renderRoute('/about');
+
+    expect(document.title).toBe('About Us | Hilltop Developments');
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://www.thehilltopdevelopments.com/about',
+    );
+    expect(document.querySelector('meta[property="og:url"]')).toHaveAttribute(
+      'content',
+      'https://www.thehilltopdevelopments.com/about',
+    );
+    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+  });
+
+  it('uses the brand title on the homepage', () => {
+    renderRoute('/');
+    expect(document.title).toBe('Hilltop Developments — Building Sustainable Cities');
+  });
+
+  it('drops a trailing slash from the canonical URL', () => {
+    renderRoute('/about/');
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://www.thehilltopdevelopments.com/about',
+    );
+  });
+});
+
+describe('robustness', () => {
+  it('survives a malformed URL hash instead of blanking the page', async () => {
+    renderRoute('/about#%E0%A4%A');
+    // The hash is decoded on the next animation frame; let it run.
+    await new Promise((resolve) => window.requestAnimationFrame(resolve));
+    expect(screen.getByRole('heading', { level: 1, name: 'Who We Are' })).toBeInTheDocument();
+  });
+});
+
+describe('developments filter', () => {
+  const cardTitles = () => screen.getAllByRole('article').map((card) => within(card).getByRole('heading').textContent);
+
+  it('shows every development by default and narrows by category', async () => {
+    const user = userEvent.setup();
+    renderRoute('/developments');
+
+    expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
+    expect(screen.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true');
+
+    await user.click(screen.getByRole('button', { name: /^Land/ }));
+    expect(cardTitles()).toEqual(['Land Developments']);
+    expect(screen.getByRole('button', { name: /^Land/ })).toHaveAttribute('aria-pressed', 'true');
+
+    await user.click(screen.getByRole('button', { name: /^All/ }));
+    expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
+  });
+
+  it('reads the category from the URL', () => {
+    renderRoute('/developments?category=residential');
+    expect(cardTitles()).toHaveLength(5);
+  });
+
+  it('falls back to all developments for an unknown category', () => {
+    renderRoute('/developments?category=castles');
+    expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
+    expect(screen.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true');
+  });
+});
+
+describe('contact page', () => {
+  it('pre-selects the enquiry type from the link that brought the visitor', () => {
+    renderRoute('/contact?type=partnership');
+    expect(screen.getByLabelText('Enquiry about')).toHaveValue('partnership');
+  });
+
+  it('pre-selects the development for "register interest" links', () => {
+    renderRoute('/contact?type=development&development=splurge');
+    expect(screen.getByLabelText(/which development/i)).toHaveValue('splurge');
+  });
+
+  it('scrolls to the FAQ when the URL has #faqs', async () => {
+    renderRoute('/contact#faqs');
+    expect(screen.getByRole('heading', { level: 2, name: 'Frequently Asked Questions' })).toBeInTheDocument();
+    await waitFor(() => expect(Element.prototype.scrollIntoView).toHaveBeenCalled());
+  });
+});
+
+describe('navigation', () => {
+  it('moves between pages from the header and scrolls to the top', async () => {
+    const user = userEvent.setup();
+    renderRoute('/');
+
+    const mainNav = screen.getByRole('navigation', { name: 'Main' });
+    await user.click(within(mainNav).getByRole('link', { name: 'Services' }));
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Expertise That Moves Developments Forward.' }),
+    ).toBeInTheDocument();
+    expect(window.scrollTo).toHaveBeenCalled();
+    expect(document.activeElement).toBe(screen.getByRole('main'));
+  });
+
+  it('does not move focus on the first page load', () => {
+    renderRoute('/services');
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('closes the mobile menu when the current page is chosen again', async () => {
+    const user = userEvent.setup();
+    renderRoute('/about');
+
+    await user.click(screen.getByRole('button', { name: 'Open menu' }));
+    const mobileNav = screen.getByRole('navigation', { name: 'Mobile' });
+    await user.click(within(mobileNav).getByRole('link', { name: 'About' }));
+
+    await waitFor(() => expect(screen.queryByRole('navigation', { name: 'Mobile' })).not.toBeInTheDocument());
+  });
+
+  it('hides an open header dropdown on Escape', async () => {
+    const user = userEvent.setup();
+    renderRoute('/');
+    const mainNav = screen.getByRole('navigation', { name: 'Main' });
+    const aboutLink = within(mainNav).getByRole('link', { name: 'About' });
+    const dropdown = within(mainNav).getByRole('link', { name: 'Company Overview' }).closest('div');
+
+    aboutLink.focus();
+    await user.keyboard('{Escape}');
+
+    expect(dropdown.className).toContain('!invisible');
+    expect(aboutLink).toHaveFocus();
+  });
+
+  it('opens and closes the mobile menu, and closes it after navigating', async () => {
+    const user = userEvent.setup();
+    renderRoute('/');
+
+    await user.click(screen.getByRole('button', { name: 'Open menu' }));
+    expect(screen.getByRole('navigation', { name: 'Mobile' })).toBeInTheDocument();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('navigation', { name: 'Mobile' })).not.toBeInTheDocument());
+    expect(document.body.style.overflow).toBe('');
+
+    await user.click(screen.getByRole('button', { name: 'Open menu' }));
+    const mobileNav = screen.getByRole('navigation', { name: 'Mobile' });
+    await user.click(within(mobileNav).getByRole('link', { name: 'Own a Piece' }));
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Own a Piece of the Earth.' })).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole('navigation', { name: 'Mobile' })).not.toBeInTheDocument());
+  });
+});
