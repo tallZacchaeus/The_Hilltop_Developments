@@ -9,6 +9,10 @@ import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import EnquiryForm from '../components/sections/EnquiryForm';
 import FaqSection from '../components/sections/FaqSection';
+import { useHydrated } from '../hooks/useHydrated';
+
+/** Read-only stand-in for the query string while hydrating (the prerendered page has none). */
+const NO_PARAMS = new URLSearchParams();
 
 const CONTACT_ITEMS = [
   { icon: MapPin, label: 'Office address', lines: CONTACT.addressLines },
@@ -60,8 +64,11 @@ export default function ContactPage() {
       "Get in touch with Hilltop Developments about our developments, services or a partnership. We'd be happy to hear from you.",
   });
 
+  const hydrated = useHydrated();
   const [searchParams] = useSearchParams();
-  const initialValues = enquiryFromParams(searchParams);
+  // Match the prerendered page first, then apply ?type=… (the key change re-mounts the form with it).
+  const params = hydrated ? searchParams : NO_PARAMS;
+  const initialValues = enquiryFromParams(params);
 
   return (
     <>
@@ -86,7 +93,7 @@ export default function ContactPage() {
           </Reveal>
           <Reveal delay={0.1}>
             {/* key: a new ?type=… link resets the form to its pre-selected values */}
-            <EnquiryForm key={searchParams.toString()} initialValues={initialValues} />
+            <EnquiryForm key={params.toString()} initialValues={initialValues} />
           </Reveal>
         </div>
       </Panel>

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { useMountedAfterHydration } from '../../hooks/useHydrated';
 import Eyebrow from '../ui/Eyebrow';
 import Photo from '../ui/Photo';
 import { PANEL_INSET } from '../ui/Panel';
@@ -19,8 +20,11 @@ const SCRIM =
  */
 export default function ImageHero({ image, imageAlt, eyebrow, title, lead, actions, footnote }) {
   const reduceMotion = useReducedMotion();
+  // A prerendered hero is visible straight away (it is the page's largest paint); the entrance
+  // animation only plays when the hero mounts after a client-side navigation.
+  const animateEntrance = useMountedAfterHydration() && !reduceMotion;
   const enter = (delay) =>
-    reduceMotion
+    !animateEntrance
       ? {}
       : {
           initial: { opacity: 0, y: 18 },

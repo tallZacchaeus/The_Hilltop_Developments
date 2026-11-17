@@ -3,21 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--app-head:start-->
+    <!-- Page-specific tags. scripts/prerender.js replaces this whole block (comment included) with each
+         page's own title, description, robots, Open Graph tags and canonical link, and
+         src/hooks/usePageMeta.js keeps them current during client-side navigation. These defaults
+         only appear on the dev server. -->
     <title>Hilltop Developments — Building Sustainable Cities</title>
     <meta name="description" content="Hilltop Developments is a forward-thinking real estate development company creating innovative, future-ready spaces that shape how cities grow and evolve." />
+    <meta property="og:title" content="Hilltop Developments — Building Sustainable Cities" />
+    <meta property="og:description" content="Hilltop Developments is a forward-thinking real estate development company creating innovative, future-ready spaces that shape how cities grow and evolve." />
+    <meta name="twitter:title" content="Hilltop Developments — Building Sustainable Cities" />
+    <meta name="twitter:description" content="Hilltop Developments is a forward-thinking real estate development company creating innovative, future-ready spaces that shape how cities grow and evolve." />
+    <!--app-head:end-->
     <meta name="theme-color" content="#14265F" />
 
-    <!-- Canonical URL, og:url and per-page titles are set at runtime by src/hooks/usePageMeta.js -->
+    <!-- Site-wide sharing tags -->
     <meta property="og:site_name" content="Hilltop Developments" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Hilltop Developments — Building Sustainable Cities" />
-    <meta property="og:description" content="A Realty Expression of the Marvel Ideations. Building sustainable cities through strategic enterprise, innovative solutions and impactful partnerships." />
     <meta property="og:image" content="https://www.thehilltopdevelopments.com/images/og-hilltop.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hilltop Developments — Building Sustainable Cities" />
-    <meta name="twitter:description" content="A Realty Expression of the Marvel Ideations. Building sustainable cities through strategic enterprise, innovative solutions and impactful partnerships." />
     <meta name="twitter:image" content="https://www.thehilltopdevelopments.com/images/og-hilltop.jpg" />
 
     <link rel="icon" type="image/png" href="/Hilltop_Developments_2-removebg-preview-cropped.png" />

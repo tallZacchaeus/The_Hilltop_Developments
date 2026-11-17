@@ -26,8 +26,8 @@ npm run dev            # http://localhost:5173
 
 | Script | Does |
 |--------|------|
-| `npm run build` | Production build to `dist/` |
-| `npm run preview` | Serves `dist/` with the same security headers as Vercel |
+| `npm run build` | Production build to `dist/`, with every page prerendered to its own HTML file |
+| `npm run preview` | Serves `dist/` like Vercel: same security headers, clean URLs, real 404s |
 | `npm test` | Runs the Vitest suite |
 | `npm run test:coverage` | Tests + coverage (fails below the 80 % threshold) |
 
@@ -42,9 +42,11 @@ Most content lives in `src/data/` — no layout changes needed:
 
 Images go in `public/images/` (keep them under ~400 KB, 1600 px wide).
 
+New developments are prerendered automatically. A new top-level page needs its route in `src/App.jsx`, its path in `PAGE_ROUTES` (`site.js`) and a `usePageMeta` call, or the build stops.
+
 ## Deployment
 
-Vercel builds every push to `main` (framework preset: Vite). `vercel.json` handles SPA routing and security headers. Use a branch and the Vercel preview URL to review changes before merging.
+Vercel builds every push to `main` (framework preset: Vite, running `npm run build`). `vercel.json` serves the prerendered pages with clean URLs, returns real 404s and sets the security headers. Use a branch and the Vercel preview URL to review changes before merging.
 
 ## Not built yet
 

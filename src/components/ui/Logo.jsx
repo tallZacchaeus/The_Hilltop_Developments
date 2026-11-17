@@ -9,14 +9,15 @@ const strokes = [
   'M6 22 H14 V30 H26'
 ];
 
+// The same starting state on the server and in the browser keeps hydration consistent;
+// reduced motion only changes the duration (an instant draw).
+const PATH_MOTION = {
+  initial: { pathLength: 0, opacity: 0 },
+  animate: { pathLength: 1, opacity: 1 }
+};
+
 export default function Logo({ size = 32, showWordmark = false, className = '' }) {
   const reduceMotion = useReducedMotion();
-  const pathProps = reduceMotion
-    ? { initial: false, animate: { pathLength: 1, opacity: 1 } }
-    : {
-        initial: { pathLength: 0, opacity: 0 },
-        animate: { pathLength: 1, opacity: 1 }
-      };
 
   return (
     <span className={`inline-flex flex-col items-center text-current ${className}`}>
@@ -35,7 +36,7 @@ export default function Logo({ size = 32, showWordmark = false, className = '' }
             strokeWidth="1.5"
             strokeLinecap="square"
             strokeLinejoin="miter"
-            {...pathProps}
+            {...PATH_MOTION}
             transition={{
               duration: reduceMotion ? 0 : 1.2,
               delay: reduceMotion ? 0 : index * 0.1,

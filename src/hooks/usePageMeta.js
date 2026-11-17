@@ -1,6 +1,12 @@
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SITE } from '../data/site';
+import { buildPageMeta, metaTagsFor } from '../lib/pageMeta';
+
+/**
+ * Prerender only: entry-server.jsx provides a callback that receives each page's metadata,
+ * because effects (which update <head> in the browser) never run during server rendering.
+ */
+export const PageMetaSinkContext = createContext(null);
 
 function upsertMeta(attribute, key, content) {
   const existing = document.head.querySelector(`meta[${attribute}="${key}"]`);
@@ -23,29 +29,25 @@ function upsertCanonical(href) {
 }
 
 /**
- * Sets the document title, description, canonical URL and Open Graph tags for the current route.
+ * Sets the document title, description, canonical URL, robots and Open Graph tags for the current route.
  * Pages call this once at the top: `usePageMeta({ title: 'About', description: '…' })`.
- * `noIndex` keeps soft-404 pages out of search results (the SPA always answers 200).
- * @param {{ title?: string, description?: string, noIndex?: boolean }} meta
+ * Prerendered HTML already carries these tags; this keeps them current on client-side navigation.
+ * `noIndex` keeps pages such as the 404 out of search results.
+ * @param {{ title?: string, description?: string, noIndex?: boolean }} input
  */
 export default function usePageMeta({ title, description, noIndex = false } = {}) {
   const { pathname } = useLocation();
+  const meta = buildPageMeta({ title, description, noIndex }, pathname);
 
+  // During prerendering, hand the metadata to the renderer (no-op in the browser).
+  const reportMeta = useContext(PageMetaSinkContext);
+  reportMeta?.(meta);
+
+  const { title: fullTitle, description: summary, url, robots } = meta;
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
-    const summary = description ?? SITE.description;
-    // "/about/" and "/about" are the same page; canonicalise without the trailing slash.
-    const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-    const url = `${SITE.url}${path}`;
-
+    const current = { title: fullTitle, description: summary, url, robots };
     document.title = fullTitle;
-    upsertMeta('name', 'robots', noIndex ? 'noindex' : 'index, follow');
-    upsertMeta('name', 'description', summary);
-    upsertMeta('property', 'og:title', fullTitle);
-    upsertMeta('property', 'og:description', summary);
-    upsertMeta('property', 'og:url', url);
-    upsertMeta('name', 'twitter:title', fullTitle);
-    upsertMeta('name', 'twitter:description', summary);
+    metaTagsFor(current).forEach(([attribute, key, content]) => upsertMeta(attribute, key, content));
     upsertCanonical(url);
-  }, [title, description, noIndex, pathname]);
+  }, [fullTitle, summary, url, robots]);
 }

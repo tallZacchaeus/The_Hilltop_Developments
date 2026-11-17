@@ -1,7 +1,7 @@
 # Dependencies (reinstalled by `npm install`; Vercel installs its own)
 node_modules/
 
-# Build output (Vercel runs `vite build` itself)
+# Build output (Vercel runs `npm run build`, which also prerenders every page; dist-ssr/ is temporary)
 dist/
 dist-ssr/
 
