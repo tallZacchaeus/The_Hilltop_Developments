@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '../../data/site';
+import { canonicalPath } from '../../lib/pageMeta';
+import { isKnownPath } from '../../prerender/routes';
 import Button from '../ui/Button';
 import Wordmark from './Wordmark';
 import MobileMenu from './MobileMenu';
@@ -21,10 +23,27 @@ function useHasScrolled(threshold) {
   return hasScrolled;
 }
 
-const navLinkClass = ({ isActive }) =>
+const navLinkClass = (isCurrent) =>
   `focus-ring inline-flex items-center gap-1 rounded-md px-3 py-2 font-display text-[15px] transition-colors hover:text-navy ${
-    isActive ? 'text-navy' : 'text-navy/70'
+    isCurrent ? 'text-navy' : 'text-navy/70'
   }`;
+
+/**
+ * Header link that marks its section as current. On the 404 page no section is current: that page
+ * is served at any unknown URL (even /developments/whatever), and this keeps it identical to the
+ * prerendered 404.html so hydration matches.
+ * @param {{ to: string, children: React.ReactNode }} props
+ */
+function SectionLink({ to, children }) {
+  const path = canonicalPath(useLocation().pathname);
+  const isCurrent = isKnownPath(path) && (path === to || path.startsWith(`${to}/`));
+
+  return (
+    <Link to={to} aria-current={isCurrent ? 'page' : undefined} className={navLinkClass(isCurrent)}>
+      {children}
+    </Link>
+  );
+}
 
 function DesktopNavItem({ item }) {
   // Escape hides an open dropdown (WCAG 1.4.13) until the pointer or focus leaves the item.
@@ -33,9 +52,7 @@ function DesktopNavItem({ item }) {
   if (!item.children) {
     return (
       <li>
-        <NavLink to={item.to} className={navLinkClass}>
-          {item.label}
-        </NavLink>
+        <SectionLink to={item.to}>{item.label}</SectionLink>
       </li>
     );
   }
@@ -59,13 +76,13 @@ function DesktopNavItem({ item }) {
       onBlur={handleBlur}
       onMouseLeave={() => setIsDismissed(false)}
     >
-      <NavLink to={item.to} className={navLinkClass}>
+      <SectionLink to={item.to}>
         {item.label}
         <ChevronDown
           aria-hidden
           className="h-3.5 w-3.5 transition-transform duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
         />
-      </NavLink>
+      </SectionLink>
       <div
         className={`invisible absolute left-1/2 top-full z-10 w-60 -translate-x-1/2 pt-3 opacity-0 transition duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 ${dismissed}`}
       >

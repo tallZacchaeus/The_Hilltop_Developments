@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { DEVELOPMENTS, DEVELOPMENT_TYPES, filterDevelopments } from '../data/developments';
 import usePageMeta from '../hooks/usePageMeta';
+import { useHydrated } from '../hooks/useHydrated';
 import Button from '../components/ui/Button';
 import CtaPanel from '../components/sections/CtaPanel';
 import DevelopmentCard from '../components/sections/DevelopmentCard';
@@ -49,8 +50,10 @@ export default function DevelopmentsPage() {
       'Explore Hilltop residential, commercial and land developments, including Crib, Goshen, Splurge, The Terrace and The Yard by Hilltop.',
   });
 
+  const hydrated = useHydrated();
   const [searchParams, setSearchParams] = useSearchParams();
-  const requested = searchParams.get('category') ?? ALL;
+  // Match the prerendered page (all developments) first, then apply ?category= once hydrated.
+  const requested = (hydrated ? searchParams.get('category') : null) ?? ALL;
   const activeId = FILTERS.some((filter) => filter.id === requested) ? requested : ALL;
   const developments = filterDevelopments(activeId);
 

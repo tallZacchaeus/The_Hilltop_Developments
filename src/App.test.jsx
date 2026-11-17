@@ -1,8 +1,27 @@
 import { describe, expect, it } from 'vitest';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createRoutesFromChildren } from 'react-router-dom';
+import App from './App';
 import { DEVELOPMENTS } from './data/developments';
+import { PAGE_ROUTES } from './data/site';
 import { renderRoute } from './test/renderRoute';
+
+/** Static (parameter-free) paths declared in a route table: these are the pages that must be prerendered. */
+function staticPaths(routes, base = '') {
+  return routes.flatMap((route) => {
+    const path = route.index ? base || '/' : route.path ? `${base}/${route.path}` : base;
+    const own = (route.index || route.path) && !/[:*]/.test(path) ? [path] : [];
+    return [...own, ...staticPaths(route.children ?? [], path)];
+  });
+}
+
+describe('route table', () => {
+  it('lists every static route in PAGE_ROUTES, so each one is prerendered', () => {
+    const routes = createRoutesFromChildren(App().props.children);
+    expect([...staticPaths(routes)].sort()).toEqual([...PAGE_ROUTES].sort());
+  });
+});
 
 const PAGES = [
   ['/', 'Building Sustainable Cities for Generations'],
@@ -144,6 +163,21 @@ describe('navigation', () => {
     ).toBeInTheDocument();
     expect(window.scrollTo).toHaveBeenCalled();
     expect(document.activeElement).toBe(screen.getByRole('main'));
+  });
+
+  it('marks the current section in the header, but no section on the 404 page', () => {
+    const currentInMainNav = () =>
+      within(screen.getByRole('navigation', { name: 'Main' }))
+        .queryAllByRole('link')
+        .filter((link) => link.getAttribute('aria-current') === 'page')
+        .map((link) => link.textContent);
+
+    const { unmount } = renderRoute('/developments/splurge');
+    expect(currentInMainNav()).toEqual(['Developments']);
+    unmount();
+
+    renderRoute('/developments/no-such-development');
+    expect(currentInMainNav()).toEqual([]);
   });
 
   it('does not move focus on the first page load', () => {

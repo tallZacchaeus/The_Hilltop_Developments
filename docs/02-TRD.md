@@ -7,8 +7,8 @@
 | Layer | Choice | Notes |
 |-------|--------|-------|
 | UI library | React 18 | Function components and hooks only |
-| Build tool | Vite 5 | `npm run dev`, `npm run build` → `dist/` |
-| Routing | React Router 7 (`react-router-dom`, library mode) | Client-side routes, see [03-App-Flow.md](03-App-Flow.md) |
+| Build tool | Vite 5 | `npm run dev`; `npm run build` = client build + server build of `src/entry-server.jsx` + `scripts/prerender.js` → one static HTML file per route in `dist/` |
+| Routing | React Router 7 (`react-router-dom`, library mode) | Routes in `src/App.jsx`; every page is prerendered at build time and hydrated in the browser (§2a, [03-App-Flow.md](03-App-Flow.md)) |
 | Styling | Tailwind CSS 3 | Design tokens in `tailwind.config.js`; a few utilities in `src/index.css` |
 | Motion | Framer Motion 11 | Scroll reveals and menu transitions; all respect `prefers-reduced-motion` |
 | Icons | lucide-react | Tree-shaken per icon |
@@ -17,12 +17,28 @@
 
 ## 2. Hosting and deployment
 
-- **Host:** Vercel project `the-hilltop-developments`, framework preset **Vite** (Vercel runs `npm install` and `vite build` itself).
+- **Host:** Vercel project `the-hilltop-developments`, framework preset **Vite**. `vercel.json` pins `buildCommand: "npm run build"` (which includes prerendering) and `outputDirectory: "dist"`, so a dashboard override can't skip the prerender step and leave every inner page returning 404.
 - **Domains:** `www.thehilltopdevelopments.com` (primary); `thehilltopdevelopments.com` redirects to `www`.
-- **SPA routing:** `vercel.json` rewrites every path to `/index.html` so deep links such as `/developments/goshen` load the app.
-- **Security headers:** `vercel.json` also sets CSP, HSTS, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. `vite.config.js` reads the same headers into `vite preview`, so `npm run build && npm run preview` reproduces production. Any new third-party script, font or image host must be added to the CSP.
+- **Static pages:** `vercel.json` sets `cleanUrls: true` (serves `about.html` at `/about`, `developments/splurge.html` at `/developments/splurge`) and `trailingSlash: false` (`/about/` → 308 → `/about`). There is no SPA rewrite: unknown paths get `404.html` with a real 404 status.
+- **Security headers:** `vercel.json` also sets CSP, HSTS, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. `vite.config.js` reads the same headers into `vite preview` and serves `404.html` for unknown paths, so `npm run build && npm run preview` reproduces production. Any new third-party script, font or image host must be added to the CSP.
 - **Deploy trigger:** every push to `main` deploys to production. Use a branch + preview deployment for review.
 - **Repository hygiene:** `node_modules/` and `dist/` are git-ignored (see `.gitignore`).
+
+## 2a. Prerendering and hydration
+
+Link-preview crawlers (WhatsApp, LinkedIn, Facebook, X) don't run JavaScript, so each page's title, description and Open Graph tags must be in the HTML the server sends.
+
+- **Build:** `vite build` (client) → `vite build --ssr src/entry-server.jsx --outDir dist-ssr` → `node scripts/prerender.js`. The script renders every path from `prerenderPages()` (`src/prerender/routes.js`: `PAGE_ROUTES` plus one page per entry in `DEVELOPMENTS`, then `/404` → `404.html`) and deletes `dist-ssr/`.
+- **Metadata:** pages call `usePageMeta`; during prerendering it reports to `PageMetaSinkContext`, and `src/prerender/template.js` writes escaped tags between the `<!--app-head:start-->` / `<!--app-head:end-->` markers in `index.html`. Both sides build tags from `src/lib/pageMeta.js`. The build fails if a page renders without calling `usePageMeta`.
+- **Browser:** `src/main.jsx` hydrates when `#root` already has markup (production) and renders from scratch on the dev server. `src/Root.jsx` is the wrapper both entries share.
+- **Hydration rule:** the browser's first render must match the prerendered HTML exactly. The server sees only the path, so anything that depends on the query string, the clock or browser preferences waits for `useHydrated()` (`src/hooks/useHydrated.js`), which turns `true` right after hydration. Current uses: `ContactPage` (`?type=`), `DevelopmentsPage` (`?category=`), `Reveal`, `ImageHero`. The footer year uses `suppressHydrationWarning` (baked in at build time; it updates on the next deploy). `src/hydration.test.jsx` hydrates every page and fails on any mismatch.
+- **Motion:** prerendered content arrives visible. After hydration, `Reveal` hides only content still below the fold and fades it up on scroll; the image hero's entrance plays only after client-side navigation; the logo still draws in after hydration.
+- **CSP:** no inline scripts are added, so `script-src 'self'` is unchanged.
+- **Adding pages:** a guard test fails if a static route in `src/App.jsx` is missing from `PAGE_ROUTES`, and the build fails unless each page calls `usePageMeta` exactly once. The header marks a section as current only on known pages, so the 404 page looks the same at any URL.
+- **Known trade-offs:**
+  - The logo's draw-in animation starts from invisible, so the monogram appears once JavaScript runs. The wordmark text is visible straight away.
+  - A deep link such as `/developments?category=land` or `/contact?type=partnership` briefly shows the unfiltered page or the empty form, then applies the query once hydrated. Anything typed into that pre-filled form before hydration is reset.
+  - URLs are case-sensitive now. `/About` returns 404, whereas React Router used to match it.
 
 ## 3. Integrations
 
@@ -51,7 +67,7 @@ All site-wide values (name, URLs, contact details, navigation, footer links) liv
 |------|-------------|
 | Performance | JS ≤ 150 KB gzipped for the initial load; LCP < 2.5 s and CLS < 0.1 on mobile 4G; images lazy-loaded below the fold with explicit `width`/`height`; hero image eager with `fetchpriority="high"` |
 | Accessibility | WCAG 2.1 AA: semantic landmarks, one `h1` per page, visible focus rings, keyboard-operable menus and accordion, form errors announced, colour contrast ≥ 4.5:1 for body text, reduced-motion support |
-| SEO | Per-route `<title>`, meta description, canonical and `og:url` set by `usePageMeta`; Organization JSON-LD in `index.html`; 1200×630 JPG social image |
+| SEO | Each route's `<title>`, meta description, robots, canonical, Open Graph and Twitter tags are in its prerendered HTML (link previews work without JavaScript) and kept current on navigation by `usePageMeta`; unknown URLs return HTTP 404; Organization JSON-LD in `index.html`; 1200×630 JPG social image (site-wide) |
 | Browser support | Last two versions of Chrome, Safari (incl. iOS), Firefox, Edge |
 | Responsiveness | Layouts verified at 375, 768, 1024, 1440 px; no horizontal scroll |
 | Security | No user data stored client-side; external links use `rel="noopener noreferrer"`; form input validated before building links |

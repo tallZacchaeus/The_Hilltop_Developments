@@ -73,7 +73,8 @@ export default function Footer() {
 
       <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-sm text-navy/70 sm:flex-row sm:justify-between">
         <p>
-          © {year} {SITE.name}. All rights reserved.
+          {/* The year is baked in at build time; suppress the one-off mismatch if a visit crosses New Year before the next deploy. */}
+          © <span suppressHydrationWarning>{year}</span> {SITE.name}. All rights reserved.
         </p>
         <p>{SITE.parent}</p>
       </div>

@@ -56,6 +56,21 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 - ⬜ Hilltop approves the copy notes in [01-PRD.md](01-PRD.md) §9
 - ⬜ Confirm the email domain is Hilltop's; set up Google Search Console
 
+## Phase 5.1 — Prerendered pages 🟡 (17 Nov 2026)
+
+Shared links showed the homepage title for every page, and unknown URLs returned HTTP 200. Every route is now static HTML with its own metadata, hydrated in the browser (details in [02-TRD.md](02-TRD.md) §2a).
+
+| Task | Status |
+|------|--------|
+| Build-time prerender: `src/entry-server.jsx` + `scripts/prerender.js` → 17 HTML files including `404.html` | ✅ |
+| Shared page metadata (`src/lib/pageMeta.js`) behind both `usePageMeta` and the prerendered head tags | ✅ |
+| Hydration-safe query strings, reveals, image hero and footer year (`useHydrated`) | ✅ |
+| `vercel.json`: `cleanUrls`, `trailingSlash: false`, SPA rewrite removed → real 404s; `vite preview` matches | ✅ |
+| Tests: prerender output, route list (and a guard that it matches `App.jsx`), head-tag escaping, hydration of every page and of 404s under real sections, `Reveal` behaviour | ✅ 145 tests (~99 % statements / ~96 % branches) |
+| Independent code review | ✅ 0 critical / 0 high. Fixed 4 medium (build command pinned in `vercel.json`, route-table drift test, header nav state on 404s under real sections, exactly one `usePageMeta` per page) and 3 low (template comment no longer shipped, path guard in the preview 404 plugin, `dist-ssr/` removed on failure). Kept by design: see the trade-offs in [02-TRD.md](02-TRD.md) §2a |
+| Local check with `npm run preview`: status codes, per-page titles, headers on 404s, `?type=` / `?category=`, client-side navigation, no console or CSP errors | ✅ |
+| Check the Vercel preview deployment: 404 status, `/about/` redirect, link preview of a development page | ⬜ |
+
 ## Phase 6 — Next (planned)
 
 | Item | Notes |
@@ -66,4 +81,5 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 | CMS | For Insights (news, articles, careers) |
 | Image formats | Serve AVIF/WebP variants |
 | E2E tests | Playwright smoke run against the Vercel preview |
-| True 404 status | The SPA rewrite returns HTTP 200 for unknown URLs; the 404 page is `noindex`, but Search Console may report "soft 404". Prerendering known routes would allow a real 404 |
+| Sitemap and robots.txt | Generate `sitemap.xml` from `prerenderPages()` and add `robots.txt`; both currently return the 404 page. Needed before submitting to Search Console |
+| Per-page share images | Development pages still use the site-wide `og-hilltop.jpg`; a 1200×630 image per development would make WhatsApp previews more specific |

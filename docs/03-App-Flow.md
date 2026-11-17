@@ -19,7 +19,7 @@ graph TD
   Footer --> Terms["/terms"]
 ```
 
-Unknown paths and unknown development slugs render the 404 page.
+Unknown paths and unknown development slugs render the 404 page. In production every known route is a prerendered HTML file, and anything else is served `404.html` with an HTTP 404 status (see [02-TRD.md](02-TRD.md) §2a). Query-string state (`/contact?type=…`, `/developments?category=…`) is applied right after the page hydrates. Paths are case-sensitive (`/About` is a 404). On the 404 page no header section is marked as current.
 
 ## 2. Navigation
 

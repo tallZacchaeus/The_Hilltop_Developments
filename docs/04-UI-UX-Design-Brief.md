@@ -75,7 +75,8 @@ Panels use the `.panel-sky` utility: layered white radial "clouds" over a `sky-2
 
 ## 6. Motion
 
-- Reveal: opacity 0 → 1, y 24 → 0, 0.6 s, `cubic-bezier(0.22, 1, 0.36, 1)`, once per element, 0.06 s stagger in grids.
+- Reveal: opacity 0 → 1, y 24 → 0, 0.6 s, `cubic-bezier(0.22, 1, 0.36, 1)`, once per element, 0.06 s stagger in grids. Pages arrive prerendered and fully visible; after hydration only content still below the fold hides and fades up on scroll, so nothing on screen flickers. After client-side navigation every reveal plays.
+- Image hero: the staggered entrance plays only after client-side navigation; on a fresh load the prerendered hero is visible immediately (it is the page's largest paint).
 - Hover: cards lift 2 px and images scale 1.03 over 0.5 s.
 - Menus: 0.2 s fade + 8 px slide.
 - `prefers-reduced-motion: reduce` disables transforms and keeps only instant state changes.
