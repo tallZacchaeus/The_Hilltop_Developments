@@ -51,12 +51,12 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 - ✅ Commit on a branch and open [PR #1](https://github.com/tallZacchaeus/The_Hilltop_Developments/pull/1) (17 Nov 2026)
 - ✅ Merge to `main` (`addf303`) → production deploy on Vercel, state READY (17 Nov 2026)
 - ✅ Live-site check on `www.thehilltopdevelopments.com`: all routes return the new app shell, security headers present, apex redirects to `www`, fonts load, no console or CSP errors, canonical / `og:url` set per page. Merged `main` passes all 79 tests and builds to the same bundle hashes as the reviewed branch
-- ⬜ Review the live site on a real phone and desktop
+- ⬜ Review the live site on a real phone and desktop, including the card WhatsApp shows when a development page link is shared
 - ⬜ Send a real enquiry by email and by WhatsApp from a phone
 - ⬜ Hilltop approves the copy notes in [01-PRD.md](01-PRD.md) §9
-- ⬜ Confirm the email domain is Hilltop's; set up Google Search Console and submit `/sitemap.xml` (Phase 5.2)
+- ⬜ Confirm the email domain is Hilltop's; set up Google Search Console and submit `https://www.thehilltopdevelopments.com/sitemap.xml` (live since 17 Nov 2026, Phase 5.2)
 
-## Phase 5.1 — Prerendered pages 🟡 (17 Nov 2026)
+## Phase 5.1 — Prerendered pages ✅ (17 Nov 2026)
 
 Shared links showed the homepage title for every page, and unknown URLs returned HTTP 200. Every route is now static HTML with its own metadata, hydrated in the browser (details in [02-TRD.md](02-TRD.md) §2a).
 
@@ -69,9 +69,9 @@ Shared links showed the homepage title for every page, and unknown URLs returned
 | Tests: prerender output, route list (and a guard that it matches `App.jsx`), head-tag escaping, hydration of every page and of 404s under real sections, `Reveal` behaviour | ✅ 145 tests (~99 % statements / ~96 % branches) |
 | Independent code review | ✅ 0 critical / 0 high. Fixed 4 medium (build command pinned in `vercel.json`, route-table drift test, header nav state on 404s under real sections, exactly one `usePageMeta` per page) and 3 low (template comment no longer shipped, path guard in the preview 404 plugin, `dist-ssr/` removed on failure). Kept by design: see the trade-offs in [02-TRD.md](02-TRD.md) §2a |
 | Local check with `npm run preview`: status codes, per-page titles, headers on 404s, `?type=` / `?category=`, client-side navigation, no console or CSP errors | ✅ |
-| Check the Vercel preview deployment: 404 status, `/about/` redirect, link preview of a development page | ⬜ |
+| Merged as [PR #3](https://github.com/tallZacchaeus/The_Hilltop_Developments/pull/3) (`92e924f`). Live check: unknown paths return 404; `/about/` → 308 → `/about`; each development page has its own `<title>` and `og:*` tags in the HTML, so link previews don't need JavaScript; no `x-robots-tag` header | ✅ |
 
-## Phase 5.2 — Sitemap and robots.txt 🟡 (17 Nov 2026)
+## Phase 5.2 — Sitemap and robots.txt ✅ (17 Nov 2026)
 
 Both URLs used to return the 404 page; Search Console needs them. Built on top of Phase 5.1 (details in [02-TRD.md](02-TRD.md) §2a).
 
@@ -81,7 +81,7 @@ Both URLs used to return the 404 page; Search Console needs them. Built on top o
 | Static `public/robots.txt`: allows all crawlers, names the sitemap | ✅ |
 | Tests: sitemap rendering, page list, `canonicalUrl`, `robots.txt` contents | ✅ 157 tests (~99 % statements / ~96 % branches) |
 | Local check with `npm run preview`: `/robots.txt` 200 `text/plain`, `/sitemap.xml` 200 XML with 16 URLs, unknown paths still 404 | ✅ |
-| Merge after Phase 5.1, then check both URLs on the live site | ⬜ |
+| Merged as [PR #5](https://github.com/tallZacchaeus/The_Hilltop_Developments/pull/5) (`160898f`). It replaced PR #4, which was stacked on PR #3 and merged into `feat/prerender-pages` after #3 had already landed, so it never reached `main`. Live check: `/robots.txt` returns 200 `text/plain`; `/sitemap.xml` returns 200 `application/xml` with 16 URLs, each returning 200 without a redirect; unknown paths still return 404 | ✅ |
 
 ## Phase 6 — Next (planned)
 
