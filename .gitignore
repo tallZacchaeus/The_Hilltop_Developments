@@ -1,0 +1,29 @@
+# Dependencies (reinstalled by `npm install`; Vercel installs its own)
+node_modules/
+
+# Build output (Vercel runs `vite build` itself)
+dist/
+dist-ssr/
+
+# Local env and Vercel CLI state
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude Code session internals (launch.json is kept)
+.claude/.cc-writes/
+
+# Test coverage output
+coverage/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

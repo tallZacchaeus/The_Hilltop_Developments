@@ -1,42 +1,51 @@
 # Hilltop Developments
 
-Pre-launch holding page for Hilltop Developments, built with React, Vite, Tailwind CSS, and Framer Motion.
+Marketing website for Hilltop Developments — *Building Sustainable Cities. A Realty Expression of the Marvel Ideations.*
 
-## Brand Reference
+Live: https://www.thehilltopdevelopments.com · Built with React 18, Vite 5, Tailwind CSS 3, Framer Motion and React Router. Design follows the [Architecteo](https://architecteo.framer.website/) template, adapted to Hilltop's royal navy.
 
-Primary brand source: `Africa Missions-Tirta Ayu Spa - Redemption City - Variant 1.pdf`.
+## Documentation
 
-Key facts from the brand reference:
+| Doc | What's in it |
+|-----|--------------|
+| [docs/01-PRD.md](docs/01-PRD.md) | Goals, users, features, content still needed, copy notes |
+| [docs/02-TRD.md](docs/02-TRD.md) | Stack, hosting, headers, constraints, image credits |
+| [docs/03-App-Flow.md](docs/03-App-Flow.md) | Sitemap, navigation, page sections, enquiry flows |
+| [docs/04-UI-UX-Design-Brief.md](docs/04-UI-UX-Design-Brief.md) | Colours, type, components, layout, motion, accessibility |
+| [docs/05-Backend-Schema.md](docs/05-Backend-Schema.md) | Content models in `src/data/`, enquiry payload, planned API |
+| [docs/06-Implementation-Plan.md](docs/06-Implementation-Plan.md) | Phases and current status |
 
-- Brand name: Hilltop Developments
-- Tagline: Building Sustainable Cities
-- Parent positioning: A Realty Expression of the Marvel Ideations
-- Vision: To build sustainable cities through strategic enterprise, innovative solutions, and impactful partnerships.
-- Mission: To drive sustainable urban development by fostering purposeful enterprise, building strategic partnerships, and delivering solutions that create lasting value for communities globally.
+Brand source: `Africa Missions-Tirta Ayu Spa - Redemption City - Variant 1.pdf`. Earlier audit: [AUDIT_REPORT.md](AUDIT_REPORT.md).
 
-The site uses the deck's deep navy field, white H-monogram language, gold accent treatments, architectural imagery, and overlapping navy content blocks.
+## Local setup
 
-## Local Setup
+```bash
+npm install
+npm run dev            # http://localhost:5173
+```
 
-1. Make sure you have Node.js installed.
-2. Run `npm install` to install dependencies.
-3. Run `npm run dev` to start the development server.
+| Script | Does |
+|--------|------|
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Serves `dist/` with the same security headers as Vercel |
+| `npm test` | Runs the Vitest suite |
+| `npm run test:coverage` | Tests + coverage (fails below the 80 % threshold) |
 
-## Sections
+## Editing content
 
-- Hero: brand tagline, parent positioning, and architectural carousel.
-- View From The Top: vision and mission blocks over blue-tinted architecture.
-- Our Approach: sustainable, strategic, and transformative development pillars.
-- As The Future Unfolds: closing commitment from the brand deck.
-- Consultation and footer: direct enquiry paths and launch positioning.
+Most content lives in `src/data/` — no layout changes needed:
+
+- `site.js` — contact details, navigation, footer links
+- `developments.js` — each development's name, summary, images
+- `services.js`, `content.js` — services, FAQs, project categories, ownership opportunities, insights
+- `people.js` — advisory board, team and client logos (empty arrays show a "coming soon" state)
+
+Images go in `public/images/` (keep them under ~400 KB, 1600 px wide).
 
 ## Deployment
 
-To deploy to Vercel:
-1. Push this repository to GitHub and import it on Vercel.
-2. Or use the Vercel CLI: run `vercel --prod` in the root directory.
+Vercel builds every push to `main` (framework preset: Vite). `vercel.json` handles SPA routing and security headers. Use a branch and the Vercel preview URL to review changes before merging.
 
-## Future Enhancements
+## Not built yet
 
-- **Backend Integration:** The consultation buttons currently use `mailto:` and `wa.me` links. To handle this properly in production, wire them up to an API (like Resend or Formspree) by creating a modal form.
-- **Accessibility Check:** The animations all respect `prefers-reduced-motion` but always ensure proper tab-focus and screen-reader testing before going live.
+Server-side enquiry handling (the form currently opens a pre-filled email or WhatsApp message), analytics, and a CMS for Insights. See [docs/06-Implementation-Plan.md](docs/06-Implementation-Plan.md).
