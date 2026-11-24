@@ -1,13 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
-
-const strokes = [
-  'M6 4 V18',
-  'M6 22 V36',
-  'M26 4 V18',
-  'M26 22 V36',
-  'M6 18 H18 V10 H26',
-  'M6 22 H14 V30 H26'
-];
+import { MARK_HEIGHT, MARK_PATHS, MARK_STROKE, MARK_WIDTH } from './logoMark';
 
 // The same starting state on the server and in the browser keeps hydration consistent;
 // reduced motion only changes the duration (an instant draw).
@@ -16,6 +8,10 @@ const PATH_MOTION = {
   animate: { pathLength: 1, opacity: 1 }
 };
 
+/**
+ * Hilltop's H mark in the current text colour, drawn stroke by stroke on first view.
+ * @param {{ size?: number, showWordmark?: boolean, className?: string }} props  `size` is the width in px.
+ */
 export default function Logo({ size = 32, showWordmark = false, className = '' }) {
   const reduceMotion = useReducedMotion();
 
@@ -23,23 +19,23 @@ export default function Logo({ size = 32, showWordmark = false, className = '' }
     <span className={`inline-flex flex-col items-center text-current ${className}`}>
       <motion.svg
         width={size}
-        height={size * 1.25}
-        viewBox="0 0 32 40"
+        height={(size * MARK_HEIGHT) / MARK_WIDTH}
+        viewBox={`0 0 ${MARK_WIDTH} ${MARK_HEIGHT}`}
         fill="none"
         aria-hidden="true"
       >
-        {strokes.map((d, index) => (
+        {MARK_PATHS.map((d, index) => (
           <motion.path
             key={d}
             d={d}
             stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="square"
+            strokeWidth={MARK_STROKE}
+            strokeLinecap="butt"
             strokeLinejoin="miter"
             {...PATH_MOTION}
             transition={{
               duration: reduceMotion ? 0 : 1.2,
-              delay: reduceMotion ? 0 : index * 0.1,
+              delay: reduceMotion ? 0 : index * 0.12,
               ease: [0.83, 0, 0.17, 1]
             }}
           />

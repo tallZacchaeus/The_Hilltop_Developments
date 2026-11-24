@@ -6,7 +6,7 @@
 
 **Reference:** the [Architecteo Framer template](https://architecteo.framer.website/) — "light architectural luxury". White page, content sits in large rounded **sky panels** inset from the page edge, soft cloud-like gradients, white cards with thin borders, calm navy type, generous whitespace and gentle fade-up motion.
 
-**Adaptation for Hilltop:** the template's slate navy (`#183654`) is replaced with Hilltop's royal navy, and Hilltop's gold appears only as a small accent (eyebrow dots, focus rings, hover underline). All copy comes from the client's copy doc; no template text or images are reused. The H-monogram logo (`src/components/ui/Logo.jsx`) is kept unchanged.
+**Adaptation for Hilltop:** the template's slate navy (`#183654`) is replaced with Hilltop's royal navy, and Hilltop's gold appears only as a small accent (eyebrow dots, focus rings, hover underline). All copy comes from the client's copy doc; no template text or images are reused. The H mark is the client's logo (supplied 24 Nov 2026), redrawn as four vector strokes in `src/components/ui/logoMark.js` (the bottom half is the top half rotated 180°) and drawn by `Logo.jsx` beside the "Hilltop Developments" wordmark. The favicon, iOS home-screen icon and 1200×630 share image use the same mark in white on brand navy; the share image sets "HILLTOP / DEVELOPMENTS" in Montserrat Light to match the client's lockup (Montserrat is used only in that image, not loaded on the site).
 
 **Mobbin references** for sections the template doesn't cover:
 

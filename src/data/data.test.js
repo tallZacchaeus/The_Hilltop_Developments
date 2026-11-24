@@ -93,6 +93,18 @@ describe('content data', () => {
     expect(OPPORTUNITIES.map((item) => item.id)).toEqual(['land']);
   });
 
+  it('points every icon, logo and share image in index.html at a file in public/', () => {
+    const template = readFileSync(fileURLToPath(new URL('../../index.html', import.meta.url)), 'utf8');
+    const assetPaths = [
+      ...template.matchAll(/(?:href|content)="(?:https:\/\/www\.thehilltopdevelopments\.com)?(\/[^"/][^"]*\.(?:png|jpg|svg|ico))"/g),
+      ...template.matchAll(/"logo": "https:\/\/www\.thehilltopdevelopments\.com(\/[^"]+)"/g),
+    ].map((match) => match[1]);
+
+    expect(assetPaths.length).toBeGreaterThanOrEqual(5);
+    assetPaths.forEach((path) => expect(existsInPublic(path), `${path} is missing from public/`).toBe(true));
+    expect(template).not.toContain('Hilltop_Developments_2');
+  });
+
   it('keeps Marvel Ideations out of the site data and the HTML template', () => {
     const template = readFileSync(fileURLToPath(new URL('../../index.html', import.meta.url)), 'utf8');
 
