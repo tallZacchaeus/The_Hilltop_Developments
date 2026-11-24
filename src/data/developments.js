@@ -14,9 +14,9 @@ export const DEVELOPMENT_TYPES = Object.freeze([
     imageAlt: 'Glass office towers seen from street level against the sky',
   },
   {
-    id: 'land',
-    label: 'Land',
-    title: 'Land',
+    id: 'infrastructure',
+    label: 'Infrastructure',
+    title: 'Infrastructure Developments',
     image: '/images/land-development-site.jpg',
     imageAlt: 'Aerial view of a new development site with roads laid out',
   },
@@ -126,14 +126,15 @@ export const DEVELOPMENTS = Object.freeze([
     ],
   },
   {
-    slug: 'land',
-    name: 'Land Developments',
-    type: 'land',
+    // Draft copy pending client approval (docs/01-PRD.md §9): the client renamed "Land" to "Infrastructure".
+    slug: 'infrastructure',
+    name: 'Infrastructure Developments',
+    type: 'infrastructure',
     status: 'coming-soon',
-    tagline: 'Land for future development',
-    audience: 'Individuals, investors and organisations',
+    tagline: 'The groundwork for growing cities',
+    audience: 'Communities, businesses and partners',
     summary:
-      'We offer land opportunities for individuals, investors and organisations looking to secure property for future development. Whether for residential, commercial or other purposes, our land offerings provide a foundation for a range of real estate possibilities.',
+      "Hilltop's infrastructure developments lay the groundwork for sustainable cities, delivering the roads, utilities and shared spaces that allow communities and businesses to grow and connect.",
     image: '/images/land-development-site.jpg',
     imageAlt: 'Aerial view of a development site with roads laid out',
     gallery: [

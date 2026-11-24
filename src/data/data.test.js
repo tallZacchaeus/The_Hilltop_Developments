@@ -1,6 +1,6 @@
 /** @vitest-environment node */
 // Pure data checks — no DOM needed, and Node gives import.meta.url a file: URL for the image checks.
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
@@ -14,7 +14,7 @@ import {
 } from './developments';
 import { HOME_SERVICES, SERVICES } from './services';
 import { FAQS, INSIGHTS, OPPORTUNITIES, PROJECT_CATEGORIES } from './content';
-import { FOOTER_GROUPS, NAV_ITEMS, PAGE_ROUTES } from './site';
+import { FOOTER_GROUPS, NAV_ITEMS, PAGE_ROUTES, SITE } from './site';
 
 const PUBLIC_DIR = fileURLToPath(new URL('../../public/', import.meta.url));
 const existsInPublic = (src) => existsSync(PUBLIC_DIR + src.replace(/^\//, ''));
@@ -56,7 +56,8 @@ describe('developments data', () => {
 
   it('filters by type and returns everything for unknown categories', () => {
     expect(filterDevelopments('residential')).toHaveLength(5);
-    expect(filterDevelopments('land').map((item) => item.slug)).toEqual(['land']);
+    expect(filterDevelopments('infrastructure').map((item) => item.slug)).toEqual(['infrastructure']);
+    expect(DEVELOPMENT_TYPES.map((type) => type.id)).toEqual(['residential', 'commercial', 'infrastructure']);
     expect(filterDevelopments('all')).toHaveLength(DEVELOPMENTS.length);
     expect(filterDevelopments(undefined)).toHaveLength(DEVELOPMENTS.length);
   });
@@ -87,9 +88,28 @@ describe('content data', () => {
     });
   });
 
-  it('has the three project categories and four ownership opportunities', () => {
+  it('has the three project categories, and Own a Piece offers land only', () => {
     expect(PROJECT_CATEGORIES.map((item) => item.name)).toEqual(['Metropolis', 'Countryside', 'Hinterland']);
-    expect(OPPORTUNITIES.map((item) => item.id)).toEqual(['land', 'estate', 'property', 'investment']);
+    expect(OPPORTUNITIES.map((item) => item.id)).toEqual(['land']);
+  });
+
+  it('points every icon, logo and share image in index.html at a file in public/', () => {
+    const template = readFileSync(fileURLToPath(new URL('../../index.html', import.meta.url)), 'utf8');
+    const assetPaths = [
+      ...template.matchAll(/(?:href|content)="(?:https:\/\/www\.thehilltopdevelopments\.com)?(\/[^"/][^"]*\.(?:png|jpg|svg|ico))"/g),
+      ...template.matchAll(/"logo": "https:\/\/www\.thehilltopdevelopments\.com(\/[^"]+)"/g),
+    ].map((match) => match[1]);
+
+    expect(assetPaths.length).toBeGreaterThanOrEqual(5);
+    assetPaths.forEach((path) => expect(existsInPublic(path), `${path} is missing from public/`).toBe(true));
+    expect(template).not.toContain('Hilltop_Developments_2');
+  });
+
+  it('keeps Marvel Ideations out of the site data and the HTML template', () => {
+    const template = readFileSync(fileURLToPath(new URL('../../index.html', import.meta.url)), 'utf8');
+
+    expect(SITE).not.toHaveProperty('parent');
+    expect(template).not.toMatch(/marvel/i);
   });
 
   it('points every image at a file that exists in public/', () => {

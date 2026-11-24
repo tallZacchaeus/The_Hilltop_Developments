@@ -83,6 +83,19 @@ Both URLs used to return the 404 page; Search Console needs them. Built on top o
 | Local check with `npm run preview`: `/robots.txt` 200 `text/plain`, `/sitemap.xml` 200 XML with 16 URLs, unknown paths still 404 | ✅ |
 | Merged as [PR #5](https://github.com/tallZacchaeus/The_Hilltop_Developments/pull/5) (`160898f`). It replaced PR #4, which was stacked on PR #3 and merged into `feat/prerender-pages` after #3 had already landed, so it never reached `main`. Live check: `/robots.txt` returns 200 `text/plain`; `/sitemap.xml` returns 200 `application/xml` with 16 URLs, each returning 200 without a redirect; unknown paths still return 404 | ✅ |
 
+## Phase 5.3 — Client feedback, round 1 🟡 (24 Nov 2026)
+
+The client likes the site and asked for these changes ("pictures in some places" to follow separately):
+
+| Task | Status |
+|------|--------|
+| "Land" development category renamed to Infrastructure (data, nav, filter, homepage card, detail page `/developments/infrastructure`); permanent redirect from `/developments/land` in `vercel.json` | ✅ (infrastructure copy is a draft for approval, see [01-PRD.md](01-PRD.md) §9) |
+| Own a Piece is strictly land buying: one land section and enquiry link; estate, property and investment opportunities removed; enquiry type "Own a Piece (land)" | ✅ |
+| "A Realty Expression of the Marvel Ideations" removed from the footer, homepage hero, JSON-LD, README and PRD; tests fail if it reappears on any page or in `index.html` | ✅ |
+| New logo, favicon and share-link image: the client's H mark redrawn as vector strokes (`logoMark.js`, symmetry-tested), used in the header and footer, `favicon.svg`, 48 px PNG favicon, 180 px iOS icon, 512 px JSON-LD logo and a new 1200×630 `og-hilltop.png` with the "HILLTOP / DEVELOPMENTS" lockup; old logo PNGs and `og-hilltop.jpg` removed | ✅ (replace with the designer's originals if supplied) |
+| Picture changes | ⬜ Waiting for the client's list |
+| Vitest ignores agent worktrees under `.claude/` (their copies of the tests were being collected) | ✅ |
+
 ## Phase 6 — Next (planned)
 
 | Item | Notes |
@@ -93,4 +106,4 @@ Both URLs used to return the 404 page; Search Console needs them. Built on top o
 | CMS | For Insights (news, articles, careers) |
 | Image formats | Serve AVIF/WebP variants |
 | E2E tests | Playwright smoke run against the Vercel preview |
-| Per-page share images | Development pages still use the site-wide `og-hilltop.jpg`; a 1200×630 image per development would make WhatsApp previews more specific |
+| Per-page share images | Development pages still use the site-wide `og-hilltop.png`; a 1200×630 image per development would make WhatsApp previews more specific |

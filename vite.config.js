@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 import { defineConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 // Reuse the production security headers from vercel.json so `vite preview`
@@ -60,6 +61,8 @@ export default defineConfig(({ isPreview, isSsrBuild }) => ({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.js',
+    // Agent sessions keep git worktrees under .claude/worktrees; their copies of the tests aren't ours to run.
+    exclude: [...configDefaults.exclude, '.claude/**'],
     css: false,
     coverage: {
       provider: 'v8',

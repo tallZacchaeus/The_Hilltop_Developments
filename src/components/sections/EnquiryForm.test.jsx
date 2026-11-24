@@ -90,10 +90,10 @@ describe('EnquiryForm', () => {
 
   it('shows the ownership opportunity the visitor came from, and hides it if the type changes', async () => {
     const user = userEvent.setup();
-    renderForm({ type: 'ownership', opportunity: 'estate' });
-    expect(screen.getByText('Estate Opportunities')).toBeInTheDocument();
+    renderForm({ type: 'ownership', opportunity: 'land' });
+    expect(screen.getByText('Land Opportunities')).toBeInTheDocument();
 
     await user.selectOptions(screen.getByLabelText('Enquiry about'), 'general');
-    expect(screen.queryByText('Estate Opportunities')).not.toBeInTheDocument();
+    expect(screen.queryByText('Land Opportunities')).not.toBeInTheDocument();
   });
 });

@@ -1,7 +1,6 @@
 export const SITE = Object.freeze({
   name: 'Hilltop Developments',
   tagline: 'Building Sustainable Cities',
-  parent: 'A Realty Expression of the Marvel Ideations',
   url: 'https://www.thehilltopdevelopments.com',
   description:
     'Hilltop Developments is a forward-thinking real estate development company creating innovative, future-ready spaces that shape how cities grow and evolve.',
@@ -35,7 +34,7 @@ export const NAV_ITEMS = Object.freeze([
     children: [
       { label: 'Residential', to: '/developments?category=residential' },
       { label: 'Commercial', to: '/developments?category=commercial' },
-      { label: 'Land', to: '/developments?category=land' },
+      { label: 'Infrastructure', to: '/developments?category=infrastructure' },
     ],
   },
   { label: 'Insights', to: '/insights' },

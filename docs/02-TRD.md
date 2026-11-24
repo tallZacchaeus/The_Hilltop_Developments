@@ -75,6 +75,18 @@ All site-wide values (name, URLs, contact details, navigation, footer links) liv
 
 ## 7. Image credits
 
+**Brand assets** (client logo, Nov 2026). All of these are drawn from the vector mark in `src/components/ui/logoMark.js`. If Hilltop's designer supplies original SVG or PNG files, replace them in place.
+
+| File | Size | Used for |
+|------|------|----------|
+| `public/favicon.svg` | vector | Browser tab icon; a test keeps its paths identical to `logoMark.js` |
+| `public/icon-48.png` | 48×48 | PNG favicon fallback (older browsers, Google results) |
+| `public/apple-touch-icon.png` | 180×180 | iOS home-screen icon |
+| `public/icon-512.png` | 512×512 | Organization logo in the JSON-LD |
+| `public/images/og-hilltop.png` | 1200×630 | Link previews (`og:image`, `twitter:image`) |
+
+A test fails if any icon, logo or share image named in `index.html` is missing from `public/`.
+
 Photos in `public/images/` come from two sources:
 
 - **Hilltop brand deck** (client-owned): `glass-facade`, `hero-glass-sky`, `metropolis-skyline`, `curved-architecture`, `commercial-towers`, `residential-dusk`, `apartment-block`.

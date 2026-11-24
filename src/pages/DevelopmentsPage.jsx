@@ -47,7 +47,7 @@ export default function DevelopmentsPage() {
   usePageMeta({
     title: 'Developments',
     description:
-      'Explore Hilltop residential, commercial and land developments, including Crib, Goshen, Splurge, The Terrace and The Yard by Hilltop.',
+      'Explore Hilltop residential, commercial and infrastructure developments, including Crib, Goshen, Splurge, The Terrace and The Yard by Hilltop.',
   });
 
   const hydrated = useHydrated();

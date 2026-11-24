@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <Wordmark />
           <p className="max-w-xs text-[15px] leading-relaxed text-navy/70">
-            {SITE.tagline}. {SITE.parent}.
+            {SITE.tagline}.
           </p>
         </div>
 
@@ -76,7 +76,6 @@ export default function Footer() {
           {/* The year is baked in at build time; suppress the one-off mismatch if a visit crosses New Year before the next deploy. */}
           © <span suppressHydrationWarning>{year}</span> {SITE.name}. All rights reserved.
         </p>
-        <p>{SITE.parent}</p>
       </div>
     </footer>
   );

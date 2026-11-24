@@ -5,7 +5,7 @@ import { OPPORTUNITIES } from '../data/content.js';
 export const ENQUIRY_TYPES = Object.freeze([
   { value: 'general', label: 'General enquiry' },
   { value: 'development', label: 'A development' },
-  { value: 'ownership', label: 'Own a Piece (land & property)' },
+  { value: 'ownership', label: 'Own a Piece (land)' },
   { value: 'services', label: 'Our services' },
   { value: 'partnership', label: 'Partnership proposal' },
   { value: 'careers', label: 'Careers at Hilltop' },

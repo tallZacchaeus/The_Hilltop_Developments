@@ -118,7 +118,7 @@ describe('stale topics', () => {
 describe('buildEnquirySubject', () => {
   it('uses the opportunity title for ownership enquiries', () => {
     expect(buildEnquirySubject({ ...VALID, type: 'ownership', opportunity: 'land' })).toBe(
-      'Website enquiry — Own a Piece (land & property): Land Opportunities — Ada Obi',
+      'Website enquiry — Own a Piece (land): Land Opportunities — Ada Obi',
     );
   });
 
