@@ -1,13 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, MessageCircle } from 'lucide-react';
-import {
-  DEVELOPMENTS,
-  DEVELOPMENT_STATUS_LABELS,
-  findDevelopment,
-  getTypeLabel,
-} from '../data/developments';
+import { DEVELOPMENTS, DEVELOPMENT_STATUS_LABELS, getTypeLabel } from '../data/developments';
 import { buildQuickWhatsAppLink } from '../lib/enquiry';
-import usePageMeta from '../hooks/usePageMeta';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Panel from '../components/ui/Panel';
@@ -15,7 +9,6 @@ import Photo from '../components/ui/Photo';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import DevelopmentCard from '../components/sections/DevelopmentCard';
-import NotFoundPage from './NotFoundPage';
 
 const RELATED_COUNT = 3;
 
@@ -64,8 +57,12 @@ function RegisterInterest({ development }) {
   );
 }
 
-function DevelopmentDetail({ development }) {
-  usePageMeta({ title: development.name, description: development.summary });
+/**
+ * One development's page. The page table (src/site/pages.jsx) creates one per entry in DEVELOPMENTS
+ * and passes it in, so an unknown slug never reaches here: it gets the 404 page.
+ * @param {{ development: (typeof DEVELOPMENTS)[number] }} props
+ */
+export default function DevelopmentDetailPage({ development }) {
   const related = DEVELOPMENTS.filter((item) => item.slug !== development.slug).slice(0, RELATED_COUNT);
 
   return (
@@ -111,13 +108,4 @@ function DevelopmentDetail({ development }) {
       </Panel>
     </>
   );
-}
-
-export default function DevelopmentDetailPage() {
-  const { slug } = useParams();
-  const development = findDevelopment(slug);
-
-  if (!development) return <NotFoundPage />;
-  // key resets page state when moving between developments
-  return <DevelopmentDetail key={development.slug} development={development} />;
 }

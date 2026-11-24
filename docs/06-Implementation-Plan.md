@@ -1,6 +1,6 @@
 # 06 — Implementation Plan
 
-**Last updated:** 2026-11-17
+**Last updated:** 2026-11-24
 
 Legend: ✅ done · 🟡 in progress · ⬜ pending
 
@@ -29,7 +29,7 @@ Single-page site (hero carousel, vision, pillars, consultation) deployed to Verc
 | 3.2 | Design tokens (`tailwind.config.js`), Satoshi + Manrope, `.panel-sky` | — | ✅ |
 | 3.3 | Content data modules (`src/data/*`) | 3.1 | ✅ |
 | 3.4 | Shared UI (`Panel`, `Button`, `Eyebrow`, `SectionHeading`, `Card`, `Chip`, `Photo`, `Reveal`, `Accordion`) | 3.2 | ✅ |
-| 3.5 | Layout: Header (dropdowns + mobile menu), Footer, ScrollToTop, `usePageMeta` | 3.4 | ✅ |
+| 3.5 | Layout: Header (dropdowns + mobile menu), Footer, ScrollToTop, `usePageMeta` (replaced by the page table in 5.4) | 3.4 | ✅ |
 | 3.6 | Home page | 3.3–3.5 | ✅ |
 | 3.7 | About, Services, Developments (+ detail), Insights, Contact (+ FAQ), Own a Piece, legal, 404 | 3.6 | ✅ |
 | 3.8 | Enquiry logic + form (email / WhatsApp hand-off) | 3.3 | ✅ |
@@ -62,8 +62,8 @@ Shared links showed the homepage title for every page, and unknown URLs returned
 
 | Task | Status |
 |------|--------|
-| Build-time prerender: `src/entry-server.jsx` + `scripts/prerender.js` → 17 HTML files including `404.html` | ✅ |
-| Shared page metadata (`src/lib/pageMeta.js`) behind both `usePageMeta` and the prerendered head tags | ✅ |
+| Build-time prerender: `src/entry-server.jsx` + `scripts/prerender.js` → 17 HTML files including `404.html` (entry now `src/site/buildSite.jsx`, see 5.4) | ✅ |
+| Shared page metadata (`src/lib/pageMeta.js`) behind both `usePageMeta` and the prerendered head tags (`usePageMeta` replaced by the page table in 5.4) | ✅ |
 | Hydration-safe query strings, reveals, image hero and footer year (`useHydrated`) | ✅ |
 | `vercel.json`: `cleanUrls`, `trailingSlash: false`, SPA rewrite removed → real 404s; `vite preview` matches | ✅ |
 | Tests: prerender output, route list (and a guard that it matches `App.jsx`), head-tag escaping, hydration of every page and of 404s under real sections, `Reveal` behaviour | ✅ 145 tests (~99 % statements / ~96 % branches) |
@@ -77,7 +77,7 @@ Both URLs used to return the 404 page; Search Console needs them. Built on top o
 
 | Task | Status |
 |------|--------|
-| `sitemap.xml` generated at build time from `prerenderPages()` (`src/prerender/sitemap.js`): canonical URLs, 404 left out, XML-escaped, stable order; new developments are listed automatically | ✅ |
+| `sitemap.xml` generated at build time from `prerenderPages()` (`src/prerender/sitemap.js`; now built by `buildSite`, see 5.4): canonical URLs, 404 left out, XML-escaped, stable order; new developments are listed automatically | ✅ |
 | Static `public/robots.txt`: allows all crawlers, names the sitemap | ✅ |
 | Tests: sitemap rendering, page list, `canonicalUrl`, `robots.txt` contents | ✅ 157 tests (~99 % statements / ~96 % branches) |
 | Local check with `npm run preview`: `/robots.txt` 200 `text/plain`, `/sitemap.xml` 200 XML with 16 URLs, unknown paths still 404 | ✅ |
@@ -95,6 +95,21 @@ The client likes the site and asked for these changes ("pictures in some places"
 | New logo, favicon and share-link image: the client's H mark redrawn as vector strokes (`logoMark.js`, symmetry-tested), used in the header and footer, `favicon.svg`, 48 px PNG favicon, 180 px iOS icon, 512 px JSON-LD logo and a new 1200×630 `og-hilltop.png` with the "HILLTOP / DEVELOPMENTS" lockup; old logo PNGs and `og-hilltop.jpg` removed | ✅ (replace with the designer's originals if supplied) |
 | Picture changes | ⬜ Waiting for the client's list |
 | Vitest ignores agent worktrees under `.claude/` (their copies of the tests were being collected) | ✅ |
+
+## Phase 5.4 — One page table ✅ (24 Nov 2026)
+
+What pages exist and how each is described was spread over `App.jsx`, `PAGE_ROUTES`, `src/prerender/routes.js`, a `usePageMeta` call in every page (with an "exactly once" build check), `PageMetaSinkContext`, the sitemap module and a route-table drift test. It now lives in one table, `src/site/pages.jsx`. Chosen after comparing four interface designs ("design it twice"); details in [02-TRD.md](02-TRD.md) §2a.
+
+| Task | Status |
+|------|--------|
+| `definePages()`: page table → `pages` and `pageAt()` (exact, case-sensitive, decoded; anything else → the 404 page), checked when it loads | ✅ |
+| `SiteRoutes` (one catch-all route; the table is the only URL matcher), `useCurrentPage()` for the header, `buildSite(template)` returning every deploy file | ✅ |
+| Pages no longer handle metadata; `DevelopmentDetailPage` receives its development; legal text moved to `src/data/legal.js` | ✅ |
+| Removed `App.jsx`, `entry-server.jsx`, `usePageMeta`, `PAGE_ROUTES`, `src/prerender/routes.js` and `sitemap.js`, and their tests (replaced by tests on the new interface) | ✅ |
+| Fixed: `/About` (wrong case) rendered the About page over Vercel's 404.html; the 404 page's canonical URL changed in the browser | ✅ |
+| Tests: every page and 404s at foreign URLs hydrate without mismatches; head tags update on in-app navigation; a page remounts when moving between developments | ✅ |
+| Build output identical to before (all 17 HTML files and `sitemap.xml`, ignoring asset hashes); browser check of navigation, head tags and header highlighting | ✅ |
+| Independent code review | ✅ 0 critical / 0 high. Fixed 2 medium (clear errors for malformed family rows; tests for head updates on navigation and for remounting between developments) and 3 low (an encoded slash no longer matches a page, stale comment, history rows annotated) |
 
 ## Phase 6 — Next (planned)
 

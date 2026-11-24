@@ -1,6 +1,5 @@
 import { ArrowRight } from 'lucide-react';
 import { SITE } from '../../data/site';
-import usePageMeta from '../../hooks/usePageMeta';
 import Button from '../../components/ui/Button';
 import CtaPanel from '../../components/sections/CtaPanel';
 import ImageHero from '../../components/sections/ImageHero';
@@ -10,8 +9,6 @@ import HomeServices from './HomeServices';
 import HomeUpcoming from './HomeUpcoming';
 
 export default function HomePage() {
-  usePageMeta({ description: SITE.description });
-
   return (
     <>
       <ImageHero

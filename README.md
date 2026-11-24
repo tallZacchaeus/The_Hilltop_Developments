@@ -42,7 +42,7 @@ Most content lives in `src/data/` — no layout changes needed:
 
 Images go in `public/images/` (keep them under ~400 KB, 1600 px wide).
 
-New developments are prerendered and added to `sitemap.xml` automatically. A new top-level page needs its route in `src/App.jsx`, its path in `PAGE_ROUTES` (`site.js`) and a `usePageMeta` call, or the build stops.
+Every page is one row in `src/site/pages.jsx`: its path, the title and description shown in search results and link previews, and what it renders. To add a page or reword its title or description, edit that table; the route, `<head>` tags, prerendered file, sitemap entry and header highlighting follow. New developments in `src/data/developments.js` get their pages automatically. A bad row (duplicate or unsafe path, missing description) stops the tests and the build.
 
 ## Deployment
 

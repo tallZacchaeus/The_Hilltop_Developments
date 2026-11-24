@@ -1,27 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRoutesFromChildren } from 'react-router-dom';
-import App from './App';
 import { DEVELOPMENTS } from './data/developments';
-import { PAGE_ROUTES } from './data/site';
 import { renderRoute } from './test/renderRoute';
-
-/** Static (parameter-free) paths declared in a route table: these are the pages that must be prerendered. */
-function staticPaths(routes, base = '') {
-  return routes.flatMap((route) => {
-    const path = route.index ? base || '/' : route.path ? `${base}/${route.path}` : base;
-    const own = (route.index || route.path) && !/[:*]/.test(path) ? [path] : [];
-    return [...own, ...staticPaths(route.children ?? [], path)];
-  });
-}
-
-describe('route table', () => {
-  it('lists every static route in PAGE_ROUTES, so each one is prerendered', () => {
-    const routes = createRoutesFromChildren(App().props.children);
-    expect([...staticPaths(routes)].sort()).toEqual([...PAGE_ROUTES].sort());
-  });
-});
 
 const PAGES = [
   ['/', 'Building Sustainable Cities for Generations'],
@@ -67,6 +48,12 @@ describe('routes', () => {
     renderRoute('/developments/atlantis');
     expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
   });
+
+  // The static host matches file names exactly, so /About gets 404.html; the app must agree to hydrate it.
+  it('treats paths as case-sensitive, like the static host', () => {
+    renderRoute('/About');
+    expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
+  });
 });
 
 describe('page metadata', () => {
@@ -88,6 +75,14 @@ describe('page metadata', () => {
   it('uses the brand title on the homepage', () => {
     renderRoute('/');
     expect(document.title).toBe('Hilltop Developments — Building Sustainable Cities');
+  });
+
+  it('gives the 404 page the same canonical URL as 404.html at any unknown address', () => {
+    renderRoute('/no-such-page');
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://www.thehilltopdevelopments.com/404',
+    );
   });
 
   it('drops a trailing slash from the canonical URL', () => {
@@ -184,6 +179,36 @@ describe('navigation', () => {
     ).toBeInTheDocument();
     expect(window.scrollTo).toHaveBeenCalled();
     expect(document.activeElement).toBe(screen.getByRole('main'));
+  });
+
+  it('updates the title, canonical URL and robots when navigating in the app', async () => {
+    const user = userEvent.setup();
+    renderRoute('/about');
+
+    await user.click(within(screen.getByRole('navigation', { name: 'Main' })).getByRole('link', { name: 'Services' }));
+
+    expect(document.title).toBe('Our Services | Hilltop Developments');
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://www.thehilltopdevelopments.com/services',
+    );
+    expect(document.querySelector('meta[property="og:url"]')).toHaveAttribute(
+      'content',
+      'https://www.thehilltopdevelopments.com/services',
+    );
+    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+  });
+
+  it('starts each development page afresh when moving between developments', async () => {
+    const user = userEvent.setup();
+    const [first, second] = DEVELOPMENTS;
+    renderRoute(`/developments/${first.slug}`);
+    const firstHeading = screen.getByRole('heading', { level: 1, name: first.name });
+
+    await user.click(screen.getByRole('link', { name: second.name }));
+
+    // A new element, not the old one with new text: the page remounted, so no state carries over.
+    expect(screen.getByRole('heading', { level: 1, name: second.name })).not.toBe(firstHeading);
   });
 
   it('marks the current section in the header, but no section on the 404 page', () => {

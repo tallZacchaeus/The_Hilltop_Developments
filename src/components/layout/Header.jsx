@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '../../data/site';
-import { canonicalPath } from '../../lib/pageMeta';
-import { isKnownPath } from '../../prerender/routes';
+import useCurrentPage from '../../site/useCurrentPage';
 import Button from '../ui/Button';
 import Wordmark from './Wordmark';
 import MobileMenu from './MobileMenu';
@@ -29,14 +28,13 @@ const navLinkClass = (isCurrent) =>
   }`;
 
 /**
- * Header link that marks its section as current. On the 404 page no section is current: that page
- * is served at any unknown URL (even /developments/whatever), and this keeps it identical to the
- * prerendered 404.html so hydration matches.
+ * Header link that marks its section as current. Any unknown URL resolves to the 404 page (path
+ * /404), so no section is current there: the page matches the prerendered 404.html wherever it is served.
  * @param {{ to: string, children: React.ReactNode }} props
  */
 function SectionLink({ to, children }) {
-  const path = canonicalPath(useLocation().pathname);
-  const isCurrent = isKnownPath(path) && (path === to || path.startsWith(`${to}/`));
+  const { path } = useCurrentPage();
+  const isCurrent = path === to || path.startsWith(`${to}/`);
 
   return (
     <Link to={to} aria-current={isCurrent ? 'page' : undefined} className={navLinkClass(isCurrent)}>

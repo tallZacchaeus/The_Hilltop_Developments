@@ -1,7 +1,6 @@
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import { INSIGHTS } from '../data/content';
 import { buildQuickWhatsAppLink } from '../lib/enquiry';
-import usePageMeta from '../hooks/usePageMeta';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Chip from '../components/ui/Chip';
@@ -45,12 +44,6 @@ function InsightCard({ insight }) {
 }
 
 export default function InsightsPage() {
-  usePageMeta({
-    title: 'Insights',
-    description:
-      'News, articles and career opportunities from Hilltop Developments, plus perspectives on real estate and the built environment.',
-  });
-
   return (
     <PageHero
       eyebrow="Insights"

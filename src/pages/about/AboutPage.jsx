@@ -1,6 +1,5 @@
 import { ArrowRight } from 'lucide-react';
 import { ADVISORY_BOARD, TEAM } from '../../data/people';
-import usePageMeta from '../../hooks/usePageMeta';
 import Button from '../../components/ui/Button';
 import CtaPanel from '../../components/sections/CtaPanel';
 import PeopleSection from '../../components/sections/PeopleSection';
@@ -16,12 +15,6 @@ const BOARD_INTRO = [
 const TEAM_INTRO = ['Behind every development is a team of people committed to turning ideas into possibilities.'];
 
 export default function AboutPage() {
-  usePageMeta({
-    title: 'About Us',
-    description:
-      'Hilltop Developments is a forward-thinking real estate development company dedicated to shaping sustainable cities through innovative, adaptive and future-ready developments.',
-  });
-
   return (
     <>
       <SplitSection

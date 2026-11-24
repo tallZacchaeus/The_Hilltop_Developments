@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router-dom';
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { CONTACT } from '../data/site';
 import { buildQuickWhatsAppLink, enquiryFromParams } from '../lib/enquiry';
-import usePageMeta from '../hooks/usePageMeta';
 import Card from '../components/ui/Card';
 import Panel from '../components/ui/Panel';
 import Reveal from '../components/ui/Reveal';
@@ -58,12 +57,6 @@ function ContactItem({ item }) {
 }
 
 export default function ContactPage() {
-  usePageMeta({
-    title: 'Contact Us',
-    description:
-      "Get in touch with Hilltop Developments about our developments, services or a partnership. We'd be happy to hear from you.",
-  });
-
   const hydrated = useHydrated();
   const [searchParams] = useSearchParams();
   // Match the prerendered page first, then apply ?type=… (the key change re-mounts the form with it).
