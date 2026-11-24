@@ -1,7 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { DEVELOPMENTS, DEVELOPMENT_TYPES, filterDevelopments } from '../data/developments';
-import usePageMeta from '../hooks/usePageMeta';
 import { useHydrated } from '../hooks/useHydrated';
 import Button from '../components/ui/Button';
 import CtaPanel from '../components/sections/CtaPanel';
@@ -44,12 +43,6 @@ function FilterBar({ activeId, onSelect }) {
 }
 
 export default function DevelopmentsPage() {
-  usePageMeta({
-    title: 'Developments',
-    description:
-      'Explore Hilltop residential, commercial and infrastructure developments, including Crib, Goshen, Splurge, The Terrace and The Yard by Hilltop.',
-  });
-
   const hydrated = useHydrated();
   const [searchParams, setSearchParams] = useSearchParams();
   // Match the prerendered page (all developments) first, then apply ?category= once hydrated.

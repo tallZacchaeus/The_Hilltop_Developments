@@ -51,7 +51,7 @@ export default defineConfig(({ isPreview, isSsrBuild }) => ({
   // Preview serves only real files, like production: /about → about.html, anything else → 404.html.
   appType: isPreview ? 'mpa' : 'spa',
   build: {
-    // The server bundle (src/entry-server.jsx) only renders HTML; it doesn't need public/ assets.
+    // The server bundle (src/site/buildSite.jsx) only renders HTML; it doesn't need public/ assets.
     copyPublicDir: !isSsrBuild,
   },
   preview: {

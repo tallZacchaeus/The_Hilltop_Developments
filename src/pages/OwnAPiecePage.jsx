@@ -1,6 +1,5 @@
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { LAND_OPPORTUNITY } from '../data/content';
-import usePageMeta from '../hooks/usePageMeta';
 import Button from '../components/ui/Button';
 import CtaPanel from '../components/sections/CtaPanel';
 import ImageHero from '../components/sections/ImageHero';
@@ -10,12 +9,6 @@ const LAND_ENQUIRY = `/contact?type=ownership&opportunity=${LAND_OPPORTUNITY.id}
 
 /** Own a Piece is Hilltop's land-buying offer (client brief, Nov 2026: strictly land). */
 export default function OwnAPiecePage() {
-  usePageMeta({
-    title: 'Own a Piece',
-    description:
-      'Own a Piece of the Earth: buy land for direct ownership and future development across Hilltop developments.',
-  });
-
   return (
     <>
       <ImageHero

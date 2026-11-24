@@ -1,10 +1,7 @@
-import usePageMeta from '../hooks/usePageMeta';
 import Button from '../components/ui/Button';
 import PageHero from '../components/sections/PageHero';
 
 export default function NotFoundPage() {
-  usePageMeta({ title: 'Page not found', noIndex: true });
-
   return (
     <PageHero
       eyebrow="404"

@@ -1,14 +1,14 @@
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App.jsx';
 import Root from './Root';
+import SiteRoutes from './site/SiteRoutes';
 import './index.css';
 
 const container = document.getElementById('root');
 const app = (
   <Root>
     <BrowserRouter>
-      <App />
+      <SiteRoutes />
     </BrowserRouter>
   </Root>
 );

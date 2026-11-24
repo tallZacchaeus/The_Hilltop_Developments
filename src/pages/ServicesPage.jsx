@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { SERVICES } from '../data/services';
 import { CLIENTS } from '../data/people';
-import usePageMeta from '../hooks/usePageMeta';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Panel from '../components/ui/Panel';
@@ -49,12 +48,6 @@ function ClientLogos() {
 }
 
 export default function ServicesPage() {
-  usePageMeta({
-    title: 'Our Services',
-    description:
-      'Integrated real estate services from design & build and development advisory to property, facility, estate, community and city development.',
-  });
-
   return (
     <>
       <PageHero

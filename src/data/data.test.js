@@ -14,7 +14,8 @@ import {
 } from './developments';
 import { HOME_SERVICES, SERVICES } from './services';
 import { FAQS, INSIGHTS, OPPORTUNITIES, PROJECT_CATEGORIES } from './content';
-import { FOOTER_GROUPS, NAV_ITEMS, PAGE_ROUTES, SITE } from './site';
+import { FOOTER_GROUPS, NAV_ITEMS, SITE } from './site';
+import site from '../site/pages';
 
 const PUBLIC_DIR = fileURLToPath(new URL('../../public/', import.meta.url));
 const existsInPublic = (src) => existsSync(PUBLIC_DIR + src.replace(/^\//, ''));
@@ -119,10 +120,7 @@ describe('content data', () => {
 });
 
 describe('site navigation', () => {
-  const isKnownRoute = (to) => {
-    const path = to.split(/[?#]/)[0];
-    return PAGE_ROUTES.includes(path) || /^\/developments\/[a-z0-9-]+$/.test(path);
-  };
+  const isKnownRoute = (to) => site.pageAt(to.split(/[?#]/)[0]).known;
 
   it('links only to routes the app defines', () => {
     const navLinks = NAV_ITEMS.flatMap((item) => [item, ...(item.children ?? [])]);

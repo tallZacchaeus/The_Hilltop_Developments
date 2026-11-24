@@ -15,8 +15,9 @@ export function canonicalUrl(pathname) {
 }
 
 /**
- * Resolves a page's metadata. Shared by the browser (usePageMeta) and the prerender step,
- * so the HTML that link-preview crawlers read matches what the app sets at runtime.
+ * Resolves a page's metadata. The page table (src/site/definePages.js) builds it once per page, and
+ * both the prerendered HTML and the browser's <head> updates use that same object, so link-preview
+ * crawlers read exactly what the app shows.
  * @param {{ title?: string, description?: string, noIndex?: boolean }} input
  * @param {string} pathname
  * @returns {Readonly<{ title: string, description: string, url: string, robots: string }>}

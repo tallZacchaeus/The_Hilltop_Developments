@@ -1,7 +1,7 @@
-// Writes a static HTML file for every route after `vite build`, so link previews, search engines
-// and visitors without JavaScript get each page's real content and metadata, then writes the
-// sitemap that public/robots.txt points crawlers at.
-// Run by `npm run build`; expects dist/ (client build) and dist-ssr/ (server build of src/entry-server.jsx).
+// Writes every file buildSite() produces into dist/ after `vite build`: one prerendered HTML file per
+// page (so link previews, search engines and visitors without JavaScript get each page's real content
+// and metadata), 404.html, and the sitemap that public/robots.txt points crawlers at.
+// Run by `npm run build`; expects dist/ (client build) and dist-ssr/ (server build of src/site/buildSite.jsx).
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -18,16 +18,15 @@ async function writeOutput(file, contents) {
 
 async function prerender() {
   try {
-    const server = await import(pathToFileURL(join(SERVER_DIR, 'entry-server.js')).href);
+    const { buildSite } = await import(pathToFileURL(join(SERVER_DIR, 'buildSite.js')).href);
+    // Read the template before writing anything: index.html itself is one of the outputs.
     const template = await readFile(join(CLIENT_DIR, 'index.html'), 'utf8');
-    const pages = server.prerenderPages();
+    const files = buildSite(template);
 
-    // Sequential on purpose: renders are synchronous and the page count is small.
-    for (const { path, file } of pages) {
-      await writeOutput(file, server.renderDocument(template, path));
+    for (const { file, contents } of files) {
+      await writeOutput(file, contents);
     }
-    await writeOutput(server.SITEMAP_FILE, server.buildSitemap());
-    process.stdout.write(`Prerendered ${pages.length} pages and ${server.SITEMAP_FILE} into dist/\n`);
+    process.stdout.write(`Wrote ${files.length} files into dist/: every page, 404.html and sitemap.xml\n`);
   } finally {
     await rm(SERVER_DIR, { recursive: true, force: true });
   }

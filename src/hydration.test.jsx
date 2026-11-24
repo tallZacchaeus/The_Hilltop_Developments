@@ -1,25 +1,39 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { act, screen, within } from '@testing-library/react';
 import { hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import Root from './Root';
-import { render as renderOnServer } from './entry-server';
-import { NOT_FOUND_PAGE } from './prerender/routes';
+import site from './site/pages';
+import SiteRoutes from './site/SiteRoutes';
+import { buildSite } from './site/buildSite';
 
+const TEMPLATE = '<html><head><!--app-head:start--><!--app-head:end--></head><body><div id="root"></div></body></html>';
+const ROOT_OPEN = '<div id="root">';
+const ROOT_CLOSE = '</div></body></html>';
+
+/** The #root markup of every file the build writes, by file name. */
+let prerendered = new Map();
 let mounted = null;
 
-/**
- * Hydrates the prerendered HTML for `url` the way the browser would after Vercel serves it:
- * the file is chosen by path alone, then the app boots with the full URL (query string included).
- */
-async function hydrateAt(url, serverPath = new URL(url, 'http://localhost').pathname) {
+beforeAll(() => {
+  // Server rendering inside jsdom makes React warn about layout effects; that noise isn't under test.
   const silence = vi.spyOn(console, 'error').mockImplementation(() => {});
-  const { html } = renderOnServer(serverPath);
+  prerendered = new Map(
+    buildSite(TEMPLATE)
+      .filter(({ file }) => file.endsWith('.html'))
+      .map(({ file, contents }) => [file, contents.slice(contents.indexOf(ROOT_OPEN) + ROOT_OPEN.length, contents.lastIndexOf(ROOT_CLOSE))]),
+  );
   silence.mockRestore();
+});
 
+/**
+ * Hydrates the prerendered file Vercel would serve for `url` (chosen by path alone; an unknown
+ * path gets 404.html), then boots the app with the full URL, query string included.
+ */
+async function hydrateAt(url) {
+  const { file } = site.pageAt(new URL(url, 'http://localhost').pathname);
   const container = document.createElement('div');
-  container.innerHTML = html;
+  container.innerHTML = prerendered.get(file);
   document.body.appendChild(container);
   window.history.replaceState(null, '', url);
 
@@ -30,7 +44,7 @@ async function hydrateAt(url, serverPath = new URL(url, 'http://localhost').path
       container,
       <Root>
         <BrowserRouter>
-          <App />
+          <SiteRoutes />
         </BrowserRouter>
       </Root>,
       { onRecoverableError: (error) => errors.push(String(error)) },
@@ -44,31 +58,24 @@ afterEach(() => {
   act(() => mounted?.root.unmount());
   mounted?.container.remove();
   mounted = null;
+  vi.restoreAllMocks();
   window.history.replaceState(null, '', '/');
 });
 
 describe('hydrating prerendered pages', () => {
-  it.each([
-    '/',
-    '/about',
-    '/services',
-    '/developments',
-    '/developments/splurge',
-    '/insights',
-    '/contact',
-    '/own-a-piece',
-    '/privacy-policy',
-    '/terms',
-  ])('%s hydrates without mismatches', async (url) => {
-    const { errors } = await hydrateAt(url);
-    expect(errors).toEqual([]);
-  });
+  it.each(site.pages.filter((page) => page.known).map((page) => page.path))(
+    '%s hydrates without mismatches',
+    async (url) => {
+      const { errors } = await hydrateAt(url);
+      expect(errors).toEqual([]);
+    },
+  );
 
-  // Vercel serves the same 404.html at every unknown URL, including ones under a real section.
-  it.each(['/no-such-page', '/developments/no-such-development', '/about/no-such-section'])(
+  // Vercel serves the same 404.html at every unknown URL, including ones under a real section or in the wrong case.
+  it.each(['/no-such-page', '/developments/no-such-development', '/about/no-such-section', '/About'])(
     'hydrates 404.html at %s without mismatches',
     async (url) => {
-      const { errors } = await hydrateAt(url, NOT_FOUND_PAGE.path);
+      const { errors } = await hydrateAt(url);
 
       expect(errors).toEqual([]);
       expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
