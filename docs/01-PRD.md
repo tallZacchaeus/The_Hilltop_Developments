@@ -8,7 +8,7 @@
 
 ## 1. Overview
 
-Hilltop Developments — *A Realty Expression of the Marvel Ideations* — is a Nigerian real estate development company whose tagline is **Building Sustainable Cities**. Until November 2026 the web presence was a single-page pre-launch holding page. This redesign replaces it with a full multi-page marketing site that presents the company, its services, its developments and its ownership offering, and turns visitors into enquiries.
+Hilltop Developments is a Nigerian real estate development company whose tagline is **Building Sustainable Cities**. Until November 2026 the web presence was a single-page pre-launch holding page. This redesign replaces it with a full multi-page marketing site that presents the company, its services, its developments and its ownership offering, and turns visitors into enquiries.
 
 ## 2. Goals
 
@@ -26,7 +26,7 @@ Hilltop Developments — *A Realty Expression of the Marvel Ideations* — is a 
 |---------|-------|---------------|
 | First-time buyer (young adult) | Affordable, practical homes; how to enquire | Developments → Crib by Hilltop, Contact |
 | Premium home buyer | Luxury, privacy, nature; inspection and payment options | Goshen, Splurge, The Terrace, FAQ |
-| Land buyer / investor | Land and investment opportunities, title documents | Own a Piece, Developments → Land, FAQ |
+| Land buyer | Land to buy, title documents | Own a Piece (land buying only), FAQ |
 | Partner / organisation | Collaboration model, who to contact | About → Partnerships, Contact (partnership) |
 | Client needing services | Design & build, advisory, management services | Services, Contact |
 | Job seeker | Open roles | Insights → Careers |
@@ -36,9 +36,9 @@ Hilltop Developments — *A Realty Expression of the Marvel Ideations* — is a 
 | ID | Requirement | Status |
 |----|-------------|--------|
 | F1 | Seven primary pages: Home, About, Services, Developments, Insights, Contact, Own a Piece | Built |
-| F2 | One detail page per development (Crib, Goshen, Splurge, The Terrace, The Yard, Commercial, Land) | Built |
+| F2 | One detail page per development (Crib, Goshen, Splurge, The Terrace, The Yard, Commercial, Infrastructure) | Built |
 | F3 | Sticky header with dropdowns for About and Developments; mobile menu | Built |
-| F4 | Developments index filterable by Residential / Commercial / Land | Built |
+| F4 | Developments index filterable by Residential / Commercial / Infrastructure | Built |
 | F5 | Enquiry form with validation, enquiry-type and development pre-selection from links | Built (sends via email app / WhatsApp; no server) |
 | F6 | FAQ accordion with all 11 questions from the copy doc | Built |
 | F7 | Advisory Board, Team and Client logos driven by data, with a "coming soon" state while empty | Built — awaiting client content (client logo section stays hidden until logos exist) |
@@ -95,5 +95,14 @@ All headings and body text come from the copy doc. These small additions or subs
 | Insights → News & Articles | Button "Get updates" (WhatsApp) instead of "View All News" / "Explore Articles" | There are no posts yet; the doc's buttons would lead nowhere |
 | Advisory Board / Team | "Profiles coming soon" card | No profiles supplied yet |
 | Contact | No office-hours line | The doc has `[Insert operating hours]` |
-| Own a Piece | "Explore Ownership Opportunities" used as the opportunities heading | The doc uses it as the hero button label; the list had no heading |
 | Privacy Policy / Terms | "Being finalised" placeholder | No legal text supplied |
+
+**Client feedback, 24 Nov 2026.** The client asked for four changes; these are the new or reworded texts to approve:
+
+| Where | What the site shows | Why |
+|-------|---------------------|-----|
+| Developments, nav, homepage card | "Infrastructure" / "Infrastructure Developments" instead of "Land" | Client: change "Land" to Infrastructure. `/developments/land` now redirects to `/developments/infrastructure` |
+| Infrastructure detail page | Tagline "The groundwork for growing cities"; designed for "Communities, businesses and partners"; summary about roads, utilities and shared spaces | **Draft:** the copy doc only has Land copy, which describes selling plots. Needs Hilltop's wording |
+| Homepage "Creating Spaces That Move Life Forward" lead | "…functional commercial spaces and the infrastructure that supports them…" (was "…and land opportunities…") | Follows the rename |
+| Own a Piece | One "Land Opportunities" section ("Enquire about land"); hero lead now "A Hilltop Developments land ownership offering, giving you the opportunity to own land across our developments." Estate, property and investment opportunities removed | Client: Own a Piece is strictly land buying |
+| Footer, homepage hero, structured data | "A Realty Expression of the Marvel Ideations" removed | Client: remove Marvel Ideations everywhere |

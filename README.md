@@ -1,6 +1,6 @@
 # Hilltop Developments
 
-Marketing website for Hilltop Developments — *Building Sustainable Cities. A Realty Expression of the Marvel Ideations.*
+Marketing website for Hilltop Developments — *Building Sustainable Cities.*
 
 Live: https://www.thehilltopdevelopments.com · Built with React 18, Vite 5, Tailwind CSS 3, Framer Motion and React Router. Design follows the [Architecteo](https://architecteo.framer.website/) template, adapted to Hilltop's royal navy.
 

@@ -19,7 +19,7 @@ export default function HomeDevelopmentTypes() {
           id="spaces-title"
           eyebrow="Our developments"
           title="Creating Spaces That Move Life Forward."
-          lead="From thoughtfully designed residences to functional commercial spaces and land opportunities, we develop spaces that respond to the changing needs of people, businesses and communities."
+          lead="From thoughtfully designed residences to functional commercial spaces and the infrastructure that supports them, we develop spaces that respond to the changing needs of people, businesses and communities."
         />
       </Reveal>
 

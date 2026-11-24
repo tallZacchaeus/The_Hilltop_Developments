@@ -83,11 +83,11 @@ describe('hydrating prerendered pages', () => {
   });
 
   it('applies ?category= to the developments filter once hydrated', async () => {
-    const { errors } = await hydrateAt('/developments?category=land');
+    const { errors } = await hydrateAt('/developments?category=infrastructure');
 
     expect(errors).toEqual([]);
     const titles = screen.getAllByRole('article').map((card) => within(card).getByRole('heading').textContent);
-    expect(titles).toEqual(['Land Developments']);
+    expect(titles).toEqual(['Infrastructure Developments']);
   });
 
   it('keeps prerendered content visible after hydration', async () => {

@@ -3,6 +3,9 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/developments/land", "destination": "/developments/infrastructure", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

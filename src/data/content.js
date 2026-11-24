@@ -76,36 +76,17 @@ export const PROJECT_CATEGORIES = Object.freeze([
   },
 ]);
 
-export const OPPORTUNITIES = Object.freeze([
-  {
-    id: 'land',
-    title: 'Land Opportunities',
-    description: 'Explore available land for direct ownership and future development.',
-    image: '/images/land-development-site.jpg',
-    imageAlt: 'Aerial view of land prepared for development',
-  },
-  {
-    id: 'estate',
-    title: 'Estate Opportunities',
-    description: "Discover land and property opportunities within Hilltop's estate developments.",
-    image: '/images/estate-aerial.jpg',
-    imageAlt: 'Aerial view of a planned residential estate',
-  },
-  {
-    id: 'property',
-    title: 'Property Opportunities',
-    description: 'Explore residential and other properties available for purchase.',
-    image: '/images/residential-dusk.jpg',
-    imageAlt: 'A modern home lit warmly at dusk',
-  },
-  {
-    id: 'investment',
-    title: 'Investment Opportunities',
-    description: 'Discover real estate opportunities for individuals looking to invest in land and property.',
-    image: '/images/lagos-waterfront.jpg',
-    imageAlt: 'A bridge and waterfront in a growing Nigerian city',
-  },
-]);
+/** Own a Piece is strictly land buying (client brief, Nov 2026). */
+export const LAND_OPPORTUNITY = Object.freeze({
+  id: 'land',
+  title: 'Land Opportunities',
+  description: 'Explore available land for direct ownership and future development.',
+  image: '/images/land-development-site.jpg',
+  imageAlt: 'Aerial view of land prepared for development',
+});
+
+/** Opportunities an ownership enquiry can be about (the enquiry form and email subject read these). */
+export const OPPORTUNITIES = Object.freeze([LAND_OPPORTUNITY]);
 
 export const INSIGHTS = Object.freeze([
   {

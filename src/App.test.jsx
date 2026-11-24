@@ -51,6 +51,12 @@ describe('routes', () => {
     );
   });
 
+  // Client request (Nov 2026): the parent-brand line is removed from the site.
+  it.each(PAGES)('%s never mentions Marvel Ideations', (path) => {
+    renderRoute(path);
+    expect(document.body.textContent).not.toMatch(/marvel/i);
+  });
+
   it('shows the not-found page for unknown paths and marks it noindex', () => {
     renderRoute('/no-such-page');
     expect(screen.getByRole('heading', { level: 1, name: 'This page could not be found' })).toBeInTheDocument();
@@ -112,9 +118,10 @@ describe('developments filter', () => {
     expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
     expect(screen.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true');
 
-    await user.click(screen.getByRole('button', { name: /^Land/ }));
-    expect(cardTitles()).toEqual(['Land Developments']);
-    expect(screen.getByRole('button', { name: /^Land/ })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(screen.getByRole('button', { name: /^Infrastructure/ }));
+    expect(cardTitles()).toEqual(['Infrastructure Developments']);
+    expect(screen.getByRole('button', { name: /^Infrastructure/ })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.queryByRole('button', { name: /^Land/ })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /^All/ }));
     expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
@@ -129,6 +136,20 @@ describe('developments filter', () => {
     renderRoute('/developments?category=castles');
     expect(cardTitles()).toHaveLength(DEVELOPMENTS.length);
     expect(screen.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true');
+  });
+});
+
+describe('own a piece page', () => {
+  it('offers land buying only', () => {
+    renderRoute('/own-a-piece');
+
+    expect(screen.getByRole('link', { name: /enquire about land/i })).toHaveAttribute(
+      'href',
+      '/contact?type=ownership&opportunity=land',
+    );
+    ['Estate Opportunities', 'Property Opportunities', 'Investment Opportunities'].forEach((title) =>
+      expect(screen.queryByText(title)).not.toBeInTheDocument(),
+    );
   });
 });
 
