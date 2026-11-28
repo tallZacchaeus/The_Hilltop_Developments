@@ -27,7 +27,7 @@ Unknown paths and unknown development slugs render the 404 page. In production e
 
 | Dropdown | Items |
 |----------|-------|
-| About ▾ | Company Overview `#overview` · Vision & Mission `#vision` · The Team `#team` · Project Categories `#categories` · Partnerships `#partnerships` |
+| About ▾ | Company Overview `#overview` · Vision & Mission `#vision` · The Team `#team` · Partners in Success `#partners` · Project Categories `#categories` · Partnerships `#partnerships` |
 | Developments ▾ | Residential · Commercial · Infrastructure (each opens `/developments?category=…`) |
 
 **Header (mobile, < 1024 px):** logo + menu button → full-height sheet with all links and sub-links; closes on navigation or Escape.

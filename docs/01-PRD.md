@@ -92,7 +92,7 @@ All headings and body text come from the copy doc. These small additions or subs
 | Section eyebrows (e.g. "Who we are", "Our commitment", "Coming soon") | Short labels above headings | Template pattern; the doc has no labels |
 | Home, "The Future of Cities…" image card | "Living · Working · Community" | Taken from the doc's phrase "living, working and community development" |
 | Development detail pages | Facts (Category, Status, Designed for) and a "Register your interest" block | The doc has one paragraph per development; facts are derived from it |
-| Insights → News & Articles | Button "Get updates" (WhatsApp) instead of "View All News" / "Explore Articles" | There are no posts yet; the doc's buttons would lead nowhere |
+| Insights → all three cards | Buttons keep the doc's labels ("View All News", "Explore Articles", "Explore Career Opportunities") but open the contact form with the matching enquiry type | No news, articles or job pages exist yet (client request, 27 Nov 2026) |
 | Team | "Profiles coming soon" card | No profiles supplied yet |
 | Contact | No office-hours line | The doc has `[Insert operating hours]` |
 | Privacy Policy / Terms | "Being finalised" placeholder | No legal text supplied |
@@ -106,3 +106,10 @@ All headings and body text come from the copy doc. These small additions or subs
 | Homepage "Creating Spaces That Move Life Forward" lead | "…functional commercial spaces and the infrastructure that supports them…" (was "…and land opportunities…") | Follows the rename |
 | Own a Piece | One "Land Opportunities" section ("Enquire about land"); hero lead now "A Hilltop Developments land ownership offering, giving you the opportunity to own land across our developments." Estate, property and investment opportunities removed | Client: Own a Piece is strictly land buying |
 | Footer, homepage hero, structured data | "A Realty Expression of the Marvel Ideations" removed | Client: remove Marvel Ideations everywhere |
+
+**Client feedback, 27 Nov 2026.** New texts written for the requested changes, to approve:
+
+| Where | What the site shows | Why |
+|-------|---------------------|-----|
+| About and Services, Partners in Success | Eyebrow "Our partners"; lead "We work alongside trusted organisations that share our commitment to quality and long-term value." | The client gave the title and partner names only |
+| Goshen detail page, flyer caption | "Goshen: coming soon" | Caption for the client's flyer |
