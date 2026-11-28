@@ -134,6 +134,18 @@ describe('developments filter', () => {
   });
 });
 
+describe('footer', () => {
+  it('sits on the navy brand background with light text, and no navy-on-navy text', () => {
+    renderRoute('/');
+    const footer = screen.getByRole('contentinfo');
+
+    expect(footer.className).toContain('bg-navy');
+    expect(footer.className).toContain('text-white');
+    const navyText = [footer, ...footer.querySelectorAll('*')].filter((el) => /(^|\s)text-navy/.test(el.className?.toString() ?? ''));
+    expect(navyText).toEqual([]);
+  });
+});
+
 describe('services page', () => {
   it('shows a picture with alt text on every service card', () => {
     renderRoute('/services');
