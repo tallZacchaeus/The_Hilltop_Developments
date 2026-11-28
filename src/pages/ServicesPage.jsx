@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { SERVICES } from '../data/services';
+import { PARTNERS } from '../data/partners';
 import { CLIENTS } from '../data/people';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -7,6 +8,7 @@ import Panel from '../components/ui/Panel';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import CtaPanel from '../components/sections/CtaPanel';
+import PartnersSection from '../components/sections/PartnersSection';
 import PageHero from '../components/sections/PageHero';
 
 const STAGGER = 0.04;
@@ -75,6 +77,8 @@ export default function ServicesPage() {
           ))}
         </ol>
       </Panel>
+
+      <PartnersSection id="partners" partners={PARTNERS} />
 
       <ClientLogos />
 

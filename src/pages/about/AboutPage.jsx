@@ -1,7 +1,9 @@
 import { ArrowRight } from 'lucide-react';
+import { PARTNERS } from '../../data/partners';
 import { TEAM } from '../../data/people';
 import Button from '../../components/ui/Button';
 import CtaPanel from '../../components/sections/CtaPanel';
+import PartnersSection from '../../components/sections/PartnersSection';
 import PeopleSection from '../../components/sections/PeopleSection';
 import SplitSection from '../../components/sections/SplitSection';
 import VisionMission from './VisionMission';
@@ -52,6 +54,8 @@ export default function AboutPage() {
         people={TEAM}
         groupLabel="team"
       />
+
+      <PartnersSection id="partners" partners={PARTNERS} />
 
       <ProjectCategories />
 

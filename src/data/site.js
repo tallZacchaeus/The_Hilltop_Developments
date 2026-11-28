@@ -22,6 +22,7 @@ export const NAV_ITEMS = Object.freeze([
       { label: 'Company Overview', to: '/about#overview' },
       { label: 'Vision & Mission', to: '/about#vision' },
       { label: 'The Team', to: '/about#team' },
+      { label: 'Partners in Success', to: '/about#partners' },
       { label: 'Project Categories', to: '/about#categories' },
       { label: 'Partnerships', to: '/about#partnerships' },
     ],

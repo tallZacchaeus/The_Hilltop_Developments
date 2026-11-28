@@ -14,6 +14,7 @@ import {
 } from './developments';
 import { HOME_SERVICES, SERVICES } from './services';
 import { FAQS, INSIGHTS, OPPORTUNITIES, PROJECT_CATEGORIES } from './content';
+import { PARTNERS } from './partners';
 import { FOOTER_GROUPS, NAV_ITEMS, SITE } from './site';
 import site from '../site/pages';
 
@@ -28,6 +29,7 @@ const allImages = [
   ...PROJECT_CATEGORIES.map((item) => item.image),
   ...OPPORTUNITIES.map((item) => item.image),
   ...INSIGHTS.map((item) => item.image),
+  ...PARTNERS.filter((item) => item.logo).map((item) => item.logo),
 ];
 
 describe('developments data', () => {
