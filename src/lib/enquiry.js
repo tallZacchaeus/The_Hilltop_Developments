@@ -9,6 +9,8 @@ export const ENQUIRY_TYPES = Object.freeze([
   { value: 'services', label: 'Our services' },
   { value: 'partnership', label: 'Partnership proposal' },
   { value: 'careers', label: 'Careers at Hilltop' },
+  { value: 'news', label: 'News & updates' },
+  { value: 'articles', label: 'Articles' },
 ]);
 
 export const LIMITS = Object.freeze({

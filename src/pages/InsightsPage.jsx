@@ -1,6 +1,5 @@
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { INSIGHTS } from '../data/content';
-import { buildQuickWhatsAppLink } from '../lib/enquiry';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Chip from '../components/ui/Chip';
@@ -9,19 +8,8 @@ import Reveal from '../components/ui/Reveal';
 import PageHero from '../components/sections/PageHero';
 
 const STAGGER = 0.08;
-const UPDATES_LINK = buildQuickWhatsAppLink('Hello Hilltop Developments, please add me to your news and updates.');
-
-// News and articles have no posts yet, so their action subscribes to updates;
-// careers routes straight to an enquiry.
-const ACTIONS = {
-  news: { label: 'Get updates', href: UPDATES_LINK, icon: MessageCircle },
-  articles: { label: 'Get updates', href: UPDATES_LINK, icon: MessageCircle },
-  careers: { label: 'Explore Career Opportunities', to: '/contact?type=careers', icon: ArrowRight },
-};
 
 function InsightCard({ insight }) {
-  const { label, ...action } = ACTIONS[insight.id];
-
   return (
     <Card as="article" id={insight.id} className="flex h-full scroll-mt-28 flex-col p-3 sm:p-4">
       <div className="relative aspect-[16/11] overflow-hidden rounded-inner bg-sky-100">
@@ -34,8 +22,8 @@ function InsightCard({ insight }) {
         <h2 className="text-h3">{insight.title}</h2>
         <p className="text-[15px] leading-relaxed text-navy/70">{insight.description}</p>
         <div className="mt-auto pt-3">
-          <Button variant="light" {...action}>
-            {label}
+          <Button to={insight.action.to} variant="light" icon={ArrowRight}>
+            {insight.action.label}
           </Button>
         </div>
       </div>

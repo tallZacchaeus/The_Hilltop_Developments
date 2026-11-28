@@ -97,6 +97,8 @@ export const INSIGHTS = Object.freeze([
     image: '/images/construction-cranes.jpg',
     imageAlt: 'Tower cranes rising over a building under construction',
     status: 'First updates coming soon',
+    // No news posts exist yet, so the button opens the enquiry form with the subject pre-selected.
+    action: { label: 'View All News', to: '/contact?type=news#enquiry' },
   },
   {
     id: 'articles',
@@ -106,6 +108,7 @@ export const INSIGHTS = Object.freeze([
     image: '/images/architect-plans.jpg',
     imageAlt: 'Architectural plans being drafted by hand',
     status: 'First articles coming soon',
+    action: { label: 'Explore Articles', to: '/contact?type=articles#enquiry' },
   },
   {
     id: 'careers',
@@ -115,5 +118,6 @@ export const INSIGHTS = Object.freeze([
     image: '/images/construction-crew.jpg',
     imageAlt: 'A construction team at work on site',
     status: 'Open to applications',
+    action: { label: 'Explore Career Opportunities', to: '/contact?type=careers#enquiry' },
   },
 ]);

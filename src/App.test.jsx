@@ -134,6 +134,35 @@ describe('developments filter', () => {
   });
 });
 
+describe('insights page', () => {
+  it('shows the client copy with a button to a real destination on each card', () => {
+    renderRoute('/insights');
+
+    expect(
+      screen.getByText(
+        'Stay informed about Hilltop Developments, our projects, company activities and perspectives on the real estate industry.',
+      ),
+    ).toBeInTheDocument();
+    const buttons = [
+      ['News & Updates', 'View All News', '/contact?type=news#enquiry'],
+      ['Articles', 'Explore Articles', '/contact?type=articles#enquiry'],
+      ['Careers at Hilltop', 'Explore Career Opportunities', '/contact?type=careers#enquiry'],
+    ];
+    buttons.forEach(([title, label, href]) => {
+      const card = screen.getByRole('heading', { level: 2, name: title }).closest('article');
+      expect(within(card).getByRole('link', { name: label })).toHaveAttribute('href', href);
+    });
+  });
+
+  it('pre-selects the news and articles enquiry types on the contact page', () => {
+    const { unmount } = renderRoute('/contact?type=news');
+    expect(screen.getByLabelText('Enquiry about')).toHaveValue('news');
+    unmount();
+    renderRoute('/contact?type=articles');
+    expect(screen.getByLabelText('Enquiry about')).toHaveValue('articles');
+  });
+});
+
 describe('own a piece page', () => {
   it('offers land buying only', () => {
     renderRoute('/own-a-piece');
