@@ -134,6 +134,81 @@ describe('developments filter', () => {
   });
 });
 
+describe('development flyers', () => {
+  it('shows the Goshen coming-soon flyer on its page only', () => {
+    const { unmount } = renderRoute('/developments/goshen');
+    const flyer = screen.getByAltText(/Goshen by Hilltop.*coming soon.*Ogun State, Nigeria/i);
+    expect(flyer).toHaveAttribute('src', '/images/goshen-flyer.jpg');
+    expect(flyer).toHaveAttribute('width', '1080');
+    unmount();
+
+    renderRoute('/developments/crib');
+    expect(document.querySelector('img[src="/images/goshen-flyer.jpg"]')).toBeNull();
+  });
+});
+
+describe('footer', () => {
+  it('sits on the navy brand background with light text, and no navy-on-navy text', () => {
+    renderRoute('/');
+    const footer = screen.getByRole('contentinfo');
+
+    expect(footer.className).toContain('bg-navy');
+    expect(footer.className).toContain('text-white');
+    const navyText = [footer, ...footer.querySelectorAll('*')].filter((el) => /(^|\s)text-navy/.test(el.className?.toString() ?? ''));
+    expect(navyText).toEqual([]);
+  });
+});
+
+describe('services page', () => {
+  it('shows a picture with alt text on every service card', () => {
+    renderRoute('/services');
+    const cards = within(document.getElementById('all-services')).getAllByRole('listitem');
+
+    expect(cards).toHaveLength(10);
+    cards.forEach((card) => expect(within(card).getByRole('img')).toHaveAttribute('alt', expect.stringMatching(/\w{4}/)));
+  });
+});
+
+describe('about page', () => {
+  it('has no Advisory Board section but keeps Our Team', () => {
+    renderRoute('/about');
+
+    expect(document.body.textContent).not.toMatch(/advisory board/i);
+    expect(document.getElementById('board')).toBeNull();
+    expect(document.getElementById('team')).not.toBeNull();
+    expect(screen.queryByRole('link', { name: 'Advisory Board' })).not.toBeInTheDocument();
+  });
+});
+
+describe('insights page', () => {
+  it('shows the client copy with a button to a real destination on each card', () => {
+    renderRoute('/insights');
+
+    expect(
+      screen.getByText(
+        'Stay informed about Hilltop Developments, our projects, company activities and perspectives on the real estate industry.',
+      ),
+    ).toBeInTheDocument();
+    const buttons = [
+      ['News & Updates', 'View All News', '/contact?type=news#enquiry'],
+      ['Articles', 'Explore Articles', '/contact?type=articles#enquiry'],
+      ['Careers at Hilltop', 'Explore Career Opportunities', '/contact?type=careers#enquiry'],
+    ];
+    buttons.forEach(([title, label, href]) => {
+      const card = screen.getByRole('heading', { level: 2, name: title }).closest('article');
+      expect(within(card).getByRole('link', { name: label })).toHaveAttribute('href', href);
+    });
+  });
+
+  it('pre-selects the news and articles enquiry types on the contact page', () => {
+    const { unmount } = renderRoute('/contact?type=news');
+    expect(screen.getByLabelText('Enquiry about')).toHaveValue('news');
+    unmount();
+    renderRoute('/contact?type=articles');
+    expect(screen.getByLabelText('Enquiry about')).toHaveValue('articles');
+  });
+});
+
 describe('own a piece page', () => {
   it('offers land buying only', () => {
     renderRoute('/own-a-piece');

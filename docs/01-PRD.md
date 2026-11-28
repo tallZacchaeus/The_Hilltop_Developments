@@ -41,7 +41,7 @@ Hilltop Developments is a Nigerian real estate development company whose tagline
 | F4 | Developments index filterable by Residential / Commercial / Infrastructure | Built |
 | F5 | Enquiry form with validation, enquiry-type and development pre-selection from links | Built (sends via email app / WhatsApp; no server) |
 | F6 | FAQ accordion with all 11 questions from the copy doc | Built |
-| F7 | Advisory Board, Team and Client logos driven by data, with a "coming soon" state while empty | Built — awaiting client content (client logo section stays hidden until logos exist) |
+| F7 | Team and Client logos driven by data, with a "coming soon" state while empty | Built — awaiting client content (client logo section stays hidden until logos exist) |
 | F8 | Per-page title, description, canonical URL and robots (404 is `noindex`) | Built |
 | F9 | Privacy Policy and Terms pages | Placeholder until legal text is supplied |
 | F10 | Server-side enquiry handling (Resend / Formspree) | Planned |
@@ -71,7 +71,7 @@ Measurement depends on F11 (analytics), which is planned.
 
 These are rendered as clearly marked placeholders and tracked in [06-Implementation-Plan.md](06-Implementation-Plan.md):
 
-- Advisory Board and Team: photos, names, titles, short bios
+- Team: photos, names, titles, short bios
 - Client logos
 - Office hours (the copy doc has `[Insert operating hours]`)
 - Per-development facts: location, unit types, price range, status dates, real renders
@@ -92,8 +92,8 @@ All headings and body text come from the copy doc. These small additions or subs
 | Section eyebrows (e.g. "Who we are", "Our commitment", "Coming soon") | Short labels above headings | Template pattern; the doc has no labels |
 | Home, "The Future of Cities…" image card | "Living · Working · Community" | Taken from the doc's phrase "living, working and community development" |
 | Development detail pages | Facts (Category, Status, Designed for) and a "Register your interest" block | The doc has one paragraph per development; facts are derived from it |
-| Insights → News & Articles | Button "Get updates" (WhatsApp) instead of "View All News" / "Explore Articles" | There are no posts yet; the doc's buttons would lead nowhere |
-| Advisory Board / Team | "Profiles coming soon" card | No profiles supplied yet |
+| Insights → all three cards | Buttons keep the doc's labels ("View All News", "Explore Articles", "Explore Career Opportunities") but open the contact form with the matching enquiry type | No news, articles or job pages exist yet (client request, 27 Nov 2026) |
+| Team | "Profiles coming soon" card | No profiles supplied yet |
 | Contact | No office-hours line | The doc has `[Insert operating hours]` |
 | Privacy Policy / Terms | "Being finalised" placeholder | No legal text supplied |
 
@@ -106,3 +106,10 @@ All headings and body text come from the copy doc. These small additions or subs
 | Homepage "Creating Spaces That Move Life Forward" lead | "…functional commercial spaces and the infrastructure that supports them…" (was "…and land opportunities…") | Follows the rename |
 | Own a Piece | One "Land Opportunities" section ("Enquire about land"); hero lead now "A Hilltop Developments land ownership offering, giving you the opportunity to own land across our developments." Estate, property and investment opportunities removed | Client: Own a Piece is strictly land buying |
 | Footer, homepage hero, structured data | "A Realty Expression of the Marvel Ideations" removed | Client: remove Marvel Ideations everywhere |
+
+**Client feedback, 27 Nov 2026.** New texts written for the requested changes, to approve:
+
+| Where | What the site shows | Why |
+|-------|---------------------|-----|
+| About and Services, Partners in Success | Eyebrow "Our partners"; lead "We work alongside trusted organisations that share our commitment to quality and long-term value." | The client gave the title and partner names only |
+| Goshen detail page, flyer caption | "Goshen: coming soon" | Caption for the client's flyer |

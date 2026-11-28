@@ -40,7 +40,7 @@ function ComingSoon({ groupLabel }) {
 }
 
 /**
- * Advisory board / team section. Shows person cards, or a "coming soon" card while the list is empty.
+ * Team section. Shows person cards, or a "coming soon" card while the list is empty.
  * @param {{
  *   id: string, eyebrow: string, title: string, intro: ReadonlyArray<string>,
  *   people: ReadonlyArray<{ name: string, title: string, bio: string, photo: string, photoAlt?: string }>,
