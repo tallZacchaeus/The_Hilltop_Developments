@@ -42,7 +42,7 @@ Unknown paths and unknown development slugs render the 404 page. In production e
 | `/about` | Who We Are `#overview` · Vision & Mission `#vision` · Our Team `#team` · Partners in Success `#partners` · Project Categories `#categories` (Metropolis / Countryside / Hinterland) · Building with Tomorrow in Mind `#tomorrow` · Partnerships `#partnerships` · Be Part of What Comes Next `#next` (CTA) |
 | `/services` | Page hero · 10 services (each with a photo) · Partners in Success `#partners` · Our Valued Clients (hidden until logos exist) · Let's Bring Your Next Project to Life (CTA) |
 | `/developments` | Page hero · Category filter (All / Residential / Commercial / Infrastructure) · Development grid · CTA. The old `/developments/land` permanently redirects to `/developments/infrastructure` |
-| `/developments/:slug` | Back link · Title + summary · Fact cards · Coming-soon flyer (Goshen only) · Image gallery · Overview · Register interest CTA · Other developments |
+| `/developments/:slug` | Back link · Title + summary · Fact cards · Coming-soon flyer (Goshen and Splurge) · Image gallery · Overview · Register interest CTA · Other developments |
 | `/insights` | Page hero · News & Updates `#news` · Articles `#articles` · Careers at Hilltop `#careers` (buttons: View All News → `/contact?type=news#enquiry`, Explore Articles → `/contact?type=articles#enquiry`, Explore Career Opportunities → `/contact?type=careers#enquiry`; they point at the form until news, articles and jobs exist) |
 | `/contact` | Get in Touch (contact information + enquiry form) · FAQ (11) |
 | `/own-a-piece` | Hero ("Own a Piece of the Earth.") · Land Opportunities `#land` (land buying only) · Interested in an Opportunity? (CTA) |

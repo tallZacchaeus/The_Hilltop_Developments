@@ -59,7 +59,7 @@ erDiagram
 | `team` | `Person[]` | `[]` (awaiting client content) |
 | `clients` | `{ name: string, logo: string }[]` | `[]` |
 
-`src/data/partners.js` exports `PARTNERS`: `{ name, logo: string \| null, width?, height? }[]` (five entries; `logo: null` renders a text wordmark). A development may carry an optional `flyer: { src, alt, width, height }` (Goshen only for now), and each service has `image`, `imageAlt` and an optional `imagePosition`.
+`src/data/partners.js` exports `PARTNERS`: `{ name, logo: string \| null, width?, height? }[]` (five entries, all with logos; `logo: null` would render a text wordmark). A development may carry an optional `flyer: { src, alt, width, height }` (Goshen and Splurge), and each service has `image`, `imageAlt` and an optional `imagePosition`.
 
 `Person` = `{ name: string, title: string, bio: string, photo: string }`.
 

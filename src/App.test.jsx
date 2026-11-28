@@ -135,15 +135,19 @@ describe('developments filter', () => {
 });
 
 describe('development flyers', () => {
-  it('shows the Goshen coming-soon flyer on its page only', () => {
-    const { unmount } = renderRoute('/developments/goshen');
-    const flyer = screen.getByAltText(/Goshen by Hilltop.*coming soon.*Ogun State, Nigeria/i);
-    expect(flyer).toHaveAttribute('src', '/images/goshen-flyer.jpg');
+  it.each([
+    ['goshen', 'Goshen', '/images/goshen-flyer.jpg'],
+    ['splurge', 'Splurge', '/images/splurge-flyer.jpg'],
+  ])('shows the %s coming-soon flyer on its page only', (slug, name, src) => {
+    const { unmount } = renderRoute(`/developments/${slug}`);
+    const flyer = screen.getByAltText(new RegExp(`${name} by Hilltop.*coming soon.*Ogun State, Nigeria`, 'i'));
+    expect(flyer).toHaveAttribute('src', src);
     expect(flyer).toHaveAttribute('width', '1080');
+    expect(flyer).toHaveAttribute('height', '1350');
     unmount();
 
     renderRoute('/developments/crib');
-    expect(document.querySelector('img[src="/images/goshen-flyer.jpg"]')).toBeNull();
+    expect(document.querySelector(`img[src="${src}"]`)).toBeNull();
   });
 });
 

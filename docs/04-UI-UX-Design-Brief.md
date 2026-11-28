@@ -64,7 +64,7 @@ Panels use the `.panel-sky` utility: layered white radial "clouds" over a `sky-2
 | `PageHero` | `sections/PageHero.jsx` | Sky-panel hero for inner pages, centred or with an image |
 | `SplitSection` | `sections/SplitSection.jsx` | Text beside a photo; text first on phones |
 | `PeopleSection` | `sections/PeopleSection.jsx` | Team cards, or a "profiles coming soon" card when data is empty (the Advisory Board was removed in Nov 2026) |
-| `PartnersSection` | `sections/PartnersSection.jsx` | "Partners in Success" logo grid driven by `src/data/partners.js`; logos greyscale until hover/focus, text wordmark tile when no logo file yet. Used on About and Services |
+| `PartnersSection` | `sections/PartnersSection.jsx` | "Partners in Success" logo grid driven by `src/data/partners.js`; logos full colour on phones, greyscale until hover from md up; a text wordmark tile is the fallback when a partner has no logo file. Used on About and Services |
 | `EnquiryForm` | `sections/EnquiryForm.jsx` | Validated form → email / WhatsApp |
 
 ## 5. Layout conventions

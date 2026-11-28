@@ -79,6 +79,13 @@ export const DEVELOPMENTS = Object.freeze([
       'A residential development designed for those who value luxury, relaxation and a connection to nature. It brings together contemporary design, comfort and sophistication to create a distinctive living experience.',
     image: '/images/splurge-pool-villa.jpg',
     imageAlt: 'A contemporary villa with a pool and a wide lawn',
+    // Client flyer (Nov 2026), shown on the detail page.
+    flyer: {
+      src: '/images/splurge-flyer.jpg',
+      alt: 'Flyer: Splurge by Hilltop, coming soon, Ogun State, Nigeria, over a concrete and timber villa beside a turquoise pool in a forest',
+      width: 1080,
+      height: 1350,
+    },
     gallery: [
       { src: '/images/splurge-pool-villa.jpg', alt: 'Villa with pool and garden' },
       { src: '/images/countryside-tropical-home.jpg', alt: 'A modern home among tropical trees' },
