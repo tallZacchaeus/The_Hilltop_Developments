@@ -89,7 +89,9 @@ All site-wide values (name, URLs, contact details, navigation, footer links) liv
 
 A test fails if any icon, logo or share image named in `index.html` is missing from `public/`.
 
-Photos in `public/images/` come from two sources:
+Photos in `public/images/` come from these sources:
 
 - **Hilltop brand deck** (client-owned): `glass-facade`, `hero-glass-sky`, `metropolis-skyline`, `curved-architecture`, `commercial-towers`, `residential-dusk`, `apartment-block`.
-- **Unsplash** (free under the [Unsplash License](https://unsplash.com/license), no attribution required): `lagos-waterfront`, `countryside-tropical-home`, `goshen-residence`, `splurge-pool-villa`, `land-development-site`, `estate-aerial`, `interior-living`, `construction-cranes`, `construction-crew`, `crib-homes`, `terrace-townhouses`, `yard-courtyard`, `hinterland-savanna`, `countryside-hills`, `partnership-handshake`, `architect-plans`. Replace with real project renders as they become available.
+- **Unsplash** (free under the [Unsplash License](https://unsplash.com/license), no attribution required): `lagos-waterfront`, `countryside-tropical-home`, `goshen-residence`, `splurge-pool-villa`, `land-development-site`, `estate-aerial`, `interior-living`, `construction-cranes`, `construction-crew`, `crib-homes`, `terrace-townhouses`, `yard-courtyard`, `hinterland-savanna`, `countryside-hills`, `architect-plans`. Replace with real project renders as they become available.
+- **Pexels** (free under the [Pexels License](https://www.pexels.com/license/), no attribution required; photographer: RDNE Stock project): `partnership-handshake` ([pexels.com/photo/7841498](https://www.pexels.com/photo/a-two-men-talking-while-holding-hands-7841498/), two Black professionals shaking hands, chosen per the client's Nov 2026 request) and `service-advisory` ([pexels.com/photo/8052232](https://www.pexels.com/photo/a-man-in-blue-suit-talking-to-the-woman-in-black-blazer-while-holding-a-paper-8052232/), Development Advisory service).
+- **Client-supplied** (Nov 2026): `partners/*.png` (partner logos, trimmed and resized to 400 px wide) and `goshen-flyer.jpg` (Goshen "Coming soon" flyer, resized to 1080 px wide).

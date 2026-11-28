@@ -82,7 +82,7 @@ export default function AboutPage() {
         eyebrow="Partnerships"
         title="We believe meaningful development is strengthened by collaboration."
         image="/images/partnership-handshake.jpg"
-        imageAlt="Two professionals shaking hands outside a modern building"
+        imageAlt="Two Black business professionals in suits shaking hands and smiling in an office"
         imageSide="left"
         imageAspect="aspect-[4/3]"
         actions={
