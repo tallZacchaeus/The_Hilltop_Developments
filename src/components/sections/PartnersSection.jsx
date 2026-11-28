@@ -16,7 +16,7 @@ function PartnerTile({ partner }) {
           height={partner.height}
           loading="lazy"
           decoding="async"
-          className="max-h-20 w-auto max-w-full object-contain opacity-80 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0 group-focus-within:grayscale-0 motion-reduce:transition-none"
+          className="max-h-20 w-auto max-w-full object-contain transition duration-300 motion-reduce:transition-none md:opacity-80 md:grayscale md:group-hover:opacity-100 md:group-hover:grayscale-0"
         />
       ) : (
         <span className="text-balance text-center font-display text-xl font-medium tracking-[-0.02em] text-navy/80 transition-colors duration-300 group-hover:text-navy">

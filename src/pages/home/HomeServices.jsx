@@ -19,20 +19,44 @@ const SPANS = [
 ];
 const STAGGER = 0.05;
 
-// Wide tiles put the photo beside the text; narrower ones stack it above.
+// The grid is one column below md, two columns at md, twelve at lg. The photo sits beside the text only
+// where the tile is wide enough (about 600px): full width below md, and the 7-column tiles at lg.
+const ROW_SM = {
+  card: 'sm:flex-row sm:items-stretch',
+  image: 'sm:aspect-auto sm:min-h-[200px] sm:w-[44%] sm:shrink-0',
+};
+const STACK_FROM_MD = {
+  card: 'md:flex-col',
+  image: 'md:aspect-[16/10] md:min-h-0 md:w-auto',
+};
+const ROW_AGAIN_AT_LG = {
+  card: 'lg:flex-row lg:items-stretch',
+  image: 'lg:aspect-auto lg:min-h-[200px] lg:w-[44%] lg:shrink-0',
+};
+const STACK_FROM_LG = {
+  card: 'lg:flex-col',
+  image: 'lg:aspect-[16/10] lg:min-h-0 lg:w-auto',
+};
+const join = (...parts) => parts.join(' ');
+
 const LAYOUTS = {
-  row: {
-    card: 'sm:flex-row sm:items-stretch',
-    image: 'sm:aspect-auto sm:min-h-[200px] sm:w-[44%] sm:shrink-0',
+  // Row below md, stacked in the half-width md tiles, row again in the 7-column lg tiles (indexes 0 and 3).
+  wide: {
+    card: join(ROW_SM.card, STACK_FROM_MD.card, ROW_AGAIN_AT_LG.card),
+    image: join(ROW_SM.image, STACK_FROM_MD.image, ROW_AGAIN_AT_LG.image),
   },
-  stacked: { card: '', image: '' },
-  // Full width on tablets (a row), one third on desktop (stacked).
-  rowThenStacked: {
-    card: 'md:flex-row md:items-stretch lg:flex-col',
-    image: 'md:aspect-auto md:min-h-[200px] md:w-[44%] md:shrink-0 lg:aspect-[16/10] lg:min-h-0 lg:w-auto',
+  // Row below md, stacked from md up (indexes 1, 2, 4 and 5: half or narrower tiles).
+  narrow: {
+    card: join(ROW_SM.card, STACK_FROM_MD.card),
+    image: join(ROW_SM.image, STACK_FROM_MD.image),
+  },
+  // Full-width tile at md (index 6): a row until lg, where it is one third wide and stacks.
+  fullThenNarrow: {
+    card: join(ROW_SM.card, STACK_FROM_LG.card),
+    image: join(ROW_SM.image, STACK_FROM_LG.image),
   },
 };
-const TILE_LAYOUTS = ['row', 'row', 'row', 'row', 'stacked', 'stacked', 'rowThenStacked'];
+const TILE_LAYOUTS = ['wide', 'narrow', 'narrow', 'wide', 'narrow', 'narrow', 'fullThenNarrow'];
 
 function ServiceTile({ service, layout }) {
   const Icon = service.icon;
