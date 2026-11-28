@@ -19,16 +19,30 @@ const SPANS = [
 ];
 const STAGGER = 0.05;
 
-function ServiceTile({ service }) {
+// Wide tiles put the photo beside the text; narrower ones stack it above.
+const LAYOUTS = {
+  row: {
+    card: 'sm:flex-row sm:items-stretch',
+    image: 'sm:aspect-auto sm:min-h-[200px] sm:w-[44%] sm:shrink-0',
+  },
+  stacked: { card: '', image: '' },
+  // Full width on tablets (a row), one third on desktop (stacked).
+  rowThenStacked: {
+    card: 'md:flex-row md:items-stretch lg:flex-col',
+    image: 'md:aspect-auto md:min-h-[200px] md:w-[44%] md:shrink-0 lg:aspect-[16/10] lg:min-h-0 lg:w-auto',
+  },
+};
+const TILE_LAYOUTS = ['row', 'row', 'row', 'row', 'stacked', 'stacked', 'rowThenStacked'];
+
+function ServiceTile({ service, layout }) {
   const Icon = service.icon;
+  const classes = LAYOUTS[layout];
 
   return (
-    <Card className="flex h-full flex-col gap-4 p-4 sm:flex-row sm:items-stretch">
-      {service.image && (
-        <div className="aspect-[16/10] overflow-hidden rounded-inner bg-sky-100 sm:aspect-auto sm:min-h-[200px] sm:w-[44%] sm:shrink-0">
-          <Photo src={service.image} alt={service.imageAlt} />
-        </div>
-      )}
+    <Card className={`flex h-full flex-col gap-4 p-4 ${classes.card}`}>
+      <div className={`aspect-[16/10] overflow-hidden rounded-inner bg-sky-100 ${classes.image}`}>
+        <Photo src={service.image} alt={service.imageAlt} className={service.imagePosition ?? ''} />
+      </div>
       <div className="flex flex-col gap-3 p-2 sm:py-3">
         <Icon aria-hidden className="h-6 w-6" strokeWidth={1.5} />
         <h3 className="text-h3">{service.title}</h3>
@@ -53,7 +67,7 @@ export default function HomeServices() {
       <ul className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-12">
         {HOME_SERVICES.map((service, index) => (
           <Reveal as="li" key={service.id} delay={index * STAGGER} className={SPANS[index]}>
-            <ServiceTile service={service} />
+            <ServiceTile service={service} layout={TILE_LAYOUTS[index]} />
           </Reveal>
         ))}
       </ul>

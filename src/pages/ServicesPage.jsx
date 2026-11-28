@@ -5,6 +5,7 @@ import { CLIENTS } from '../data/people';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Panel from '../components/ui/Panel';
+import Photo from '../components/ui/Photo';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import CtaPanel from '../components/sections/CtaPanel';
@@ -16,15 +17,20 @@ const STAGGER = 0.04;
 function ServiceCard({ service, number }) {
   const Icon = service.icon;
   return (
-    <Card className="flex h-full flex-col gap-4 p-6 sm:p-8">
-      <div className="flex items-center justify-between">
-        <span className="grid h-12 w-12 place-items-center rounded-full bg-sky-100">
-          <Icon aria-hidden className="h-5 w-5" strokeWidth={1.75} />
-        </span>
-        <span aria-hidden="true" className="font-display text-sm text-navy/50">{String(number).padStart(2, '0')}</span>
+    <Card className="flex h-full flex-col gap-5 p-3 sm:p-4">
+      <div className="aspect-[16/10] overflow-hidden rounded-inner bg-sky-100">
+        <Photo src={service.image} alt={service.imageAlt} className={service.imagePosition ?? ''} />
       </div>
-      <h3 className="text-h3">{service.title}</h3>
-      <p className="text-[15px] leading-relaxed text-navy/70">{service.description}</p>
+      <div className="flex flex-1 flex-col gap-4 px-3 pb-3 sm:px-4 sm:pb-4">
+        <div className="flex items-center justify-between">
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-sky-100">
+            <Icon aria-hidden className="h-5 w-5" strokeWidth={1.75} />
+          </span>
+          <span aria-hidden="true" className="font-display text-sm text-navy/50">{String(number).padStart(2, '0')}</span>
+        </div>
+        <h3 className="text-h3">{service.title}</h3>
+        <p className="text-[15px] leading-relaxed text-navy/70">{service.description}</p>
+      </div>
     </Card>
   );
 }

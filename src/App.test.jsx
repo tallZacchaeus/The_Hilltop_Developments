@@ -134,6 +134,16 @@ describe('developments filter', () => {
   });
 });
 
+describe('services page', () => {
+  it('shows a picture with alt text on every service card', () => {
+    renderRoute('/services');
+    const cards = within(document.getElementById('all-services')).getAllByRole('listitem');
+
+    expect(cards).toHaveLength(10);
+    cards.forEach((card) => expect(within(card).getByRole('img')).toHaveAttribute('alt', expect.stringMatching(/\w{4}/)));
+  });
+});
+
 describe('about page', () => {
   it('has no Advisory Board section but keeps Our Team', () => {
     renderRoute('/about');

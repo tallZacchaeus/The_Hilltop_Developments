@@ -25,7 +25,7 @@ const unique = (values) => new Set(values).size === values.length;
 const allImages = [
   ...DEVELOPMENT_TYPES.map((item) => item.image),
   ...DEVELOPMENTS.flatMap((item) => [item.image, ...item.gallery.map((photo) => photo.src)]),
-  ...SERVICES.filter((item) => item.image).map((item) => item.image),
+  ...SERVICES.map((item) => item.image),
   ...PROJECT_CATEGORIES.map((item) => item.image),
   ...OPPORTUNITIES.map((item) => item.image),
   ...INSIGHTS.map((item) => item.image),
@@ -81,6 +81,13 @@ describe('content data', () => {
     expect(SERVICES).toHaveLength(10);
     expect(unique(SERVICES.map((item) => item.id))).toBe(true);
     expect(HOME_SERVICES).toHaveLength(7);
+  });
+
+  it('gives every service a picture with alt text', () => {
+    SERVICES.forEach((service) => {
+      expect(service.image, `${service.id} image`).toMatch(/^\/images\/.+\.jpg$/);
+      expect(service.imageAlt.length, `${service.id} alt`).toBeGreaterThan(15);
+    });
   });
 
   it('has all eleven FAQs from the copy doc', () => {
