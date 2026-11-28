@@ -28,7 +28,7 @@ function PartnerTile({ partner }) {
 }
 
 /**
- * "Partners in Success" logo grid. Partners without a logo file show their name as a wordmark.
+ * "Partners in Success" logo grid. A partner without a logo file would show its name as a wordmark.
  * @param {{ id: string, partners: ReadonlyArray<{ name: string, logo: string | null, width?: number, height?: number }> }} props
  */
 export default function PartnersSection({ id, partners }) {

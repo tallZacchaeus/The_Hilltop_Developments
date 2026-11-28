@@ -19,7 +19,7 @@ describe('PartnersSection', () => {
     expect(image).toHaveAttribute('width', '300');
   });
 
-  it('shows a text wordmark for partners without a logo yet', () => {
+  it('shows a text wordmark for a partner with no logo file', () => {
     render(<PartnersSection id="partners" partners={SAMPLE} />);
 
     const items = screen.getAllByRole('listitem');
@@ -37,8 +37,9 @@ describe('PartnersSection', () => {
 describe('partners on the site', () => {
   const NAMES = ['1987 Projects & Procurement', 'Premium Cast', 'The Facility', '2nd Haven', 'Space R'];
 
-  it('lists the five client-supplied partners', () => {
+  it('lists the five client-supplied partners, each with a logo file', () => {
     expect(PARTNERS.map((partner) => partner.name)).toEqual(NAMES);
+    PARTNERS.forEach((partner) => expect(partner.logo, `${partner.name} logo`).toMatch(/^\/images\/partners\/.+\.png$/));
   });
 
   it.each(['/about', '/services'])('%s shows Partners in Success', (path) => {
@@ -46,7 +47,7 @@ describe('partners on the site', () => {
     const section = document.getElementById('partners');
     expect(section).not.toBeNull();
     NAMES.forEach((name) =>
-      expect(within(section).queryByAltText(name) ?? within(section).queryByText(name)).not.toBeNull(),
+      expect(within(section).queryByAltText(name)).not.toBeNull(),
     );
   });
 
