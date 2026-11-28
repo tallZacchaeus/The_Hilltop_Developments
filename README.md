@@ -38,7 +38,7 @@ Most content lives in `src/data/` — no layout changes needed:
 - `site.js` — contact details, navigation, footer links
 - `developments.js` — each development's name, summary, images
 - `services.js`, `content.js` — services, FAQs, project categories, ownership opportunities, insights
-- `people.js` — advisory board, team and client logos (empty arrays show a "coming soon" state)
+- `people.js` — team and client logos (empty arrays show a "coming soon" state)
 
 Images go in `public/images/` (keep them under ~400 KB, 1600 px wide).
 

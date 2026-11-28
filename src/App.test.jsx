@@ -134,6 +134,17 @@ describe('developments filter', () => {
   });
 });
 
+describe('about page', () => {
+  it('has no Advisory Board section but keeps Our Team', () => {
+    renderRoute('/about');
+
+    expect(document.body.textContent).not.toMatch(/advisory board/i);
+    expect(document.getElementById('board')).toBeNull();
+    expect(document.getElementById('team')).not.toBeNull();
+    expect(screen.queryByRole('link', { name: 'Advisory Board' })).not.toBeInTheDocument();
+  });
+});
+
 describe('insights page', () => {
   it('shows the client copy with a button to a real destination on each card', () => {
     renderRoute('/insights');

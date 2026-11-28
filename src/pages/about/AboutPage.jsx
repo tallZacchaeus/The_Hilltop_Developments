@@ -1,16 +1,11 @@
 import { ArrowRight } from 'lucide-react';
-import { ADVISORY_BOARD, TEAM } from '../../data/people';
+import { TEAM } from '../../data/people';
 import Button from '../../components/ui/Button';
 import CtaPanel from '../../components/sections/CtaPanel';
 import PeopleSection from '../../components/sections/PeopleSection';
 import SplitSection from '../../components/sections/SplitSection';
 import VisionMission from './VisionMission';
 import ProjectCategories from './ProjectCategories';
-
-const BOARD_INTRO = [
-  "Our Advisory Board brings together experienced professionals whose knowledge, insights and strategic guidance contribute to Hilltop's direction and long-term aspirations.",
-  'Their collective perspectives help strengthen our approach to development, partnerships and sustainable growth.',
-];
 
 const TEAM_INTRO = ['Behind every development is a team of people committed to turning ideas into possibilities.'];
 
@@ -48,15 +43,6 @@ export default function AboutPage() {
       </SplitSection>
 
       <VisionMission />
-
-      <PeopleSection
-        id="board"
-        eyebrow="Our Advisory Board"
-        title="Guided by experience and driven by a shared vision"
-        intro={BOARD_INTRO}
-        people={ADVISORY_BOARD}
-        groupLabel="advisory board members"
-      />
 
       <PeopleSection
         id="team"

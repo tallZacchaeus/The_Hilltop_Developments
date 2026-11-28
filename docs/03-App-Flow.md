@@ -27,7 +27,7 @@ Unknown paths and unknown development slugs render the 404 page. In production e
 
 | Dropdown | Items |
 |----------|-------|
-| About ▾ | Company Overview `#overview` · Vision & Mission `#vision` · Advisory Board `#board` · The Team `#team` · Project Categories `#categories` · Partnerships `#partnerships` |
+| About ▾ | Company Overview `#overview` · Vision & Mission `#vision` · The Team `#team` · Project Categories `#categories` · Partnerships `#partnerships` |
 | Developments ▾ | Residential · Commercial · Infrastructure (each opens `/developments?category=…`) |
 
 **Header (mobile, < 1024 px):** logo + menu button → full-height sheet with all links and sub-links; closes on navigation or Escape.
@@ -39,7 +39,7 @@ Unknown paths and unknown development slugs render the 404 page. In production e
 | Route | Sections (in order) |
 |-------|---------------------|
 | `/` | Hero ("Building Sustainable Cities for Generations") · The Future of Cities Starts with Us · Creating Spaces That Move Life Forward (Residential / Commercial / Infrastructure) · Expertise That Moves Developments Forward (7 services) · Upcoming Developments (5) · As the Future Unfolds (CTA) |
-| `/about` | Who We Are `#overview` · Vision & Mission `#vision` · Advisory Board `#board` · Our Team `#team` · Project Categories `#categories` (Metropolis / Countryside / Hinterland) · Building with Tomorrow in Mind `#tomorrow` · Partnerships `#partnerships` · Be Part of What Comes Next `#next` (CTA) |
+| `/about` | Who We Are `#overview` · Vision & Mission `#vision` · Our Team `#team` · Project Categories `#categories` (Metropolis / Countryside / Hinterland) · Building with Tomorrow in Mind `#tomorrow` · Partnerships `#partnerships` · Be Part of What Comes Next `#next` (CTA) |
 | `/services` | Page hero · 10 services · Our Valued Clients · Let's Bring Your Next Project to Life (CTA) |
 | `/developments` | Page hero · Category filter (All / Residential / Commercial / Infrastructure) · Development grid · CTA. The old `/developments/land` permanently redirects to `/developments/infrastructure` |
 | `/developments/:slug` | Back link · Title + summary · Fact cards · Image gallery · Overview · Register interest CTA · Other developments |

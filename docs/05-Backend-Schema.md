@@ -56,7 +56,6 @@ erDiagram
 
 | Export | Shape | Current value |
 |--------|-------|---------------|
-| `advisoryBoard` | `Person[]` | `[]` (awaiting client content) |
 | `team` | `Person[]` | `[]` (awaiting client content) |
 | `clients` | `{ name: string, logo: string }[]` | `[]` |
 
