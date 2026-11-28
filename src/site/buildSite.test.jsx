@@ -34,6 +34,13 @@ describe('buildSite', () => {
     expect(html).not.toContain('<title>Default</title>');
   });
 
+  it('prerenders Partners in Success on About and Services, and no Advisory Board', () => {
+    expect(contentsOf('about.html')).toContain('id="partners"');
+    expect(contentsOf('services.html')).toContain('id="partners"');
+    expect(contentsOf('about.html')).not.toMatch(/advisory board/i);
+    expect(contentsOf('developments/goshen.html')).toContain('/images/goshen-flyer.jpg');
+  });
+
   it("renders each page's own content", () => {
     expect(contentsOf('about.html')).toContain('Who We Are');
     expect(contentsOf('services.html')).toContain('Expertise That Moves Developments Forward.');

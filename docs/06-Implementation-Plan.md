@@ -111,11 +111,24 @@ What pages exist and how each is described was spread over `App.jsx`, `PAGE_ROUT
 | Build output identical to before (all 17 HTML files and `sitemap.xml`, ignoring asset hashes); browser check of navigation, head tags and header highlighting | ✅ |
 | Independent code review | ✅ 0 critical / 0 high. Fixed 2 medium (clear errors for malformed family rows; tests for head updates on navigation and for remounting between developments) and 3 low (an encoded slash no longer matches a page, stale comment, history rows annotated) |
 
+## Phase 5.2 — Client updates ✅ (27 Nov 2026)
+
+| Item | Status |
+|------|--------|
+| Insights page: client copy and buttons (View All News / Explore Articles / Explore Career Opportunities) opening the contact form with a pre-selected subject (new `news` and `articles` enquiry types) | ✅ |
+| Advisory Board section, nav link and data removed (Our Team unchanged) | ✅ |
+| "Partners in Success" (`PartnersSection`, `src/data/partners.js`) on About (after Our Team) and Services; 2nd Haven and Space R are text tiles pending logos | ✅ |
+| Partnerships photo replaced with two Black professionals shaking hands (Pexels) | ✅ |
+| Navy footer with AA contrast | ✅ |
+| A picture for every service | ✅ |
+| Goshen coming-soon flyer on `/developments/goshen` (more flyers to follow: add a `flyer` to the development) | ✅ |
+| Logos for 2nd Haven and Space R | ⬜ awaiting client |
+
 ## Phase 6 — Next (planned)
 
 | Item | Notes |
 |------|-------|
-| Real content | Board, team, client logos, office hours, development facts and renders, social links, legal text |
+| Real content | Team, client logos, 2nd Haven and Space R logos, more development flyers, office hours, development facts and renders, social links, legal text |
 | Enquiry API | `POST /api/enquiries` (see [05-Backend-Schema.md](05-Backend-Schema.md)) |
 | Analytics | Plausible or GA4; track enquiry starts |
 | CMS | For Insights (news, articles, careers) |

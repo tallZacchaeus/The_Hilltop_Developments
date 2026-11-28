@@ -30,6 +30,7 @@
 | `line` | navy at 8 % | Card borders, dividers |
 | `gold` | `#D4B76E` | Accent only (eyebrow dot, text selection, link underline) — never for text or focus rings on light backgrounds (1.9:1) |
 | white | `#FFFFFF` | Page and cards |
+| Footer | `navy` bg, white text, `white/80` links (about 9:1), `focus-ring-light` | The only solid-navy section, so it stands apart from the sky panels |
 
 Panels use the `.panel-sky` utility: layered white radial "clouds" over a `sky-200 → sky-100` vertical gradient.
 
@@ -62,7 +63,8 @@ Panels use the `.panel-sky` utility: layered white radial "clouds" over a `sky-2
 | `ImageHero` | `sections/ImageHero.jsx` | Full-bleed photo hero (Home, Own a Piece) with navy scrim — vertical on phones, horizontal on desktop |
 | `PageHero` | `sections/PageHero.jsx` | Sky-panel hero for inner pages, centred or with an image |
 | `SplitSection` | `sections/SplitSection.jsx` | Text beside a photo; text first on phones |
-| `PeopleGrid` | `sections/PeopleGrid.jsx` | Board/team cards, or a "profiles coming soon" card when data is empty |
+| `PeopleSection` | `sections/PeopleSection.jsx` | Team cards, or a "profiles coming soon" card when data is empty (the Advisory Board was removed in Nov 2026) |
+| `PartnersSection` | `sections/PartnersSection.jsx` | "Partners in Success" logo grid driven by `src/data/partners.js`; logos greyscale until hover/focus, text wordmark tile when no logo file yet. Used on About and Services |
 | `EnquiryForm` | `sections/EnquiryForm.jsx` | Validated form → email / WhatsApp |
 
 ## 5. Layout conventions

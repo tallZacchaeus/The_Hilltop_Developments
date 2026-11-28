@@ -32,18 +32,18 @@ Unknown paths and unknown development slugs render the 404 page. In production e
 
 **Header (mobile, < 1024 px):** logo + menu button → full-height sheet with all links and sub-links; closes on navigation or Escape.
 
-**Footer:** page links · FAQs (`/contact#faqs`) · Careers at Hilltop (`/insights#careers`) · Privacy Policy · Terms & Conditions · contact details · WhatsApp.
+**Footer (navy background):** page links · FAQs (`/contact#faqs`) · Careers at Hilltop (`/insights#careers`) · Privacy Policy · Terms & Conditions · contact details · WhatsApp.
 
 ## 3. Pages and sections
 
 | Route | Sections (in order) |
 |-------|---------------------|
 | `/` | Hero ("Building Sustainable Cities for Generations") · The Future of Cities Starts with Us · Creating Spaces That Move Life Forward (Residential / Commercial / Infrastructure) · Expertise That Moves Developments Forward (7 services) · Upcoming Developments (5) · As the Future Unfolds (CTA) |
-| `/about` | Who We Are `#overview` · Vision & Mission `#vision` · Our Team `#team` · Project Categories `#categories` (Metropolis / Countryside / Hinterland) · Building with Tomorrow in Mind `#tomorrow` · Partnerships `#partnerships` · Be Part of What Comes Next `#next` (CTA) |
-| `/services` | Page hero · 10 services · Our Valued Clients · Let's Bring Your Next Project to Life (CTA) |
+| `/about` | Who We Are `#overview` · Vision & Mission `#vision` · Our Team `#team` · Partners in Success `#partners` · Project Categories `#categories` (Metropolis / Countryside / Hinterland) · Building with Tomorrow in Mind `#tomorrow` · Partnerships `#partnerships` · Be Part of What Comes Next `#next` (CTA) |
+| `/services` | Page hero · 10 services (each with a photo) · Partners in Success `#partners` · Our Valued Clients (hidden until logos exist) · Let's Bring Your Next Project to Life (CTA) |
 | `/developments` | Page hero · Category filter (All / Residential / Commercial / Infrastructure) · Development grid · CTA. The old `/developments/land` permanently redirects to `/developments/infrastructure` |
-| `/developments/:slug` | Back link · Title + summary · Fact cards · Image gallery · Overview · Register interest CTA · Other developments |
-| `/insights` | Page hero · News & Updates `#news` · Articles `#articles` · Careers at Hilltop `#careers` (News/Articles buttons open a WhatsApp "add me to updates" message until posts exist; Careers → `/contact?type=careers`) |
+| `/developments/:slug` | Back link · Title + summary · Fact cards · Coming-soon flyer (Goshen only) · Image gallery · Overview · Register interest CTA · Other developments |
+| `/insights` | Page hero · News & Updates `#news` · Articles `#articles` · Careers at Hilltop `#careers` (buttons: View All News → `/contact?type=news#enquiry`, Explore Articles → `/contact?type=articles#enquiry`, Explore Career Opportunities → `/contact?type=careers#enquiry`; they point at the form until news, articles and jobs exist) |
 | `/contact` | Get in Touch (contact information + enquiry form) · FAQ (11) |
 | `/own-a-piece` | Hero ("Own a Piece of the Earth.") · Land Opportunities `#land` (land buying only) · Interested in an Opportunity? (CTA) |
 | `/privacy-policy`, `/terms` | Placeholder text until legal copy is supplied |
@@ -80,7 +80,7 @@ Footer "FAQs" → `/contact#faqs` → page scrolls to the FAQ → expand a quest
 
 | Param | Values | Effect |
 |-------|--------|--------|
-| `type` | `development`, `services`, `partnership`, `ownership`, `careers`, `general` | Pre-selects the enquiry type |
+| `type` | `development`, `services`, `partnership`, `ownership`, `careers`, `news`, `articles`, `general` | Pre-selects the enquiry type |
 | `development` | any development slug | Pre-selects the development |
 | `opportunity` | `land`, `estate`, `property`, `investment` | Adds the opportunity to the message subject |
 

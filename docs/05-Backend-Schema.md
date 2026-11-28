@@ -59,6 +59,8 @@ erDiagram
 | `team` | `Person[]` | `[]` (awaiting client content) |
 | `clients` | `{ name: string, logo: string }[]` | `[]` |
 
+`src/data/partners.js` exports `PARTNERS`: `{ name, logo: string \| null, width?, height? }[]` (five entries; `logo: null` renders a text wordmark). A development may carry an optional `flyer: { src, alt, width, height }` (Goshen only for now), and each service has `image`, `imageAlt` and an optional `imagePosition`.
+
 `Person` = `{ name: string, title: string, bio: string, photo: string }`.
 
 ### `site.js`
@@ -74,7 +76,7 @@ Built and validated in `src/lib/enquiry.js`.
 | `name` | string | Required, 2–80 chars |
 | `email` | string | Required, valid email |
 | `phone` | string | Optional; 7–15 digits (E.164), up to 25 characters including spaces, `+ ( ) -` |
-| `type` | enum | `development`, `services`, `partnership`, `ownership`, `careers`, `general` |
+| `type` | enum | `development`, `services`, `partnership`, `ownership`, `careers`, `news`, `articles`, `general` |
 | `development` | string | Optional, must be a known slug |
 | `message` | string | Required, 10–2000 chars |
 
