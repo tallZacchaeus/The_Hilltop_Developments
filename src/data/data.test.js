@@ -28,6 +28,7 @@ const allImages = [
   ...SERVICES.map((item) => item.image),
   ...PROJECT_CATEGORIES.map((item) => item.image),
   ...OPPORTUNITIES.map((item) => item.image),
+  ...DEVELOPMENTS.filter((item) => item.flyer).map((item) => item.flyer.src),
   ...INSIGHTS.map((item) => item.image),
   ...PARTNERS.filter((item) => item.logo).map((item) => item.logo),
 ];

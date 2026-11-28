@@ -31,6 +31,24 @@ function FactList({ development }) {
   );
 }
 
+/** The client's "coming soon" flyer, for developments that have one. */
+function Flyer({ flyer, name }) {
+  return (
+    <Card as="figure" className="mx-auto mt-5 max-w-md p-3 sm:p-4">
+      <img
+        src={flyer.src}
+        alt={flyer.alt}
+        width={flyer.width}
+        height={flyer.height}
+        loading="lazy"
+        decoding="async"
+        className="h-auto w-full rounded-inner"
+      />
+      <figcaption className="px-2 pb-1 pt-4 text-center text-sm text-navy/70">{name}: coming soon</figcaption>
+    </Card>
+  );
+}
+
 function RegisterInterest({ development }) {
   const whatsappLink = buildQuickWhatsAppLink(
     `Hello Hilltop Developments, I'd like to know more about ${development.name}.`,
@@ -82,6 +100,8 @@ export default function DevelopmentDetailPage({ development }) {
         </div>
 
         <FactList development={development} />
+
+        {development.flyer && <Flyer flyer={development.flyer} name={development.name} />}
 
         <div className="mt-5 grid gap-4 md:grid-cols-[1.4fr_1fr]">
           {development.gallery.map((photo, index) => (

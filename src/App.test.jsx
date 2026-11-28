@@ -134,6 +134,19 @@ describe('developments filter', () => {
   });
 });
 
+describe('development flyers', () => {
+  it('shows the Goshen coming-soon flyer on its page only', () => {
+    const { unmount } = renderRoute('/developments/goshen');
+    const flyer = screen.getByAltText(/Goshen by Hilltop.*coming soon.*Ogun State, Nigeria/i);
+    expect(flyer).toHaveAttribute('src', '/images/goshen-flyer.jpg');
+    expect(flyer).toHaveAttribute('width', '1080');
+    unmount();
+
+    renderRoute('/developments/crib');
+    expect(document.querySelector('img[src="/images/goshen-flyer.jpg"]')).toBeNull();
+  });
+});
+
 describe('footer', () => {
   it('sits on the navy brand background with light text, and no navy-on-navy text', () => {
     renderRoute('/');

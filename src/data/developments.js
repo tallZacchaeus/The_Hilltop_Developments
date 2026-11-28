@@ -56,6 +56,13 @@ export const DEVELOPMENTS = Object.freeze([
       'A luxury residential development designed for modern living, combining comfort, privacy and contemporary elegance. Every detail is thoughtfully considered to deliver a refined living experience defined by quality and style.',
     image: '/images/goshen-residence.jpg',
     imageAlt: 'A modern home with a green lawn framed by palm trees',
+    // Client flyer (Nov 2026), shown on the detail page. Width and height are the file's pixel size.
+    flyer: {
+      src: '/images/goshen-flyer.jpg',
+      alt: 'Flyer: Goshen by Hilltop, coming soon, Ogun State, Nigeria, above a modern concrete and glass home beside a pool',
+      width: 1080,
+      height: 1350,
+    },
     gallery: [
       { src: '/images/goshen-residence.jpg', alt: 'Modern home with lawn and palm trees' },
       { src: '/images/interior-living.jpg', alt: 'A bright, contemporary living room' },
